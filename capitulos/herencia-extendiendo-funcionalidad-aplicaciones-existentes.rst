@@ -348,7 +348,7 @@ usuario. Esto puede ser realizado configurando su atributo
 .. code:: XML
 
     <field name="active" position="attributes">
-        <attribute name="invisible">1<attribute/>
+        <attribute name="invisible">1</attribute>
     </field>
 
 Configurar el atributo ``invisible`` para esconder un elemento es una
