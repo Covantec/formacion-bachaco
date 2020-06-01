@@ -679,7 +679,7 @@ complemento incluyendo el nuevo directorio de módulos:
 .. code:: shell
 
     $ cd ~/odoo-dev/odoo
-    $ ./odoo.py -d v8dev --addons-path=”/department,./addons”
+    $ ./odoo.py -d v8dev --addons-path="/department,./addons"
 
 Si se observa con cuidado el registro del servidor notará una línea
 reportando la ruta de los complementos en uso: **INFO ? Openerp: addons

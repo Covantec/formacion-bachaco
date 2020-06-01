@@ -340,7 +340,7 @@ título por el nombre del campo.
 Existe una convención para los campos de fecha que usa ``date`` como
 prefijo para el nombre. Por ejemplo, deberíamos usar ``date_effective``
 en vez de ``effective_date``. Esto también puede aplicarse a otros
-campos, como “amount\_”, “price\_” o “qty\_”.
+campos, como "amount\_", "price\_" o "qty\_".
 
 Algunos otros argumentos están disponibles para la mayoría de los tipos
 de campo:

@@ -157,7 +157,7 @@ Calling other methods
 =====================
 
 The remaining model methods are all exposed through RPC, except for
-those starting with “\_” that are considered private. This means that we
+those starting with "\_" that are considered private. This means that we
 can use create, write, and unlink to modify data on the server as
 follows:
 
