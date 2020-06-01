@@ -1,14 +1,14 @@
 :banner: banners/m_2.jpg
 
 ========
-Creditos
+Créditos
 ========
 
-**Author**
+**Autor**
 
 Daniel Reis
 
-**Reviewers**
+**Revisores**
 
 Pedro M. Baeza
 

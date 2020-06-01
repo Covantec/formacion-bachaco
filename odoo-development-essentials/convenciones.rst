@@ -18,11 +18,11 @@ Un bloque de código es asentado de la siguiente manera:
 
 ::
 
-    {               
+    {
         'name': 'To-Do Application',
         'description':  'Manage your personal Tasks with this module.',
-        'author':   'Daniel Reis',          
-        'depends':  ['mail'],               
+        'author':   'Daniel Reis',
+        'depends':  ['mail'],
         'application':  True,
     }
 
@@ -38,7 +38,7 @@ dialogo por ejemplo, aparecen en texto como este: "Seleccione la
 opción **Actualizar Listas de Módulos**."
 
 .. note::
-    Las advertencias o notas importantes aparecen en una caja como esta.
+    Las advertencias o **notas importantes** aparecen en una caja como esta.
 
 .. tip::
-    Los consejos (tips) y notas aparecen así.
+    Los consejos y notas aparecen así.
