@@ -248,8 +248,13 @@ error en la archivo de registro, como se muestra a continuación:
 .. code-block:: console
 
     $ curl http://localhost:8069
-    <html><head><script>window.location = '/web' + location.hash;</script> </head></html> 
-    $ less /var/log/odoo/odoo-server.log # show the log file  
+    <html><head><script>window.location = '/web' + location.hash;</script> </head></html>
+
+Muestre el archivo de registro de Odoo, ejecutando el siguiente comando:
+
+.. code-block:: console
+
+    $ less /var/log/odoo/odoo-server.log
 
 La parada del servicio se hace de forma similar:
 
@@ -400,12 +405,30 @@ Reforzar el HTTPS
 Ahora, deberíamos instalar un certificado para poder usar SSL. Para
 crear un certificado auto-firmado, siga los pasos a continuación:
 
+Crear y acceder al directorio ssl, ejecutando el siguiente comando:
+
 .. code-block:: console
 
-    $ sudo mkdir /etc/nginx/ssl && cd /etc/nginx/ssl 
-    $ sudo openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem – days 365 -nodes 
-    $ sudo chmod a-wx *                     # make files read only 
-    $ sudo chown www-data:root *            # access only to www-data group  
+    $ sudo mkdir /etc/nginx/ssl && cd /etc/nginx/ssl
+
+Genere certificado SSL, ejecutando el siguiente comando:
+
+.. code-block:: console
+
+    $ sudo openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem – days 365 -nodes
+
+hace a los archivos de solo lectura, ejecutando el siguiente comando:
+
+.. code-block:: console
+
+    $ sudo chmod a-wx *
+
+acceso solamente al grupo www-data, ejecutando el siguiente comando:
+
+.. code-block:: console
+
+    $ sudo chown www-data:root *
+
 
 Esto crea un directorio ``ssl/`` dentro del directorio ``/etc/nginx/`` y
 un certificado auto-firmado sin contraseña. Cuando se ejecute el comando

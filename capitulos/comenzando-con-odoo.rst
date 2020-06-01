@@ -123,17 +123,32 @@ Creando una cuenta de usuario para Odoo
 Primero, asegúrese que sudo este instalado. Su usuario de trabajo lo
 necesitará. Si ha accedido como root ejecute los siguientes comandos:
 
-.. code:: shell
-
-    $ apt-get update & apt-get upgrade # Instalar actualizaciones del sistema
-    $ apt-get install sudo # Asegurarse que 'sudo' esta instalada
-
-Los siguientes comandos crearán un usuario odoo:
+Instalar actualizaciones del sistema, ejecutando el siguiente comando:
 
 .. code:: shell
 
-    $ useradd -m -g sudo -s /bin/bash odoo # Crea un usuario 'Odoo' con poderes sudo
-    $ passwd odoo # Solicita y configura una contraseña para el nuevo usuario
+    $ apt-get update & apt-get upgrade
+
+Asegurarse que 'sudo' esta instalada, ejecutando el siguiente comando:
+
+.. code:: shell
+
+    $ apt-get install sudo
+
+
+Con los siguientes comandos crearán un usuario odoo.
+
+Cree un usuario 'Odoo' con poderes sudo, ejecutando el siguiente comando:
+
+.. code:: shell
+
+    $ useradd -m -g sudo -s /bin/bash odoo
+
+Solicite y configure una contraseña para el nuevo usuario, ejecutando el siguiente comando:
+
+.. code:: shell
+
+    $ passwd odoo
 
 Puede cambiar odoo por cualquier nombre que desee. La opción ``-m`` crea
 el directorio home. El ``-g sudo`` agrega al nuevo usuario a la lista de
@@ -173,15 +188,47 @@ usuario es ``odoo``, puede confirmar esto con el siguiente comando:
 Ahora es posible usar este script. Muestra como instalar Odoo desde el
 código fuente en un sistema Debian:
 
+Instalar las actualizaciones del sistema, ejecutando el siguiente comando:
+
 .. code:: shell
 
-    $ sudo apt-get update & sudo apt-get upgrade # Instala las actualizaciones del sistema
-    $ sudo apt-get install git # Instala Git
-    $ mkdir ~/odoo-dev # Crear el directorio de trabajo
-    $ cd ~/odoo-dev # Ingresar en el directorio de trabajo
-    $ git clone https://github.com/odoo/odoo.git -b 8.0 # Obtiene el código fuente de Odoo
-    $ ./odoo/odoo.py setup_deps # Instala las dependencias del sistema Odoo
-    $ ./odoo/odoo.py setup_pg # Instala PostgreSQL y el usuario administrador para un usuario Unix
+    $ sudo apt-get update & sudo apt-get upgrade
+
+Instalar Git, ejecutando el siguiente comando:
+
+.. code:: shell
+
+    $ sudo apt-get install git
+
+Crear el directorio de trabajo, ejecutando el siguiente comando:
+
+.. code:: shell
+
+    $ mkdir ~/odoo-dev
+
+Ingresar en el directorio de trabajo, ejecutando el siguiente comando:
+
+.. code:: shell
+
+    $ cd ~/odoo-dev
+
+Obtener el código fuente de Odoo, ejecutando el siguiente comando:
+
+.. code:: shell
+
+    $ git clone https://github.com/odoo/odoo.git -b 8.0
+
+Instalar las dependencias del sistema Odoo, ejecutando el siguiente comando:
+
+.. code:: shell
+
+    $ ./odoo/odoo.py setup_deps
+
+Instalar PostgreSQL y el usuario administrador para un usuario Unix, ejecutando el siguiente comando:
+
+.. code:: shell
+
+    $ ./odoo/odoo.py setup_pg
 
 Al finalizar, Odoo estará listo para ser usado. El símbolo ``~`` es un
 atajo para su directorio raíz (por ejemplo, ``/home/odoo``). La opción
@@ -381,11 +428,11 @@ La mayoría de las opciones pueden ser guardadas en un archivo de
 configuración. De forma predeterminada, Odoo usará el archivo
 ``.openerp-serverrc`` en su directorio home. Convenientemente, existe
 una opción ``--save`` para guardar la instancia actual de configuración
-dentro de ese archivo:
+dentro de ese archivo, ejecute el siguiente comando:
 
 .. code:: shell
 
-    $ ~/odoo-dev/odoo/odoo.py --save --stop-after-init # guarda la configuración en archivo
+    $ ~/odoo-dev/odoo/odoo.py --save --stop-after-init
 
 Aquí también se usa la opción ``--stop-after-init``, para que el
 servidor se detenga al finalizar las acciones. Ésta opción es usada
@@ -393,11 +440,11 @@ frecuentemente para ejecutar pruebas y solicitar la ejecución de
 actualización de un módulo para verificar que se instala correctamente.
 
 Ahora se puede inspeccionar lo que se guardó en este archivo de
-configuración:
+configuración, ejecutando el siguiente comando:
 
 .. code:: shell
 
-    $ more ~/.openerp_serverrc # mostrar el archivo de configuración
+    $ more ~/.openerp_serverrc
 
 Esto mostrará todas las opciones de configuración disponibles con sus
 valores predeterminados. La edición se hará efectiva la próxima vez que
@@ -488,7 +535,7 @@ comandos. En muchos sistemas Debian el editor de texto predeterminado es
 vi. Si no se siente a gusto con éste, puede usar una alternativa más
 amigable. En sistemas Ubuntu el editor de texto predeterminado es nano.
 Puede que prefiera usar éste ya que es más fácil de usar. En caso que no
-esté disponible en su servidor, puede instalarlo con:
+esté disponible en su servidor, puede instalarlo, ejecutando el siguiente comando:
 
 .. code:: shell
 
@@ -503,7 +550,7 @@ Instalar y configurar Samba
 
 El proyecto Samba proporciona a Linux servicios para compartir archivos
 compatibles con sistemas Microsoft Windows. Se puede instalar en el
-servidor Debian/Ubuntu con:
+servidor Debian/Ubuntu, ejecutando el siguiente comando:
 
 .. code:: shell
 
@@ -514,7 +561,7 @@ paquete ``samba-common-bin`` es necesario para la herramienta
 ``smbpasswd``. De forma predeterminada las usuarias y usuarios
 autorizados para acceder a los archivos compartidos necesitan ser
 registrados. Es necesario registrar el usuario odoo y asignarle una
-contraseña para su acceso a los archivos compartidos:
+contraseña para su acceso a los archivos compartidos, ejecutando el siguiente comando:
 
 .. code:: shell
 
@@ -523,7 +570,7 @@ contraseña para su acceso a los archivos compartidos:
 Después de esto el usuario odoo podrá acceder a un recurso compartido de
 archivos para su directorio home, pero será de solo lectura. Se requiere
 el acceso a escritura, así que es necesario editar los archivos de
-configuración de Samba para cambiar eso:
+configuración de Samba para cambiar eso, ejecutando el siguiente comando:
 
 .. code:: shell
 
@@ -542,7 +589,7 @@ líneas de configuración para que sean iguales a los siguientes ajustes:
        directory mask = 0750
 
 Para que estos cambios en la configuración tengan efecto, reinicie el
-servicio:
+servicio, ejecutando el siguiente comando:
 
 .. code:: shell
 

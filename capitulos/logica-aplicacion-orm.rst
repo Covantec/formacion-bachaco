@@ -258,10 +258,17 @@ Debian/Ubuntu, como se recomendó en el Capítulo 1, entonces debe
 funcionar. Se requiere el paquete Python pyinotify, y debe ser instalado
 a través de ``apt-get`` o pip, como se muestra a continuación:
 
+Usando paquetes OS, ejecutando el siguiente comando:
+
 .. code-block:: console
 
-    $ sudo apt-get install python-pyinotify # using OS packages 
-    $ pip install pyinotify                 # using pip, possibly in a virtualenv  
+    $ sudo apt-get install python-pyinotify
+
+Usando pip, posiblemente en un entorno virtual (virtualenv), ejecutando el siguiente comando:
+
+.. code-block:: console
+
+    $ pip install pyinotify
 
 Acciones en el dialogo del asistente
 ------------------------------------

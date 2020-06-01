@@ -90,8 +90,6 @@ existentes, podemos usar estos comandos en la terminal:
     $ cd todo_ui 
     $ touch __openerp__.py
     $ touch todo_model.py 
-    #$ echo "from . Import todo_model" > __init__.py
-    # aquí No se si Daniels se le escapo pero la sentencia funcional queda:
     $ echo "import todo_model" > __init__.py
 
 
