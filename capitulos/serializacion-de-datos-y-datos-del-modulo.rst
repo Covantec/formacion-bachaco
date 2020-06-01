@@ -26,9 +26,9 @@ de Odoo
 
 .. figure:: images/150_1.jpg
   :align: center
-  :alt: Grafico 4.1 - Vista de 'External Identifiers'
+  :alt: Gráfico 4.1 - Vista de 'External Identifiers'
 
-  Grafico 4.1 - Vista de 'External Identifiers'
+  Gráfico 4.1 - Vista de 'External Identifiers'
 
 
 Entendiendo los Identificadores Externos
@@ -75,9 +75,9 @@ colisionen con identificadores en otros módulos.
 
 .. figure:: images/151_1.jpg
   :align: center
-  :alt: Grafico 4.2 - Detalles del ID 'todo_app.action_todo_task'
+  :alt: Gráfico 4.2 - Detalles del ID 'todo_app.action_todo_task'
 
-  Grafico 4.2 - Detalles del ID 'todo_app.action_todo_task'
+  Gráfico 4.2 - Detalles del ID 'todo_app.action_todo_task'
 
 Al principio de la lista, puedes ver el ID de
 ``todo_app.action_todo_task``. Esta es la acción del menú que creamos
@@ -120,12 +120,12 @@ seleccionar la opción **Ver metadatos**, y se mostrara lo siguiente:
 
 .. figure:: images/152_1.jpg
   :align: center
-  :alt: Grafico 4.3 - Ver metadatos del módulo 'res.users'
+  :alt: Gráfico 4.3 - Ver metadatos del módulo 'res.users'
 
-  Grafico 4.3 - Ver metadatos del módulo 'res.users'
+  Gráfico 4.3 - Ver metadatos del módulo 'res.users'
 
 Para buscar el ID externo de los elementos de vista, como formulario,
-árbol, buscador, y acción, el **menu de Desarrollo** es también de
+árbol, buscador, y acción, el **menú de Desarrollo** es también de
 ayuda. Para esto, utilice la opción de **Obtener Campos de Vista** o
 abra la información para la vista deseada usando la opción Editar , y
 seleccione la opción Ver metadatos.
@@ -149,9 +149,9 @@ Aquí esta un ejemplo, utilizando las reciente tareas creadas a realizar:
 
 .. figure:: images/155_1.jpg
   :align: center
-  :alt: Grafico 4.4 - Exportando datos del módulo 'To-Do'
+  :alt: Gráfico 4.4 - Exportando datos del módulo 'To-Do'
 
-  Grafico 4.4 - Exportando datos del módulo 'To-Do'
+  Gráfico 4.4 - Exportando datos del módulo 'To-Do'
 
 La opción exportar nos lleva a un dialogo, donde podemos elegir lo que
 se va a exportar. La opción exportar compatible se asegura de que el
@@ -165,9 +165,9 @@ de un archivo con los datos exportados.
 
 .. figure:: images/156_1.jpg
   :align: center
-  :alt: Grafico 4.5 - Asistente para exportar datos del módulo 'To-Do'
+  :alt: Gráfico 4.5 - Asistente para exportar datos del módulo 'To-Do'
 
-  Grafico 4.5 - Asistente para exportar datos del módulo 'To-Do'
+  Gráfico 4.5 - Asistente para exportar datos del módulo 'To-Do'
 
 Si seguimos estas instrucciones y seleccionamos los campos que se
 demuestran en la imagen anterior, debemos terminar con un archivo de
@@ -220,9 +220,9 @@ importación de Odoo, es probable que es archivo sea correcto.
 
 .. figure:: images/157_1.jpg
   :align: center
-  :alt: Grafico 4.6 - Importar archivos de datos CSV
+  :alt: Gráfico 4.6 - Importar archivos de datos CSV
 
-  Grafico 4.6 - Importar archivos de datos CSV
+  Gráfico 4.6 - Importar archivos de datos CSV
 
 Ahora podemos hacer clic en **Importar** y allí va: nuestras
 modificaciones y nuevos registros deberían haberse cargado en Odoo.
@@ -428,7 +428,7 @@ próxima actualización del módulo. El procedimiento correcto es crear
 vistas heredadas de los cambios que necesitamos, como se explica en el
 Capítulo 3.
 
-Este comportamiento de sobrescritura es el valor predeterminado, pero se
+Este comportamiento de sobrescribir es el valor predeterminado, pero se
 puede cambiar, por lo que cuando un registro ya creado se carga de nuevo
 no se realiza ningún cambio al mismo. Esto se hace añadiendo al elemento
 ``<data>`` un atributo ``noupdate="1"``. Con esto, sus registros se

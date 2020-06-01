@@ -49,7 +49,7 @@ o en un botón para abrir un formulario, es la acción subyacente la que
 da instrucciones a la interfaz sobre lo que debe hacer.
 
 Comenzaremos por crear la acción de ventana que será usada en las
-opciones de manú, para abrir las vistas de las tareas por hacer y de los
+opciones de menú, para abrir las vistas de las tareas por hacer y de los
 estados. Cree el archivo de datos ``todo_view.xml`` con el siguiente
 código:
 
@@ -73,14 +73,14 @@ atributos básicos para una acción de ventana.
 
 La segunda acción usa un ID en el espacio de nombre de ``todo_app`` para
 sobre escribir la acción original de tareas por hacer del módulo
-``todo_app``. Esta usa los atributos de aciones de ventana más
+``todo_app``. Esta usa los atributos de acciones de ventana más
 relevantes.
 
 -  name: Este es el título mostrado en las vistas abiertas a través de
    esta acción.
 -  ``res_model``: Es el identificador del modelo de destino.
 -  ``view_mode``: Son los tipos de vista que estarán disponibles. El
-   orden es relevenate y el primero de la lista será la vista que se
+   orden es relevante y el primero de la lista será la vista que se
    abrirá de forma predeterminada.
 -  target: Si es fijado como "new", la vista se abrirá en una ventana de
    dialogo.De forma predeterminada esta fijado a "current", por lo que
@@ -568,7 +568,7 @@ Los atributos usados para el botón son:
 
 -  ``class="oe_stat_button"``, es para usar un estilo rectángulo en vez
    de un botón.
--  icon, es el ícono que será usaso, escogido desde el conjunto de
+-  icon, es el ícono que será usado, escogido desde el conjunto de
    íconos de Font Awesome.
 -  type, será usualmente una acción para la acción de ventana, y name
    será el ID de la acción que será ejecutada. Puede usarse la formula
@@ -1030,7 +1030,7 @@ de un gráfico Gantt básico:
 Los atributos que puede ser usados para las vistas Gantt son los
 siguientes.
 
--  ``date_start``: El campo para la fecha de incio (obligatorio).
+-  ``date_start``: El campo para la fecha de inicio (obligatorio).
 -  ``date_stop``: El campo para la fecha de culminación. Puede ser
    reemplazado por ``date_delay``.
 -  ``date_delay``: El campo con la duración en días. Puede usarse en vez

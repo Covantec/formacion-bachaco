@@ -11,7 +11,7 @@ QweB - Creando vistas Kanban y Reportes
 y es utilizado para generar fragmentos y páginas html. QWeb fue
 introducido por primera vez en la versión 7.0 para habilitar vistas
 Kanban más ricas, y con las versión 8.0, también se usa para la
-generación de reportes y páginas web CMS (CMS: Sistemas Manejadores de
+generación de reportes y páginas web CMS (CMS: Sistemas de Gestión de
 Contenido).
 
 Aquí aprenderás acerca de la sintaxis QWeb y como usarla para crear tus
@@ -25,7 +25,7 @@ industria del software con su adopción en las metodologías Ágiles.
 
 El **tablero Kanban** es una herramienta para visualizar la cola de
 trabajo. Los artículos (items) de trabajo están representados por
-tarjetas que son organizadas en columnas represantando las **etapas**
+tarjetas que son organizadas en columnas representando las **etapas**
 (stages) del proceso de trabajo. Nuevos artículos de trabajo inician en
 la columna más a la izquierda y viaja a través del tablero hasta que
 alcanzan la columna más a la derecha, representando el trabajo
@@ -258,12 +258,12 @@ El elemento superior también soporta algunos atributos interesantes:
 -  class: Añade una clase CSS al elemento raíz en la vista kanban
    renderizada.
 
-Ahora démosle una mirada más de cerca a las plantillas Qweb usadas en
+Ahora demos una mirada más de cerca a las plantillas Qweb usadas en
 las vistas kanban.
 
 La vista kanban viñeta
 
-Para las plantilas QWeb de las viñetas kanban, el esqueleto se ve así:
+Para las plantillas QWeb de las viñetas kanban, el esqueleto se ve así:
 
 .. code-block:: XML
 
@@ -321,7 +321,7 @@ nuevos. En la etiqueta , tenemos el atributo QWeb especial t-att-src.
 Esto puede calcular el contenido src de la imagen desde un campo
 almacenado en la base de datos. Explicaremos esto en otras directivas
 QWeb en un momento. También podemos ver el uso del atributo especial
-type en la etiqueta ``<a>``. Echémosle un vistazo más de cerca.
+type en la etiqueta ``<a>``. Echemos un vistazo más de cerca.
 
 Acciones en las vistas Kanban
 -----------------------------
@@ -345,7 +345,7 @@ acción también están disponibles:
 **La vista kanban de tarjeta** El kanban de **tarjeta** puede ser un
 poco más complejo. Este tiene un área de contenido principal y dos
 sub-contenedores al pie, alineados a cada lado de la tarjeta. También
-podría contener un boton de apertura de una acción de menú en la esquina
+podría contener un botón de apertura de una acción de menú en la esquina
 superior derecha de la tarjeta.
 
 El esqueleto para esta plantilla se vería así:
@@ -398,7 +398,7 @@ de HTML y etiquetas especiales (field, button, a). Pero podemos tener
 resultados mucho más interesantes usando contenido HTML generado
 dinámicamente. Veamos como podemos hacer eso usando Qweb.
 
-Agrengano contenido dinámico Qweb
+Agregando contenido dinámico Qweb
 ---------------------------------
 
 El analizador Qweb busca atributos especiales (directivas) en las
@@ -452,7 +452,7 @@ usando el atributo ``raw_value`` o el ``value``:
    ``read()``, así que se ajusta más para usarse en expresiones
    condicionales.
 -  ``value``: Este es formateado de acuerdo a las configuraciones de
-   usuario, y está destiado a ser mostrado en la interfaz del usuario.
+   usuario, y está destinado a ser mostrado en la interfaz del usuario.
 
 El contexto de evaluación de Qweb también tiene referencias disponibles
 para la instancia JavaScript del cliente web. Para hacer uso de ellos,

@@ -255,9 +255,9 @@ otros modelos. Esto es hecho usando las capacidades de herencia de Odoo.
 
 .. figure:: images/185_1.jpg
   :align: center
-  :alt: Grafico 5.1 - Vista de la estructura de base de datos del modelo todo.task
+  :alt: Gráfico 5.1 - Vista de la estructura de base de datos del modelo todo.task
 
-  Grafico 5.1 - Vista de la estructura de base de datos del modelo todo.task
+  Gráfico 5.1 - Vista de la estructura de base de datos del modelo todo.task
 
 
 Inspeccionar modelos existentes
@@ -422,7 +422,7 @@ entre versiones principales de Odoo:
 Nombres de campo reservados
 ---------------------------
 
-Unos cuantos nombres de campo estan reservados para ser usados por el
+Unos cuantos nombres de campo están reservados para ser usados por el
 ORM:
 
 -  ``id``, es un número generado automáticamente que identifica de forma

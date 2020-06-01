@@ -731,7 +731,7 @@ eliminando o agregando elementos. Puede observar esto en el siguiente
 ejemplo:
 
 -  ``self.task_ids |= task1``: Esto agrega el elemento task1 si no
-   existe en el conjusnto de registro.
+   existe en el conjunto de registro.
 -  ``self.task_ids    -= task1``: Elimina la referencia a task1 si esta
    presenta en el conjunto de registro.
 -  ``self.task_ids = self.task_ids[:-1]``: Esto elimina el enlace del

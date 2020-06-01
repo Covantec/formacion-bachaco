@@ -183,7 +183,7 @@ La herencia también funciona en la lógica de negocio. Agregar métodos
 nuevos es simple: solo declare las funciones dentro de la clase
 heredada.
 
-Para ampliar la lógica existente, un método puede ser sobreescrito
+Para ampliar la lógica existente, un método puede ser sobrescrito
 declarando otro método con el mismo nombre, y el método nuevo
 reemplazará al anterior. Pero este puede extender el código de la clase
 heredada, usando la palabra clave de Python ``super()`` para llamar al
@@ -199,7 +199,7 @@ módulos de tareas compartidas, ya que borra todas las tareas sin
 importar a quien le pertenecen. Necesitamos modificarla para que borre
 solo las tareas del usuario actual.
 
-Para esto, se sobreescribirá el método original con una nueva versión que
+Para esto, se sobrescribirá el método original con una nueva versión que
 primero encuentre las tareas completadas del usuario actual, y luego las
 desactive:
 

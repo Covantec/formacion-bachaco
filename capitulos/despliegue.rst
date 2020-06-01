@@ -125,7 +125,7 @@ servidor trabaje correctamente:
 -  xmlrpc\_port: Es el número de puerto en el cual escuchara el
    servidor. De forma predeterminada es el puerto 8069.
 
--  log\_level: Este es la cantidad de información en el regirstro. De
+-  log\_level: Este es la cantidad de información en el registro. De
    forma predeterminada es el nivel "info", pero al usar el nivel
    "debug\_rpc", más descriptivo, agrega información importante para el
    monitoreo del desempaño del servidor.
@@ -331,7 +331,7 @@ Ahora podemos instalar nginx, lo cual es realizado de la forma esperada:
 
 Para conformar que este funcionando correctamente, deberíamos ver una
 página que diga "Welcome to nginx" cuando se ingrese la dirección del
-servidor en la navegador o usarndo ``curl http://localhost``
+servidor en la navegador o usando ``curl http://localhost``
 
 Los archivos de configuración de nginx siguen el mismo enfoque que los
 de Apache: son almacenados en ``/etc/nginx/available-sites/`` y se
@@ -353,7 +353,7 @@ configuración nginx como sigue:
     $ sudo nano /etc/nginx/sites-available/odoo 
 
 Primero agregamos los "upstreams", los servidores traseros hacia los
-cuales nginx redireccionara el tráfico, en nuestro caso el servidor
+cuales nginx redireccionará el tráfico, en nuestro caso el servidor
 Odoo, el cual escucha en el puerto 8069, como se muestra a continuación:
 
 ::
