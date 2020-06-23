@@ -70,7 +70,7 @@ Ahora creamos el archivo ``__openerp__.py``, con el siguiente código:
         'name': 'Multiuser To-Do',
         'description': 'Extend the To-Do app to multiuser.',
         'author': 'Daniel Reis',
-        'depends': ['todo_app'],    
+        'depends': ['todo_app'],
     }
 
 No hemos hecho esto, pero incluir las claves "summary" y "category"
@@ -327,14 +327,17 @@ pero a veces, podemos necesitar usar ``string`` (el texto mostrado en un
 "label") o la clase CSS del elemento.
 
 El atributo de posición usado con el elemento localizador es opcional, y
-puede tener los siguientes valores: - ``after``: Este es agregado al
-elemento padre, después del nodo de coincidencia. - ``before``: Este es
-agregado al elemento padre, antes del nodo de coincidencia. - ``inside``
-(el valor predeterminado): Este es anexado al contenido del nodo de
-coincidencia. - ``replace``: Este reemplaza el nodo de coincidencia. Si
-es usado con un contenido vacío, borra un elemento. - ``attributes``:
-Este modifica los atributos XML del elemento de coincidencia (más
-detalles luego de esta lista).
+puede tener los siguientes valores:
+
+- ``after``: Este es agregado al elemento padre, después del nodo de coincidencia.
+
+- ``before``: Este es agregado al elemento padre, antes del nodo de coincidencia.
+
+- ``inside`` (el valor predeterminado): Este es anexado al contenido del nodo de coincidencia.
+
+- ``replace``: Este reemplaza el nodo de coincidencia. Si es usado con un contenido vacío, borra un elemento.
+
+- ``attributes``: Este modifica los atributos XML del elemento de coincidencia (más detalles luego de esta lista).
 
 La posición del atributo nos permite modificar los atributos del
 elemento de coincidencia. Esto es hecho usando los elementos

@@ -49,7 +49,7 @@ para instalar nuestro entorno de desarrollo. Por ejemplo:
 
 .. code-block:: console
 
-    $ git clone https://github.com/odoo/odoo.git -b 8.0 --depth=1  
+    $ git clone https://github.com/odoo/odoo.git -b 8.0 --depth=1
 
 Este comando obtiene el código fuente de la rama 8.0 desde GitHub dentro
 del subdirectorio ``odoo/``. En el momento de escribir esto, la 8.0 es
@@ -364,20 +364,20 @@ Odoo, el cual escucha en el puerto 8069, como se muestra a continuación:
 ::
 
     upstream backend-odoo {
-        server 127.0.0.1:8069; 
-    } 
+        server 127.0.0.1:8069;
+    }
 
     server {
         location / {
             proxy_pass http://backend-odoo;
-        } 
-    } 
+        }
+    }
 
 Para probar que la configuración es correcta, use lo siguiente:
 
 .. code-block:: console
 
-    $ sudo nginx -t  
+    $ sudo nginx -t
 
 En caso que se encuentren errores, verifique que el archivo de
 configuración esta bien escrito. Además, un problema común es que el
@@ -389,7 +389,7 @@ cargue la nueva configuración:
 
 .. code-block:: console
 
-    $ sudo /etc/init.d/nginx reload  
+    $ sudo /etc/init.d/nginx reload
 
 Ahora podemos verificar que nginx este redirigiendo el tráfico al
 servidor de Odoo, como se muestra a continuación:
@@ -397,7 +397,7 @@ servidor de Odoo, como se muestra a continuación:
 .. code-block:: console
 
     $ curl http://localhost
-    <html><head><script>window.location = '/web' + location.hash;</script> </head></html>  
+    <html><head><script>window.location = '/web' + location.hash;</script> </head></html>
 
 Reforzar el HTTPS
 =================
@@ -415,7 +415,7 @@ Genere certificado SSL, ejecutando el siguiente comando:
 
 .. code-block:: console
 
-    $ sudo openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem – days 365 -nodes
+    $ sudo openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem - days 365 -nodes
 
 hace a los archivos de solo lectura, ejecutando el siguiente comando:
 
@@ -468,7 +468,7 @@ HTTPS apropiadamente, agregando la siguiente configuración a "server":
 ::
 
     server {
-        listen 443 default;              
+        listen 443 default;
         # ssl settings
         ssl on;
         ssl_certificate /etc/nginx/ssl/cert.pem;
@@ -477,14 +477,14 @@ HTTPS apropiadamente, agregando la siguiente configuración a "server":
         # proxy header and settings
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forward-For $proxy_add_x_forwarded_for;      
+        proxy_set_header X-Forward-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_redirect off;      
-     
+        proxy_redirect off;
+
         location / {
             proxy_pass http://backend-odoo;
-        } 
-    } 
+        }
+    }
 
 Esto escuchara al puerto HTTPS y usará los archivos del certificado
 ``/etc/nginx/ssl/`` para cifrar el tráfico. También agregamos alguna
@@ -500,12 +500,12 @@ Odoo trabajando a través de HTTPS, como se muestra a continuación:
 
 .. code-block:: console
 
-    $ sudo nginx -t 
-    nginx: the configuration file /etc/nginx/nginx.conf syntax is ok 
-    nginx: configuration file /etc/nginx/nginx.conf test is successful 
-    $ sudo service nginx reload * 
-    Reloading nginx configuration nginx ...done. 
-    $ curl -k https://localhost  
+    $ sudo nginx -t
+    nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+    nginx: configuration file /etc/nginx/nginx.conf test is successful
+    $ sudo service nginx reload *
+    Reloading nginx configuration nginx ...done.
+    $ curl -k https://localhost
     <html><head><script>window.location = '/web' + location.hash;</script></head></html>
 
 La última salida confirma que el cliente Odoo esta siendo servido sobre
@@ -602,10 +602,10 @@ ser realizado con los siguientes comandos:
 
 .. code-block:: console
 
-    $ dropdb v8test ; createdb v8test 
-    $ pg_dump v8dev | psqlpsql -d v8test 
+    $ dropdb v8test ; createdb v8test
+    $ pg_dump v8dev | psqlpsql -d v8test
     $ cd ~/odoo-dev/odoo/ 
-    $ ./odoo.py -d v8test –xmlrpc-port=8080 -c /etc/odoo/openerp-server.conf –u all  
+    $ ./odoo.py -d v8test -xmlrpc-port=8080 -c /etc/odoo/openerp-server.conf -u all
 
 Si todo resulta bien, debería ser seguro realizar la actualización en el
 servicio en producción. Recuerde colocar una nota de la versión actual
@@ -621,8 +621,8 @@ como se muestra aquí:
 
     $ cd ~/odoo-prd/odoo/
     $ git pull 
-    $ ./odoo.py -c /etc/odoo/openerp-server.conf –stop-after-init -d v8dev -u all 
-    $ sudo /etc/init.d/odoo restart 
+    $ ./odoo.py -c /etc/odoo/openerp-server.conf -stop-after-init -d v8dev -u all
+    $ sudo /etc/init.d/odoo restart
 
 Resumen
 =======

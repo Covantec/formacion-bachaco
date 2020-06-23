@@ -1049,21 +1049,39 @@ el siguiente mensaje:
 Depuración
 ----------
 
-Sabemos que una buena parte del trabajo de desarrollo es la depuración del código. Para hacer esto frecuentemente hacemos uso del editor de código que puede fijar pontos de quiebre y ejecutar nuestro programa paso a paso. Hacer esto con Odoo es posible pero tiene sus dificultades.
+Sabemos que una buena parte del trabajo de desarrollo es la depuración del
+código. Para hacer esto frecuentemente hacemos uso del editor de código que
+puede fijar pontos de quiebre y ejecutar nuestro programa paso a paso. Hacer
+esto con Odoo es posible pero tiene sus dificultades.
 
-Si esta usando Microsoft Windows como su estación de trabajo, configurar un entorno capaz de ejecutar en código de Odoo desde la fuente no es una tarea trivial. Además el hecho que Odoo sea un servidor que espera llamadas de un cliente para actuar, lo hace diferente a la depuración de programas del lado del cliente.
+Si esta usando Microsoft Windows como su estación de trabajo, configurar un
+entorno capaz de ejecutar en código de Odoo desde la fuente no es una tarea
+trivial. Además el hecho que Odoo sea un servidor que espera llamadas de un
+cliente para actuar, lo hace diferente a la depuración de programas del lado
+del cliente.
 
-Mientras que esto puede ser realizado con Odoo, puede decirse que no es la forma más pragmática de resolver el asunto. Haremos una introducción sobre algunas estrategias básicas para la depuración, las cuales pueden ser tan efectivas como algunos IDEs sofisticados, con un poco de práctica.
+Mientras que esto puede ser realizado con Odoo, puede decirse que no es la
+forma más pragmática de resolver el asunto. Haremos una introducción sobre
+algunas estrategias básicas para la depuración, las cuales pueden ser tan
+efectivas como algunos IDEs sofisticados, con un poco de práctica.
 
-La herramienta integrada para la depuración de Python, pdb, puede hacer un trabajo decente de depuración. Podemos fijar un punto de quiebre insertando la siguiente línea en el lugar deseado:
+La herramienta integrada para la depuración de Python, pdb, puede hacer un
+trabajo decente de depuración. Podemos fijar un punto de quiebre insertando
+la siguiente línea en el lugar deseado:
 
 .. code-block:: python
 
     import pdb; pdb.set\_trace()
 
-Ahora reinicie el servidor para que se cargue la modificación del código. Tan pronto como la ejecución del código alcance la línea, una (pdb) linea de entrada de Python será mostrada en la ventana de la terminal en la cual el servidor se esta ejecutando, esperando por el ingreso de datos.
+Ahora reinicie el servidor para que se cargue la modificación del código. Tan
+pronto como la ejecución del código alcance la línea, una (pdb) linea de entrada
+de Python será mostrada en la ventana de la terminal en la cual el servidor se
+esta ejecutando, esperando por el ingreso de datos.
 
-Esta línea de entrada funciona como una línea de comandos de Python, donde puede ejecutar cualquier comando o expresión en el actual contexto de ejecución. Esto significa que las variables actuales pueden ser inspeccionadas e incluso modificadas. Estos son los comandos disponibles más importantes:
+Esta línea de entrada funciona como una línea de comandos de Python, donde puede
+ejecutar cualquier comando o expresión en el actual contexto de ejecución. Esto
+significa que las variables actuales pueden ser inspeccionadas e incluso modificadas.
+Estos son los comandos disponibles más importantes:
 
 - h: Es usado para mostrar un resumen de la ayuda del comando pdb.
 - p: Es usado para evaluar e imprimir una expresión.
@@ -1076,9 +1094,15 @@ Esta línea de entrada funciona como una línea de comandos de Python, donde pue
 - u(up): Permite moverse hacia arriba de la pila de ejecución.
 - d (down): Permite moverse hacia abajo de la pila de ejecución.
 
-El servidor Odoo también soporta la opción ``--debug``. Si se usa, el servidor entrara en un modo *post mortem* cuando encuentre una excepción, en la línea donde se encuentre el error. Es una consola pdb y nos permite inspeccionar el estado del programa en el momento en que es encontrado el error.
+El servidor Odoo también soporta la opción ``--debug``. Si se usa, el servidor
+entrara en un modo *post mortem* cuando encuentre una excepción, en la línea
+donde se encuentre el error. Es una consola pdb y nos permite inspeccionar el
+estado del programa en el momento en que es encontrado el error.
 
-Existen alternativas al depurador de Python. Puede provee los mismos comandos que pdb y funciona en terminales de solo texto, pero usa una visualización gráfica más amigable, haciendo que la información útil sea más legible como las variables del contexto actual y sus valores.
+Existen alternativas al depurador de Python. Puede provee los mismos comandos
+que pdb y funciona en terminales de solo texto, pero usa una visualización
+gráfica más amigable, haciendo que la información útil sea más legible como
+las variables del contexto actual y sus valores.
 
 .. figure:: images/185_1.jpg
   :align: center
@@ -1086,7 +1110,8 @@ Existen alternativas al depurador de Python. Puede provee los mismos comandos qu
 
   Gráfico 7.2 - Vista del modelo todo.task
 
-Puede ser instalado a través del sistema de paquetes o por pip, como se muestra a continuación:
+Puede ser instalado a través del sistema de paquetes o por pip, como se muestra
+a continuación:
 
 .. code-block:: console
 
@@ -1127,6 +1152,6 @@ También vio como la lógica de negocio interactúa con la interfaz y
 aprendió a crear ayudantes que dialoguen con el usuario y la usuaria y
 sirvan como una plataforma para iniciar procesos avanzados.
 
-En el próximo capítulo, nos enfocaremos nuevamente en la interfaz,, y
+En el próximo capítulo, nos enfocaremos nuevamente en la interfaz, y
 aprenderá como crear vistas kanban avanzadas y a diseñar sus propios
 reportes de negocio.

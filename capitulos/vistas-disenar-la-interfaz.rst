@@ -76,22 +76,28 @@ sobre escribir la acción original de tareas por hacer del módulo
 ``todo_app``. Esta usa los atributos de acciones de ventana más
 relevantes.
 
--  name: Este es el título mostrado en las vistas abiertas a través de
+-  ``name``: Este es el título mostrado en las vistas abiertas a través de
    esta acción.
+
 -  ``res_model``: Es el identificador del modelo de destino.
+
 -  ``view_mode``: Son los tipos de vista que estarán disponibles. El
    orden es relevante y el primero de la lista será la vista que se
    abrirá de forma predeterminada.
--  target: Si es fijado como "new", la vista se abrirá en una ventana de
+
+-  ``target``: Si es fijado como "new", la vista se abrirá en una ventana de
    dialogo.De forma predeterminada esta fijado a "current", por lo que
    abre la vista en el área principal de contenido.
--  context: Este fija información de contexto en las vistas de destino,
+
+-  ``context``: Este fija información de contexto en las vistas de destino,
    la cual puede ser usada para establecer valores predeterminados en
    campos o filtros activos, entre otras cosas. Veremos más detalles
    sobre esto en este mismo capítulo.
--  domain: Es una expresión de dominio que establece un filtro para los
+
+-  ``domain``: Es una expresión de dominio que establece un filtro para los
    registros que estarán disponibles en las vistas abiertas.
--  limit: Es el número de registros por cada página con vista de lista,
+
+-  ``limit``: Es el número de registros por cada página con vista de lista,
    80 es el número predefinido.
 
 La acción de ventana ya incluye los otros tipos de vista las cuales
@@ -105,7 +111,7 @@ La tercera acción de ventana demuestra como agregar una opción bajo el
 botón "Mas", en la parte superior de la vista. Estos son los atributos
 usados para realizar esto:
 
--  multi: Si esta fijado a "True", estará disponible en la vista de
+-  ``multi``: Si esta fijado a "``True``", estará disponible en la vista de
    lista. De lo contrario, estará disponible en la vista de formulario.
 
 Opciones de menú
@@ -120,7 +126,7 @@ opción de menú: la cual es ``mail.mail_my_stuff``.
 
 Reemplazaremos la opción de menú existente en Tareas por Hacer con un
 submenú que puede encontrarse navegando a través de Mensajería \|
-Organizador. En el ``todo_view.xml``, despues de las acciones de
+Organizador. En el ``todo_view.xml``, después de las acciones de
 ventana, agregue el siguiente código:
 
 .. code-block:: XML
@@ -138,7 +144,7 @@ Organizador ``mail.mail_my_stuff``. No tiene ninguna acción asignada,
 debido a que será usada como padre para las próximas dos opciones.
 
 El segundo elemento del menú re escribe la opción definida en el módulo
-``todo_app`` para ser re ubicada bajo el elemento "To-Do" del menú
+``todo_app`` para ser re ubicada bajo el elemento *"To-Do"* del menú
 principal.
 
 El tercer elemento del menú agrega una nueva opción para acceder a los
@@ -203,7 +209,7 @@ Expresiones de dominio
 ~~~~~~~~~~~~~~~~~~~~~~
 
 Los dominios se usan para filtrar los datos de registro. Odoo los
-analiza detenidamente para formar la expresión WHERE SQL usada para
+analiza detenidamente para formar la expresión *SQL* ``WHERE`` usada para
 consultar a la base de datos.
 
 Cuando se usa en una acción de ventana para abrir una vista, el dominio
@@ -214,7 +220,7 @@ Por ejemplo, para limitar solo a las Tareas del usuario actual:
 
     domain=[('user_id', '=', uid)] 
 
-El valor "uid" usado aquí es provisto por el contexto de sesión. Cuando
+El valor "``uid``" usado aquí es provisto por el contexto de sesión. Cuando
 se usa en un campo relacional, limitara las opciones disponibles de
 selección para ese campo. El filtro de dominio puede también usar
 valores de otros campos en la vista. Con esto podemos tener diferentes
@@ -231,17 +237,17 @@ usada la notación de punto en los campos relaciones.
 
 Los operadores que pueden ser usados son:
 
--  ``=``, "like" para coincidencias con el valor del patrón donde el
+-  ``=``, ``like`` para coincidencias con el valor del patrón donde el
    símbolo de guión bajo (``_``) coincida con cualquier carácter único,
-   y ``%`` coincida con cualquier secuencia de caracteres. "like" para
+   y ``%`` coincida con cualquier secuencia de caracteres. ``like`` para
    hacer coincidir con el patrón SQL ``%value%`` sensible a mayúsculas,
-   e "ilike" para coincidencias sin sensibilidad de mayúsculas. Los
-   operadores "not like" y "not ilike" hacen la operación inversa.
+   e ``ilike`` para coincidencias sin sensibilidad de mayúsculas. Los
+   operadores ``not like`` y ``not ilike`` hacen la operación inversa.
 
 -  ``child_of`` encuentra los hijos directos e indirectos, si las
    relaciones padre/hijo están configuradas en el modelo de destino.
 
--  "in" y "not" verifican la inclusión en una lista. En este caso, el
+-  "``in``" y "``not``" verifican la inclusión en una lista. En este caso, el
    valor de la derecha debe ser una lista Python. Estos son los únicos
    operadores que pueden ser usados con valores de una lista. Un caso
    especial es cuando el lado izquierdo es un campo "a-muchos": aquí el
@@ -261,8 +267,8 @@ Para los dominios de campo y las acciones de ventana, la evaluación es
 realizada desde el lado del cliente. El contexto de evaluación incluye
 aquí los campos disponibles para la vista actual, y la notación de
 puntos no esta disponible. Puede ser usados los valores del contexto de
-sesión, como "uid" y "active\_id". Estan disponibles los módulo de
-Python "datetime" y "time" para ser usado en las operaciones de fecha y
+sesión, como "``uid``" y "``active_id``". Están disponibles los módulo de
+Python "``datetime``" y "``time``" para ser usado en las operaciones de fecha y
 hora, y también esta disponible la función ``context_today()`` que
 devuelve la fecha actual del cliente.
 
@@ -271,18 +277,21 @@ código Pyhton del servidor son evaluados del lado el servidor. El
 contexto de evaluación tiene los campos los registros actuales
 disponibles, y se permite la notación de puntos. También están
 disponibles los registros de la sesión de usuario actual. Al usar
-``user.id`` es equivalente a usar "uid" en el contexto de evaluación del
+``user.id`` es equivalente a usar "``uid``" en el contexto de evaluación del
 lado del cliente.
 
 Las condiciones de dominio pueden ser combinadas usando los operadores
-lógicos: ``&`` para "AND" (el predeterminado), ``|`` para "OR" y ``!``
-para la negación.
+lógicos:
+
+- ``&`` para "**AND**" (el predeterminado).
+
+- ``|`` para "**OR**" y ``!`` para la negación.
 
 La negación es usada antes de la condición que será negada. Por ejemplo,
 para encontrar todas las tareas que no pertenezca al usuario actual:
 ``['!', ('user_id','=', uid)]``.
 
-El "AND" y "OR" operan en las dos condiciones siguientes. Por ejemplo:
+El "**AND**" y "**OR**" operan en las dos condiciones siguientes. Por ejemplo:
 para filtrar las tareas del usuario actual o sin un responsable
 asignado:
 
@@ -300,7 +309,7 @@ servidor:
 El dominio filtra todos los registro donde los seguidores (un campo de
 muchos a muchos) contienen al usuario actual además del resultado de la
 siguiente condición. La siguiente condición es, nuevamente, la unión de
-otras dos condiciones: los registros donde el "user\_id" es el usuario
+otras dos condiciones: los registros donde el ``user_id`` es el usuario
 de la sesión actual o no esta fijado.
 
 Vistas de Formulario
@@ -362,14 +371,16 @@ estructura genérica es esta:
 
 Las vistas de negocio se componen de tres área visuales:
 
--  Un encabezado, "header"
--  Un "sheet" para el contenido
+-  Un encabezado, "``header``".
+
+-  Un "``sheet``" para el contenido.
+
 -  Una sección al final de historia y comunicación, "history and
    communication".
 
 La sección historia y comunicación, con los widgets de red social en la
 parte inferior, es agregada por la herencia de nuestro modelo de
-``mail.thread`` (del módulo mail), y agrega los elementos del ejemplo
+``mail.thread`` (del módulo ``mail``), y agrega los elementos del ejemplo
 XML mencionado anteriormente al final de la vista de formulario. También
 vimos esto en el Capítulo 3.
 
@@ -396,10 +407,10 @@ Los botones de acción disponible puede diferir dependiendo en que parte
 del proceso se encuentre el documento actual. Por ejemplo, un botón
 Marcar como Hecho no tiene sentido si ya estamos en el estado "Hecho".
 
-Esto se realiza usando el atributo "states", que lista los estados donde
+Esto se realiza usando el atributo ``states``, que lista los estados donde
 el botón debería estas visible, como esto: ``states="draft,open"``.
 
-Para mayor flexibilidad podemos usar el atributo "attrs", el cual forma
+Para mayor flexibilidad podemos usar el atributo ``attrs``, el cual forma
 condiciones donde el botón debería ser invisible:
 ``attrs="{'invisible' [('stage_state','in', ['done','cancel'])]``.
 
@@ -420,20 +431,20 @@ El "Stage" es un campo muchos a uno que se usa en un modelo donde los
 pasos del proceso están definidos. Debido a esto pueden ser fácilmente
 configurados por el usuario u la usuaria final para adecuarlo a sus
 procesos específicos de negocio, y son perfectos para el uso de pizarras
-kanban.
+``kanban``.
 
 El "State" es una lista de selección que muestra los pasos estables y
 principales de un proceso, como Nuevo, En Progreso, o Hecho. No pueden
 ser configurados por el usuario o usuaria final, pero son fáciles de
 usar en la lógica de negocio. Los "States" también tienen soporte
-especial para las vistas: el atributo "state" permite que un elemento
+especial para las vistas: el atributo ``state`` permite que un elemento
 este habilitado para ser seleccionado por el usuario o usuaria
 dependiendo en el estado en que se encuentre el registro.
 
 .. tip::
 
     Es posible obtener un beneficio de ambos mundos, a través del
-    uso de "stages" que son mapeados dentro de los "states". Esto fue lo que
+    uso de ``stages`` que son mapeados dentro de los "states". Esto fue lo que
     hicimos en el capítulo anterior, haciendo disponible a "State" en los
     documentos de tareas por hacer a través de un campo calculado.
 
@@ -444,31 +455,34 @@ Para agregar un flujo de "stage" en nuestro encabezado de formulario:
     <!--    Add stage   statusbar:  ... --> 
     <field name="stage_id" widget="statusbar" clickable="True" options="{'fold_field': 'fold'}" /> 
 
-El atributo "clickable" permite hacer clic en el widget, para cambiar la
+El atributo ``clickable`` permite hacer clic en el widget, para cambiar la
 etapa o el estado del documento. Es posible que no queramos esto si el
 progreso del proceso debe realizarse a través de botones de acción.
 
-En el atributo "options" podemos usar algunas configuraciones
+En el atributo ``options`` podemos usar algunas configuraciones
 específicas:
 
--  ``fold_fields``, cuando de usa "stages", es el nombre del campo que
-   usa el "stage" del modelo usa para indicar en cuales etapas debe ser
-   mostrado "fold".
--  ``statusbar_visible``, cuando se usa "states", lista los estados que
+-  ``fold_fields``, cuando de usa el atributo ``stages``, es el nombre del campo que
+   usa el atributo "``stage``" del modelo usa para indicar en cuales etapas debe ser
+   mostrado en **negritas** o "**fold**".
+
+-  ``statusbar_visible``, cuando se usa el atributo ``states``, lista los estados que
    deben estar siempre visibles, para mantener ocultos los estados de
    excepción que se usan para casos menos comunes. Por ejemplo:
    ``statusbar_visible="draft,open.done"``.
 
-La hoja canvas es el área del formulario que contiene los elementos
+La hoja ``canvas`` es el área del formulario que contiene los elementos
 principales del formulario. Esta diseñada para parecer un documento de
 papel, y sus registros de datos, a veces, puede ser referidos como
 documentos.
 
 La estructura general del documento tiene estos componentes:
 
--  Información de título y subtítulo
+-  Información de título y subtítulo.
+
 -  Un área de botón inteligente, es la parte superior derecha de los
    campos del encabezado del documento.
+
 -  Un cuaderno con páginas en etiquetas, con líneas de documento y otros
    detalles.
 
@@ -482,7 +496,7 @@ las etiquetas y cuando.
 
 También se puede usar las etiquetas HTML para hacer que el título
 resplandezca. Para mejores resultados, el título del documento debe
-estar dentro de un "div" con la clase ``oe_title``:
+estar dentro de un elemento HTML ``div`` con la clase ``oe_title``:
 
 .. code-block:: XML
 
@@ -496,8 +510,8 @@ estar dentro de un "div" con la clase ``oe_title``:
         </h3>
     </div> 
 
-Aquí podemos ver el uso de elementos comúnes de HTML como div, span, h1
-y h3.
+Aquí podemos ver el uso de elementos comunes de HTML como ``div``, ``span``,
+``h1`` y ``h3``.
 
 Etiquetas y campos
 ------------------
@@ -505,15 +519,18 @@ Etiquetas y campos
 Las etiquetas de los campos no son mostradas fuera de las secciones
 ``<group>``, pero podemos mostrarlas usando el elemento ``<label>``:
 
--  El atributo "for" identifica el campo desde el cual tomaremos el
+-  El atributo ``for`` identifica el campo desde el cual tomaremos el
    texto de la etiqueta.
--  El atributo "string" sobre escribe el texto original de la etiqueta
+
+-  El atributo ``string`` sobre escribe el texto original de la etiqueta
    del campo.
--  Con el atributo "class" también podemos usar las clases CSS para
+
+-  Con el atributo ``class`` también podemos usar las clases CSS para
    controlar la presentación. Algunas clases útiles son:
 
 -  ``oe_edit_only`` para mostrar lo solo cuando el formulario este modo
    de edición.
+
 -  ``oe_read_only`` para mostrar lo solo cuando el formulario este en
    modo de lectura.
 
@@ -536,7 +553,7 @@ botón para mostrar el número total de tareas realizadas por el dueño de
 la tarea por hacer actual.
 
 Primero necesitamos agregar el campo calculado correspondiente a
-``todo_ui/todo_model.py``. Agregue lo siguiente a la clase TodoTask:
+``todo_ui/todo_model.py``. Agregue lo siguiente a la clase ``TodoTask``:
 
 .. code-block:: python
 
@@ -545,7 +562,7 @@ Primero necesitamos agregar el campo calculado correspondiente a
         user_todo_count      = fields.Integer('User To-Do   Count', compute='compute_user_todo_count') 
 
 Ahora agregaremos la caja del botón con un botón dentro de ella. Agregue
-lo siguiente justo después del bloque div ``oe_title``:
+lo siguiente justo después del bloque ``div`` ``oe_title``:
 
 .. code-block:: XML
 
@@ -555,7 +572,7 @@ lo siguiente justo después del bloque div ``oe_title``:
         </button>
     </div> 
 
-El contenedor para los botones es un div con las clases
+El contenedor para los botones es un elemento HTML ``div`` con las clases
 ``oe_button_box`` y ``oe_right``, para que este alineado con la parte
 derecha del formulario.
 
@@ -568,27 +585,32 @@ Los atributos usados para el botón son:
 
 -  ``class="oe_stat_button"``, es para usar un estilo rectángulo en vez
    de un botón.
--  icon, es el ícono que será usado, escogido desde el conjunto de
-   íconos de Font Awesome.
--  type, será usualmente una acción para la acción de ventana, y name
+
+-  ``icon``, es el ícono que será usado, escogido desde el conjunto de
+   íconos de *Font Awesome*.
+
+-  ``type``, será usualmente una acción para la acción de ventana, y ``name``
    será el ID de la acción que será ejecutada. Puede usarse la formula
    ``%(id-acción-externa)d``, para transformar el ID externo en un
    número de ID real. Se espera que esta acción abra una vista con los
    registros relacionados.
--  string, puede ser usado para agregar texto al botón. No se usa aquí
+
+-  ``string``, puede ser usado para agregar texto al botón. No se usa aquí
    porque el campo que lo contiene ya proporciona un texto.
--  context, fija las condiciones estándar en la vista destino, cuando se
+
+-  ``context``, fija las condiciones estándar en la vista destino, cuando se
    haga clic a través del botón, para los filtros de datos y los valores
    predeterminados para los registros creados.
--  help, es la herramienta de ayuda que será mostrada.
+
+-  ``help``, es la herramienta de ayuda que será mostrada.
 
 Por si solo el botón es un contenedor y puede tener sus campos dentro
 para mostrar estadísticas. Estos son campos regulares que usan el widget
-"statinfo".
+``statinfo``.
 
 El campo debe ser un campo calculado, definido en el módulo subyacente.
 También podemos usar texto estático en vez de o junto a los campos de
-"statinfo", como : ``<div>User's To-dos</div>``
+``statinfo``, como : ``<div>User's To-dos</div>``
 
 Organizar el contenido en formulario
 ====================================
@@ -614,9 +636,9 @@ tendremos dos columnas de campos con etiquetas, una al lado de la otra.
         </group>
     </group> 
 
-Los grupos pueden tener un atributo "string", usado para el título de la
+Los grupos pueden tener un atributo ``string``, usado para el título de la
 sección. Dentro de una sección de grupo, los títulos también pueden
-agregarse usando un elemento "separator".
+agregarse usando un elemento ``separator``.
 
 .. tip::
 
@@ -663,26 +685,33 @@ Botones
 
 Los botones soportar los siguientes atributos:
 
--  icon. A diferencia de los botones inteligentes, los íconos
+-  ``icon``. A diferencia de los botones inteligentes, los íconos
    disponibles para los botones regulares son aquellos que se encuentran
    en ``addons/web/static/src/img/icons``.
--  string, es el texto de descripción del botón.
--  type, puede ser "workflow", "object" o "action", para activar una
+
+-  ``string``, es el texto de descripción del botón.
+
+-  ``type``, puede ser "``workflow``", ``object`` o ``action``, para activar una
    señal de flujo de trabajo, llamar a un método Python o ejecutar una
    acción de ventana.
--  name, es el desencadenante de un flujo de trabajo, un método del
+
+-  ``name``, es el desencadenante de un flujo de trabajo, un método del
    modelo, o la ejecución de una acción de ventana, dependiendo del
-   "type" del botón.
--  args, se usa para pasar parámetros adicionales al método, si el
-   "type" es "object".
--  context, fija los valores en el contexto de la sesión, el cual puede
-   tenet efecto luego de la ejecución de la acción de ventana, o al
+   ``type`` del botón.
+
+-  ``args``, se usa para pasar parámetros adicionales al método, si el
+   ``type`` es ``object``.
+
+-  ``context``, fija los valores en el contexto de la sesión, el cual puede
+   tener efecto luego de la ejecución de la acción de ventana, o al
    llamar a un método de Python. En el último caso, a veces puede ser
-   usado como un alternativa a "args".
--  confirm, agrega un mensaje con el mensaje de texto preguntando por
+   usado como un alternativa a ``args``.
+
+-  ``confirm``, agrega un mensaje con el mensaje de texto preguntando por
    una confirmación.
+
 -  ``special="cancel"``, se usa en los asistentes, para cancelar o
-   cerrar el formulario. No debe ser usado con "type".
+   cerrar el formulario. No debe ser usado con ``type``.
 
 Campos
 ------
@@ -691,40 +720,53 @@ Los campos tiene los siguientes atributos disponibles. La mayoría es
 tomado de los que fue definido en el modelo, pero pueden ser sobre
 escritos en la vista. Los atributos generales son:
 
--  name: identifica el nombre técnico del campo.
--  string: proporciona la descripción de texto de la etiqueta para sobre
+-  ``name``: identifica el nombre técnico del campo.
+
+-  ``string``: proporciona la descripción de texto de la etiqueta para sobre
    escribir aquella provista por el modelo.
--  help: texto de ayuda a ser usado y que reemplaza el proporcionado por
+
+-  ``help``: texto de ayuda a ser usado y que reemplaza el proporcionado por
    el modelo.
--  placeholder: proporciona un texto de sugerencia que será mostrado
+
+-  ``placeholder``: proporciona un texto de sugerencia que será mostrado
    dentro del campo.
--  widget: sobre escribe el widget predeterminado usado por el tipo de
+
+-  ``widget``: sobre escribe el widget predeterminado usado por el tipo de
    campo. Exploraremos los widgets disponibles mas adelante en este
    mismo capítulo.
--  options: contiene opciones adicionales para ser usadas por el widget.
--  class: proporciona las clases CSS usadas por el HTML del campo.
+
+-  ``options``: contiene opciones adicionales para ser usadas por el widget.
+
+-  ``class``: proporciona las clases CSS usadas por el HTML del campo.
+
 -  ``invisible="1"``: invisibiliza el campo.
+
 -  ``nolabel="1"``: no muestra la etiqueta del campo, solo es
    significativo para los campos que se encuentran dentro de un elemento
    ``<group>``.
+
 -  ``readonly="1"``: no permite que el campo sea editado.
+
 -  ``required="1"``: hace que el campo sea obligatorio.
 
 Atributos específicos para los tipos de campos:
 
--  sum, avg: para los campos numéricos, y en las vistas de lista/árbol,
+-  ``sum``, ``avg``: para los campos numéricos, y en las vistas de lista/árbol,
    estos agregan un resumen al final con el total o el promedio de los
    valores.
+
 -  ``password="True"``: para los campos de texto, muestran el campo como
    una campo de contraseña.
--  filename: para campos binarios, es el campo para el nombre del
-   archivo.
--  ``mode="tree"``: para campos One2many, es el tipo de vista usado para
-   mostrar los registros. De forma predeterminada es de árbol, pero
-   también puede ser de formulario, kanban o gráfico.
 
-Para los atributos Boolean en general, podemos usar True o 1 para
-habilitarlo y False o 0 (cero) para deshabilitarlo. Por ejemplo,
+-  ``filename``: para campos binarios, es el campo para el nombre del
+   archivo.
+
+-  ``mode="tree"``: para campos ``One2many``, es el tipo de vista usado para
+   mostrar los registros. De forma predeterminada es de árbol, pero
+   también puede ser de formulario ``form``, ``kanban`` o gráfico.
+
+Para los atributos *Booleanos* en general, podemos usar ``True`` o ``1`` para
+habilitarlo y ``False`` o ``0`` *(cero)* para deshabilitarlo. Por ejemplo,
 ``readonly="1"`` y ``realonly="True"`` son equivalentes.
 
 Campos relacionales
@@ -735,11 +777,11 @@ referentes a los que el usuario o la usuaria puede hacer. De forma
 predeterminada el usuario y la usuaria pueden crear nuevos registros
 desde estos campos (también conocido como creación rápida) y abrir el
 formulario relacionado al registro. Esto puede ser deshabilitado usando
-el atributo del campo "options":
+el atributo del campo ``options``:
 
 .. code-block:: python
 
-    options={'no_open': True, 'no_create': True} 
+    options={'no_open': True, 'no_create': True}
 
 El contexto y el dominio también son particulares en los campos
 relacionales. El contexto puede definir valores predeterminados para los
@@ -757,23 +799,28 @@ y pueden ser usados:
 
 Widgets para los campos de texto:
 
--  email: convierte al texto del correo electrónico en un elemento
+-  ``email``: convierte al texto del correo electrónico en un elemento
    "mail-to" ejecutable.
--  url: convierte al texto en un URL al que se puede hacer clic.
--  html: espera un contenido en HTML y lo representa; en modo de edición
+
+-  ``url``: convierte al texto en un URL al que se puede hacer clic.
+
+-  ``html``: espera un contenido en HTML y lo representa; en modo de edición
    usa un editor WYSIWYG para dar formato al contenido sin saber HTML.
 
 Widgets para campos numéricos:
 
--  handle: específicamente diseñado para campos de secuencia, este
+-  ``handle``: específicamente diseñado para campos de secuencia, este
    muestra una guía para dibujar líneas en una vista de lista y re
    ordenarlos manualmente.
--  float\_time: da formato a un valor decimal como tiempo en horas y
+
+-  ``float_time``: da formato a un valor decimal como tiempo en horas y
    minutos.
--  monetary: muestra un campo decimal como un monto en monedas. La
+
+-  ``monetary``: muestra un campo decimal como un monto en monedas. La
    moneda a usar puede ser tomada desde un campo como
    ``options="{'currency_field': 'currency_id'}"``.
--  progressbar: presenta un decimal como una barra de progreso en
+
+-  ``progressbar``: presenta un decimal como una barra de progreso en
    porcentaje, usualmente se usa en un campo calculado que computa una
    tasa de culminación.
 
@@ -781,13 +828,17 @@ Algunos widget para los campos relacionales y de selección:
 
 -  ``many2many_tags``: muestran un campo muchos a muchos como una lista
    de etiquetas.
--  selection: usa el widget del campo Selección para un campo mucho a
+
+-  ``selection``: usa el widget del campo Selección para un campo mucho a
    uno.
--  radio: permite seleccionar un valor para una opción del campo de
+
+-  ``radio``: permite seleccionar un valor para una opción del campo de
    selección usando botones de selección (radio buttons).
+
 -  ``kanban_state_selection``: muestra una luz de semáforo para la lista
-   de selección de esta kanban.
--  priority: representa una selección como una lista de estrellas a las
+   de selección de esta vista ``kanban``.
+
+-  ``priority``: representa una selección como una lista de estrellas a las
    que se puede hacer clic.
 
 Eventos on-change
@@ -804,7 +855,7 @@ campo(s) que desencadenara la acción, usando el decorador
 ``@api.onchenge('field1','field2')``.
 
 En las versiones anteriores, ente enlace era hecho en la capa de vista,
-usando el atributo "onchange" para fijar el método de la clase que sería
+usando el atributo ``onchange`` para fijar el método de la clase que sería
 llamado cuando el campo cambiara. Esto todavía es soportado, pero es
 obsoleto. Tenga en cuenta que los métodos ``on-change`` con el estilo
 viejo no pueden ser ampliados usando la API nueva. Si necesita hacer
@@ -820,32 +871,33 @@ etapa del proceso en la cual esta el documento.
 Estos dos atributos nos permiten controlar la visibilidad de los
 elemento en la interfaz:
 
--  groups: hacen al elemento visible solo para los miembros de los
+-  ``groups``: hacen al elemento visible solo para los miembros de los
    grupos de seguridad específicos. Se espera una lista separada por
    coma de los ID XML del grupo.
--  states: hace al elemento visible solo cuando el documento esta en el
+
+-  ``states``: hace al elemento visible solo cuando el documento esta en el
    estado especificado. Espera una lista separada por coma de los
    códigos de "State", y el modelo del documento debe tener un campo
    "state".
 
 Para mayor flexibilidad, podemos fijar la visibilidad de un elemento
 usando expresiones evaluadas del lado del cliente. Esto puede hacerse
-usando el atributoo "attrs" con un diccionario que mapea el atributo
-"invisible" al resultado de una expresión de dominio.
+usando el atributo ``attrs`` con un diccionario que mapea el atributo
+``invisible`` al resultado de una expresión de dominio.
 
 Por ejemplo, para hacer que el campo ``refers_to`` sea visible en todos
-los estados menos "draft":
+los estados menos ``draft``:
 
 .. code-block:: XML
 
     <field name="refers_to" attrs="{'invisible': [('state','=','draft')]}"  /> 
 
-El atributo "invisible" esta disponible para cualquier elemento, no solo
+El atributo ``invisible`` esta disponible para cualquier elemento, no solo
 para los campos. Podemos usarlo en las páginas de un cuaderno o en
 grupos, por ejemplo.
 
-El "attrs" también puede fijar valores para otros dos atributos:
-readonly y required, pero esto solo tiene sentido para los campos de
+El atributo ``attrs`` también puede fijar valores para otros dos atributos:
+``readonly`` y ``required``, pero esto solo tiene sentido para los campos de
 datos, convirtiéndolos en campos que no pueden ser editados u
 obligatorios. Con esto podemos agregar alguna lógica de negocio haciendo
 a un campo obligatorio, dependiendo del valor de otro campo, o desde un
@@ -874,23 +926,23 @@ Hacer:
         </field>
     </record> 
 
-Los atributos para el elemento "tree" de nivel superior son:
+Los atributos para el elemento ``tree`` de nivel superior son:
 
--  editable: permite que los registros sean editados directamente en la
-   vista de lista. Los valores posibles son "top" y "bottom", los
+-  ``editable``: permite que los registros sean editados directamente en la
+   vista de lista. Los valores posibles son ``top`` y ``bottom``, los
    lugares en donde serán agregados los registros nuevos.
 
--  colors: fija dinámicamente el color del texto para los registros,
+-  ``colors``: fija dinámicamente el color del texto para los registros,
    basándose en su contenido. Es una lista separada por punto y coma de
    valores ``color:condition``. "color" es un color válido CSS (vea
-   http://www.w3.org/TR/css3-color/#html4 ), y "condition" es una
+   http://www.w3.org/TR/css3-color/#html4), y ``condition`` es una
    expresión Python que evalúa el contexto del registro actual.
 
--  fonts: modifica dinámicamente el tipo de letra para los registro
-   basándose en su contexto. Es similar al atributo "colors", pero este
-   fija el estilo de la letra a "bold", "italic" o "underline".
+-  ``fonts``: modifica dinámicamente el tipo de letra para los registro
+   basándose en su contexto. Es similar al atributo ``colors``, pero este
+   fija el estilo de la letra a ``bold``, ``italic`` o ``underline``.
 
--  create, delete, edit: si se fija a "false" (en minúscula),
+-  ``create``, ``delete``, ``edit``: si se fija a ``false`` (en minúscula),
    deshabilita la acción correspondiente en la vista de lista.
 
 Vistas de búsqueda
@@ -900,7 +952,7 @@ Las opciones de búsqueda disponibles en las vistas son definidas a
 través de una vista de lista. Esta define los campos que serán buscados
 cuando se escriba en la caja de búsqueda. También provee filtros
 predefinidos que pueden ser activados con un clic, y opciones de
-agrupación de datos para los registros en las vistas de lista o kanban.
+agrupación de datos para los registros en las vistas de lista o ``kanban``.
 
 Aquí se muestra una vista de búsqueda para las tareas por hacer:
 
@@ -921,47 +973,55 @@ Aquí se muestra una vista de búsqueda para las tareas por hacer:
         </field>
     </record>
 
-Podemos ver dos campos que serán buscados: "name" y "user\_id". En
-"name" tenemos una regla de filtro que hace la "búsqueda si" tanto en la
+Podemos ver dos campos que serán buscados: ``user_id`` y ``user_id``. En
+``user_id`` tenemos una regla de filtro que hace la "búsqueda si" tanto en la
 descripción como en el usuario responsable. Luego tenemos dos filtros
 predefinidos, filtrando las "tareas no culminadas" y "tareas
 culminadas". Estos filtros pueden ser activados de forma independiente,
-y serán unidos por un operador "OR" si ambos son habilitados. Los
-bloques de "filters" separados por un elemento ``<separator/>`` serán
-unidos por un operador "AND".
+y serán unidos por un operador **"OR"** si ambos son habilitados. Los
+bloques de ``filters`` separados por un elemento ``<separator/>`` serán
+unidos por un operador **"AND"**.
 
 El tercer filtro solo fija un contexto o "group-by". Esto le dice a la
 vista que agrupe los registros por ese campo, ``user_id`` en este caso.
 
-Los elementos "filed" pueden usar los siguientes atributos:
+Los elementos ``filed`` pueden usar los siguientes atributos:
 
--  name: identifica el campo.
--  string: proporciona el texto de la etiqueta que será usado, en vez
+-  ``name``: identifica el campo.
+
+-  ``string``: proporciona el texto de la etiqueta que será usado, en vez
    del predeterminado.
--  operator: nos permite usar un operador diferente en vez del
-   predeterminado - ``=`` para campos numéricos y "ilike" para otros
+
+-  ``operator``: nos permite usar un operador diferente en vez del
+   predeterminado - ``=`` para campos numéricos y ``ilike`` para otros
    tipos de campos.
--  filter\_domain: puede usarse para definir una expresión de dominio
+
+-  ``filter_domain``: puede usarse para definir una expresión de dominio
    específica para usar en la búsqueda, proporcionando mayor
-   flexibilidad que el atributo "operator". El texto que será buscado se
-   referencia en la expresión usando "self".
--  groups: permite hacer que la búsqueda en el campo solo este
+   flexibilidad que el atributo ``operator``. El texto que será buscado se
+   referencia en la expresión usando ``self``.
+
+-  ``groups``: permite hacer que la búsqueda en el campo solo este
    disponible para una lista de grupos de seguridad (identificado por
    los Ids XML)
 
-Estos son los atributos disponibles para los elementos "filter":
+Estos son los atributos disponibles para los elementos ``filter``:
 
--  name: en un identificador, usado para la herencia o para habilitar la
+-  ``name``: en un identificador, usado para la herencia o para habilitar la
    a través de la clave ``search_default_`` en el contexto de acciones
    de ventana.
--  string: proporciona el texto de la etiqueta que se mostrara para el
+
+-  ``string``: proporciona el texto de la etiqueta que se mostrara para el
    filtro (obligatorio)
--  domain: proporciona la expresión de dominio del filtro para ser
+
+-  ``domain``: proporciona la expresión de dominio del filtro para ser
    añadida al dominio activo.
--  context: es un diccionario de contexto para agregarlo al contexto
+
+-  ``context``: es un diccionario de contexto para agregarlo al contexto
    actual. Usualmente este fija una clave ``group_by`` con el nombre del
    filtro que agrupara los registros.
--  groups: permite hacer que el filtro de búsqueda solo este disponible
+
+-  ``groups``: permite hacer que el filtro de búsqueda solo este disponible
    para una lista de grupos.
 
 Otros tipos de vista
@@ -970,7 +1030,7 @@ Otros tipos de vista
 Los tipos de vista que se usan con mayor frecuencia son los formularios
 y las listas, discutidos hasta ahora. A parte de estas, existen otros
 tipos de vista, y daremos un vistazo a cada una de ellas. Las vistas
-kanban no serán discutidas aquí, ya que las veremos en el Capítulo 8.
+``kanban`` no serán discutidas aquí, ya que las veremos en el Capítulo 8.
 
 Recuerde que los tipos de vista disponibles están definidos en el
 atributo ``view_mode`` de la acción de ventana correspondiente.
@@ -994,20 +1054,24 @@ siguiente manera:
                 <field name="stage_id"  />
             </calendar>
         </field>
-    </record> 
+    </record>
 
-Los atributos de "calendar" son los siguientes:
+Los atributos de ``calendar`` son los siguientes:
 
 -  ``date_start``: El campo para la fecha de inicio (obligatorio).
+
 -  ``date_end``: El campo para la fecha de culminación (opcional).
+
 -  ``date_delay``: El campo para la duración en días. Este puede ser
    usado en vez de ``date_end``.
--  color: El campo para colorear las entradas del calendario. Se le
+
+-  ``color``: El campo para colorear las entradas del calendario. Se le
    asignará un color a cada valor en el calendario, y todas sus entradas
    tendrán el mismo color.
--  display: Este es el texto que se mostrará en las entradas del
+
+-  ``display``: Este es el texto que se mostrará en las entradas del
    calendario. Los campos pueden ser insertados usando ``[<field>]``.
-   Estos campos deben ser declarados dentro del elemento "calendar".
+   Estos campos deben ser declarados dentro del elemento ``calendar``.
 
 Vistas de Gantt
 ---------------
@@ -1031,12 +1095,16 @@ Los atributos que puede ser usados para las vistas Gantt son los
 siguientes.
 
 -  ``date_start``: El campo para la fecha de inicio (obligatorio).
+
 -  ``date_stop``: El campo para la fecha de culminación. Puede ser
    reemplazado por ``date_delay``.
+
 -  ``date_delay``: El campo con la duración en días. Puede usarse en vez
    de ``date_stop``.
--  progress: Este campo proporciona el progreso en porcentaje (entre 0 y
+
+-  ``progress``: Este campo proporciona el progreso en porcentaje (entre 0 y
    100).
+
 -  ``default_group_by``: Este campo se usa para agrupar las tareas
    Gantt.
 
@@ -1047,7 +1115,7 @@ Los tipos de vista de gráfico proporcionan un análisis de los datos, en
 forma de gráfico o una tabla pivote interactiva.
 
 Agregaremos una tabla pivote a las tareas por hacer. Primero,
-necesitamos agregar un campo. En la clase TodoTask, del archivo
+necesitamos agregar un campo. En la clase ``TodoTask``, del archivo
 ``todo_ui/todo_model.py``, agregue este línea:
 
 .. code-block:: python
@@ -1073,20 +1141,22 @@ tabla pivote:
         </field>
     </record> 
 
-El elemento "graph" tiene el atributo "type" fijado a "pivot". También
+El elemento ``graph`` tiene el atributo ``type`` fijado a ``pivot``. También
 puede ser "bar" (predeterminado), "pie" o "line". En el caso que sea
 "bar", gráfico de barras, adicionalmente se puede usar
 ``stacked="True"`` para hacer un gráfico de barras apilado.
 
-"graph" debería contener campos que pueden tener estos posibles
+``graph`` debería contener campos que pueden tener estos posibles
 atributos:
 
--  name: Identifica el campo que será usado en el gráfico, así como en
+-  ``name``: Identifica el campo que será usado en el gráfico, así como en
    otras vistas.
--  type: Describe como será usado el campo, como un grupo de filas
+
+-  ``type``: Describe como será usado el campo, como un grupo de filas
    (predeterminado), "row", como un grupo de columnas, "col", o como una
    medida, "mesure".
--  interval: Solo es significativo para los campos de fecha, es un
+
+-  ``interval``: Solo es significativo para los campos de fecha, es un
    intervalo de tiempo para agrupar datos de fecha por "day", "week",
    "month", "quarter" o "year".
 

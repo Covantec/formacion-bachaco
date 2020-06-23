@@ -627,7 +627,8 @@ button is possible. There is also available a widget to set the card
     <li>
       <ul class="oe_kanban_colorpicker"
           data-field="color"/>
-          </li/>    </ul> </div>
+      </ul>
+    </li></div>
 
 It is basically an HTML list of elements. The Edit and Delete options
 use QWeb to make them visible only when their actions are enabled on the
@@ -666,7 +667,7 @@ And, we need to replace the kanban card top element,
 
    <div class="oe_kanban_card">
 
-, with the following:
+with the following:
 
 .. code-block:: XML
 
