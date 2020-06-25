@@ -45,15 +45,22 @@ nuevas. Esto es lo que esperara lograr al final de este capítulo:
 Camino a seguir para las características colaborativas
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Aquí esta nuestro plan de trabajo para implementar la extensión de
-funcionalidades: - Agregar campos al modelo **Task**, como el usuario
-quien posee la tarea. - Modificar la lógica de negocio para operar solo
-en la tarea actual del usuario, en vez de todas las tareas disponibles
-para ser vistas por el usuario. - Agregar los campos necesarios a las
-vistas. - Agregar características de redes sociales: el muro de mensajes
-y los seguidores.
+Aquí esta su plan de trabajo para implementar la extensión de
+funcionalidades:
 
-Comenzaremos creando la estructura básica para el módulo junto al módulo
+- Agregar campos al modelo **Task**, como el usuario quien posee
+  la tarea.
+
+- Modificar la lógica de negocio para operar solo en la tarea
+  actual del usuario, en vez de todas las tareas disponibles para
+  ser vistas por el usuario.
+
+- Agregar los campos necesarios a las vistas.
+
+- Agregar características de redes sociales: el muro de mensajes y
+  los seguidores.
+
+Comience creando la estructura básica para el módulo junto al módulo
 ``todo_app``. Siguiendo el ejemplo de instalación del Capítulo 1,
 sus módulos estarán alojados en ``~/odoo-dev/custom-addons/``:
 
@@ -100,8 +107,8 @@ necesite declarar las modificaciones que querrá introducir.
 De hecho, los modelos de Odoo existen fuera de su módulo
 particular, en un registro central. Podrá referirse a este registro
 como la piscina, y puede ser accedido desde los métodos del modelo
-usando ``self.env[<model name>]``. Por ejemplo, para referirnos al
-modelo ``res.partner`` escribiremos ``self.env['res.partner']``.
+usando ``self.env[<model name>]``. Por ejemplo, para referirse al
+modelo ``res.partner`` escribirá ``self.env['res.partner']``.
 
 Para modificar un modelo de Odoo obtiene una referencia a la clase de
 registro y luego ejecuta los cambios en ella. Esto significa que esas
@@ -155,7 +162,7 @@ Para tener los campos nuevos agregados a la tabla de la base de datos
 soportada por el modelo, necesita ejecutar una actualización al
 módulo. Si todo sale como es esperado, debería poder ver los campos
 nuevos cuando revise el modelo ``todo.task``, en el menú **Técnico**,
-**Estructura de base de datos \| Modelos**.
+**Estructura de base de datos > Modelos**.
 
 Modificar los campos existentes
 -------------------------------
@@ -286,7 +293,7 @@ en el *Capítulo 4*.
 La forma natural de localizar los elementos XML es usando expresiones
 XPath. Por ejemplo, tomando la vista que fue definida en el capítulo
 anterior, la expresión XPath para localizar el elemento
-``<field name="is_done">``\ es ``//field[@name]='is_done'``. Esta
+``<field name="is_done">`` es ``//field[@name]='is_done'``. Esta
 expresión encuentra un elemento ``field`` con un atributo ``name`` igual
 a ``is_done``. Puede encontrar mayor información sobre XPath en:
 https://docs.python.org/2/library/xml.etree.elementtree.html#xpath-support.
@@ -566,8 +573,12 @@ el modelo ``mail.thread`` del modelo ``mail``. Para agregarlo a un
 módulo personalizado necesita:
  
 1. Que el módulo dependa de ``mail``.
+
 2. Que la clase herede de ``mail.thread``. 
-3. Tener agregados a la vista de formulario los widgets ``Followers`` (seguidores) y ``Threads`` (hilos). 
+
+3. Tener agregados a la vista de formulario los widgets ``Followers``
+   (seguidores) y ``Threads`` (hilos).
+
 4. Opcionalmente, configurar las reglas de registro para seguidores.
 
 Siga esta lista de verificación:
@@ -714,7 +725,7 @@ Esto encuentra y elimina la regla de registro ``todo_task_user_rule``
 del módulo ``todo_app``, y crea una nueva regla de registro
 ``todo_task_per_user``. El filtro de dominio que usa ahora hace la
 tarea visible para el usuario responsable ``user_id``, para todo el
-mundo si el usuario responsable no ha sido definido (igual a False), y
+mundo si el usuario responsable no ha sido definido (igual a ``False``), y
 para todos los seguidores. La regla se ejecutará en un contexto donde el
 usuario este disponible y represente la sesión del usuario actual. Los
 seguidores son socios, no objetos User, así que en vez de ``user_id``,

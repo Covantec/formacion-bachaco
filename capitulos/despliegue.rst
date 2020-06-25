@@ -17,9 +17,13 @@ guiara a través de una de estas formas de hacerlo.
 Esta es la lista de verificación para la configuración que seguirá:
 
 -  Instalar Odoo desde la fuente.
+
 -  Crear archivo de configuración de Odoo.
+
 -  Configuración de multiproceso de trabajos
+
 -  Configuración del servicio del sistema Odoo
+
 -  Configuración de un proxy inverso (reverse proxy) con soporte SSL
 
 Comience.
@@ -117,36 +121,36 @@ Este tendrá los parámetros de configuración para ser usados en su
 instancia del servidor. Los siguientes son los parámetros para que el
 servidor trabaje correctamente:
 
--  addons\_path: Es una lista separada por coma de las rutas de
+-  ``addons_path``: Es una lista separada por coma de las rutas de
    directorios donde se buscarán los módulos, usando los directorios de
    izquierda a derecha. Esto significa que los directorios más a la
    izquierda tienen mayor prioridad.
 
--  xmlrpc\_port: Es el número de puerto en el cual escuchara el
+-  ``xmlrpc_port``: Es el número de puerto en el cual escuchara el
    servidor. De forma predeterminada es el puerto 8069.
 
--  log\_level: Este es la cantidad de información en el registro. De
+-  ``log_level``: Este es la cantidad de información en el registro. De
    forma predeterminada es el nivel "info", pero al usar el nivel
-   "debug\_rpc", más descriptivo, agrega información importante para el
+   "debug_rpc", más descriptivo, agrega información importante para el
    monitoreo del desempaño del servidor.
 
 Las configuraciones siguientes también son importantes para una
 instancia de producción:
 
--  admin\_passwd: Es la contraseña maestra para acceder a las funciones
+-  ``admin_passwd``: Es la contraseña maestra para acceder a las funciones
    de gestión de base de datos del cliente web. Es importante fijarlo
    con una contraseña segura o con un valor vacío para desactivar la
    función.
 
--  dbfilter: Es una expresión regular interpretada por Python para
+-  ``dbfilter``: Es una expresión regular interpretada por Python para
    filtrar la lista de base de datos. Para que no sea requerido que el
-   usuario o la usuaria seleccione una base de datos, debe fijarse con
-   ``^dbname$``, por ejemplo, ``dbfilter = ^v8dev$``.
+   usuario seleccione una base de datos, debe fijarse con ``^dbname$``,
+   por ejemplo, ``dbfilter = ^v8dev$``.
 
 -  ``logrotate = True``: Divide el registro en archivos diarios y
    mantendrá solo un historias de registro mensual.
 
--  data\_dir: Es la ruta donde son almacenados los archivos adjuntos.
+-  ``data_dir``: Es la ruta donde son almacenados los archivos adjuntos.
    Recuerde tener respaldo de estos.
 
 -  ``withput_demo = True``: Se fija en los entornos de producción para
@@ -158,7 +162,7 @@ siguientes configuraciones:
 -  ``proxy_mode = True``: Es importante fijarlo cuando se usa un proxy
    inverso.
 
--  xmlrpc-interface: Este fija las direcciones que serán escuchadas. De
+-  ``xmlrpc-interface``: Este fija las direcciones que serán escuchadas. De
    forma predeterminada escucha todo 0.0.0.0, pero cuando se usa un
    proxy inverso, puede configurarse a 127.0.0.1 para responder solo a
    solicitudes locales.
@@ -213,14 +217,14 @@ continuación se muestra un ejemplo:
     PIDFILE=/var/run/${NAME}.pid 
     USER=odoo 
 
-La variable USER es el usuario del sistema bajo el cual se ejecutara el
+La variable ``USER`` es el usuario del sistema bajo el cual se ejecutara el
 servidor, y probablemente quiera cambiarlo. Las otras variables deberían
-ser las correctas y prepararemos el resto de la configuración teniendo
-en mente estos valores predeterminados. DEAMON es la ruta a el
-ejecutable del servidor, CONFIG es el archivo de configuración que será
-usado, y LOGFILE es la ubicación del archivo de registro.
+ser las correctas y preparare el resto de la configuración teniendo
+en mente estos valores predeterminados. ``DAEMON`` es la ruta a el
+ejecutable del servidor, ``CONFIG`` es el archivo de configuración que será
+usado, y ``LOGFILE`` es la ubicación del archivo de registro.
 
-Los ejecutables en DEAMON pueden ser un enlace simbólico a nuestra
+Los ejecutables en ``DAEMON`` pueden ser un enlace simbólico a su
 ubicación actual de Odoo, como se muestra a continuación:
 
 .. code-block:: console
@@ -291,7 +295,9 @@ solicitudes. Usar un proxy inverso tiene múltiples beneficios.
 De cara a la seguridad, puede hacer lo siguiente:
 
 -  Gestionar (y reforzar) los protocolos HTTPS para cifrar el tráfico.
+
 -  Esconder las características internas de la red.
+
 -  Actuar como un "aplicación firewall" limitando el número de URLs
    aceptados para su procesamiento.
 
@@ -336,8 +342,8 @@ Ahora podrá instalar nginx, lo cual es realizado de la forma esperada:
 
     $ sudo apt-get install nginx  
 
-Para conformar que este funcionando correctamente, deberíamos ver una
-página que diga "Welcome to nginx" cuando se ingrese la dirección del
+Para conformar que este funcionando correctamente, debería ver una
+página que diga **"Welcome to nginx"** cuando se ingrese la dirección del
 servidor en la navegador o usando ``curl http://localhost``
 
 Los archivos de configuración de nginx siguen el mismo enfoque que los
@@ -350,7 +356,7 @@ instalación de nginx, como se muestra a continuación:
 
     $ sudo rm /etc/nginx/sites-enabled/default 
     $ sudo touch /etc/nginx/sites-available/odoo 
-    $ sudo ln -s /etc/nginx/sites-available/odoo /etc/nginx/sites-enabled/odoo  
+    $ sudo ln -s /etc/nginx/sites-available/odoo /etc/nginx/sites-enabled/odoo
 
 Usando un editor, como ``nano`` o ``vi``, edite sus archivo de
 configuración nginx como sigue:
@@ -407,7 +413,7 @@ Reforzar el HTTPS
 Ahora, debería instalar un certificado para poder usar *SSL*. Para
 crear un certificado auto-firmado, siga los pasos a continuación:
 
-Crear y acceder al directorio ssl, ejecutando el siguiente comando:
+Crear y acceder al directorio ``ssl``, ejecutando el siguiente comando:
 
 .. code-block:: console
 
@@ -425,7 +431,7 @@ hace a los archivos de solo lectura, ejecutando el siguiente comando:
 
     $ sudo chmod a-wx *
 
-acceso solamente al grupo www-data, ejecutando el siguiente comando:
+acceso solamente al grupo ``www-data``, ejecutando el siguiente comando:
 
 .. code-block:: console
 
@@ -434,9 +440,9 @@ acceso solamente al grupo www-data, ejecutando el siguiente comando:
 
 Esto crea un directorio ``ssl/`` dentro del directorio ``/etc/nginx/`` y
 un certificado auto-firmado sin contraseña. Cuando se ejecute el comando
-openssl, se solicitara más información, y se generaran un certificado y
+``openssl``, se solicitara más información, y se generaran un certificado y
 archivos llave. Finalmente, estos archivos serán propiedad del usuario
-www-data, usado para ejecutar el servidor web.
+``www-data``, usado para ejecutar el servidor web.
 
 .. note::
     Usar un certificado auto-firmado puede plantear algunos riesgos
@@ -444,7 +450,7 @@ www-data, usado para ejecutar el servidor web.
     permitidos por algunos navegadores. Para una solución más robusta, debe
     usar un certificado firmado por una autoridad de certificación
     reconocida. Esto es particularmente importante si se esta ejecutando un
-    sitio web comercial o de e-commerce.
+    sitio web comercial o de *e-commerce*.
 
 Ahora que tiene un certificado SSL, podrá configurar nginx para
 usarlo.
@@ -464,8 +470,8 @@ Si recargue la configuración de nginx y acceda al servidor con el
 navegador web, vera que la dirección ``http://`` se convierte en
 ``https://``.
 
-Pero no devolverá ningún contenido antes que configuremos el servicio
-HTTPS apropiadamente, agregando la siguiente configuración a "server":
+Pero no devolverá ningún contenido antes que configura el servicio
+HTTPS apropiadamente, agregando la siguiente configuración a ``server``:
 
 ::
 
@@ -493,7 +499,7 @@ Esto escuchara al puerto HTTPS y usará los archivos del certificado
 información al encabezado de solicitud para hacer que el servicio de
 Odoo sepa que esta pasando a través de un proxy. Por razones de
 seguridad, es importante para Odoo asegurarse que el parámetro
-``proxy_mode`` este fijado a True. Al final, la directiva ``location``
+``proxy_mode`` este fijado a ``True``. Al final, la directiva ``location``
 define que todas las solicitudes sean pasadas al ``upstream``
 "backend-oddo".
 
@@ -521,8 +527,8 @@ recomendadas para habilitar el búfer de respuesta y compresión de datos
 que debería mejorar la velocidad del sitio web. También fije una
 localización específica para los registros.
 
-Las siguientes configuraciones deberían ser agregadas dentro de "server"
-que escucha en el puerto 443, por ejemplo, justo despues de las
+Las siguientes configuraciones deberían ser agregadas dentro de ``server``
+que escucha en el puerto **443**, por ejemplo, justo después de las
 definiciones del proxy:
 
 ::
@@ -544,7 +550,7 @@ definiciones del proxy:
 También podrá activar el caché de contenido para respuestas más
 rápidas para los tipos de solicitudes mencionados en el código anterior
 y para impedir su carga en el servidor Odoo. Después de la sección
-``location /``, agregue una segunda sección "location":
+``location /``, agregue una segunda sección ``location``:
 
 ::
 
@@ -607,7 +613,7 @@ ser realizado con los siguientes comandos:
     $ dropdb v8test ; createdb v8test
     $ pg_dump v8dev | psqlpsql -d v8test
     $ cd ~/odoo-dev/odoo/ 
-    $ ./odoo.py -d v8test -xmlrpc-port=8080 -c /etc/odoo/openerp-server.conf -u all
+    $ ./odoo.py -d v8test --xmlrpc-port=8080 -c /etc/odoo/openerp-server.conf -u all
 
 Si todo resulta bien, debería ser seguro realizar la actualización en el
 servicio en producción. Recuerde colocar una nota de la versión actual
@@ -623,7 +629,7 @@ como se muestra aquí:
 
     $ cd ~/odoo-prd/odoo/
     $ git pull 
-    $ ./odoo.py -c /etc/odoo/openerp-server.conf -stop-after-init -d v8dev -u all
+    $ ./odoo.py -c /etc/odoo/openerp-server.conf --stop-after-init -d v8dev -u all
     $ sudo /etc/init.d/odoo restart
 
 Resumen

@@ -108,6 +108,7 @@ La vista de formularios de asistente luce exactamente como los
 formularios regulares, excepto por dos elementos específicos:
 
 -  Puede usarse una sección ``<footer>`` para colocar botones de acción.
+
 -  Esta disponible un tipo especial de botón de cancelación para
    interrumpir el asistente sin ejecutar ninguna acción.
 
@@ -253,7 +254,7 @@ es detectado algún cambio. Aquí se muestra un ejemplo de su uso:
 Pero esta es una característica única en sistemas Linux. Si esta usando
 Debian/Ubuntu, como se recomendó en el Capítulo 1, entonces debe
 funcionar. Se requiere el paquete Python pyinotify, y debe ser instalado
-a través de ``apt-get`` o pip, como se muestra a continuación:
+a través de ``apt-get`` o ``pip``, como se muestra a continuación:
 
 Usando paquetes OS, ejecutando el siguiente comando:
 
@@ -321,7 +322,7 @@ usuario trabajando en el mismo asistente:
         self.ensure_one()
         Task = self.env['todo.task']
         all_tasks = Task.search([])
-        self.task_ids   = all_tasks       # reopen wizard form on same wizard record 
+        self.task_ids = all_tasks       # reopen wizard form on same wizard record
         return self.do_reopen_form() 
 
 Aquí podrá ver como obtener una referencia a un modelo diferente, el
@@ -342,7 +343,7 @@ Trabajar en el servidor
 
 Usualmente su código del servidor se ejecuta dentro de un método
 del modelo, como es el caso de ``do_mass_update()`` en el código
-precedente. En este contexto, "self" representa el conjunto de registro
+precedente. En este contexto, ``self`` representa el conjunto de registro
 desde los cuales se actúa.
 
 Las instancias de las clases del modelo son en realidad un conjunto de
@@ -351,10 +352,10 @@ registros. Para las acciones ejecutadas desde las vistas, este será
 formulario, usualmente es un único registro, pero en las vistas de
 árbol, pueden ser varios registros.
 
-El objeto ``self.env`` nos permite acceder a nuestro entorno de
-ejecución; esto incluye la información de la sesión actual, como el
-usuario actual y el contexto de sesión, y también acceso a todos los
-otros modelos disponibles en el servidor.
+El objeto ``self.env`` le permite acceder a su entorno de ejecución;
+esto incluye la información de la sesión actual, como el usuario actual
+y el contexto de sesión, y también acceso a todos los otros modelos
+disponibles en el servidor.
 
 Para explorar mejor la programación del lado del servidor, podrá usar
 la consola interactiva del servidor, donde tiene un entorno similar al
@@ -383,7 +384,7 @@ base de datos a usar, como se muestra a continuación:
     $ ./odoo.py shell -d v8dev  
 
 Puede ver la secuencia de inicio del servidor en la terminal culminando
-con un el símbolo de entrada de Python ``>>>``. Aquí, "self" representa
+con un el símbolo de entrada de Python ``>>>``. Aquí, ``self`` representa
 el registro para el usuario administrador como se muestra a
 continuación:
 
@@ -406,7 +407,7 @@ Como es usual, puede salir de la usando *Ctrl* + *D*. Esto también
 cerrará el proceso en el servidor y le llevara de vuelta a la línea de
 comandos de la terminal.
 
-La clase Model a la cual hace referencia "self" es de hecho un conjunto
+La clase ``Model`` a la cual hace referencia ``self`` es de hecho un conjunto
 de registros. Si se itera a través de un conjunto de registro se
 retornará registros individuales.
 
@@ -428,7 +429,7 @@ como se muestra a continuación:
 En este ejemplo, se realiza un ciclo a través de los registros en el
 conjunto ``self`` e imprime el contenido del campo ``name``. Este contiene
 solo un registro, por lo tanto solo se muestra un nombre. Como puede
-ver, "self" es un "singleton" y se comporta como un registro, pero al
+ver, ``self`` es un "singleton" y se comporta como un registro, pero al
 mismo tiempo es iterable como un conjunto de registros.
 
 Usar campos de relación
@@ -452,8 +453,8 @@ correctas y seguras:
 
 Convenientemente un conjunto de registros vacío también se comporta como
 un singleton, y el acceder a sus campos no retorna un error simplemente
-un False. Debido a esto, podemos recorrer los registros usando la
-notación de punto sin preocuparnos por los errores de valores vacíos,
+un ``False``. Debido a esto, podrá recorrer los registros usando la
+notación de punto sin preocuparse por los errores de valores vacíos,
 como se muestra a continuación:
 
 .. code-block:: python
@@ -575,18 +576,20 @@ Transacciones y SQL de bajo nivel
 ---------------------------------
 
 Las operaciones de escritura en la base de datos son ejecutadas en el
-contexto de una transacción de base de datos. Usualmente no tenemos que
-preocuparnos por esto ya que el servidor se encarga de ello mientras se
+contexto de una transacción de base de datos. Usualmente no tiene que
+preocuparse por esto ya que el servidor se encarga de ello mientras se
 ejecutan los métodos del modelo.
 
-Pero en algunos casos, necesitaremos un mayor control sobre la
+Pero en algunos casos, necesitara un mayor control sobre la
 transacción. Esto puede hacerse a través del cursor ``self.env.cr`` de
 la base de datos, como se muestra a continuación:
 
 -  ``self.env.cr.commit()``: Este escribe las operaciones de escritura
    cargadas de la transacción.
+
 -  ``self.env.savepoint()``: Este fija un punto seguro en la transacción
    para poder revertirla.
+
 -  ``self.env.rollback()``: Este cancela las operaciones de escritura
    de la transacción desde el último punto seguro o todo si no fue
    creado un punto seguro.
@@ -601,7 +604,7 @@ sentencia SQL que se ejecutará y un segundo argumento opcional con una
 tupla o lista de valores para ser usados como parámetros en el SQL.
 Estos valores serán usados donde se encuentre el marcador ``%s``.
 
-Si esta usando una sentencia SELECT, debería retornar los registros. La
+Si esta usando una sentencia ``SELECT``, debería retornar los registros. La
 función ``fetchall()`` devuelve todas las filas como una lista de tuplas
 y ``dictfetchall()`` las devuelve como una lista de diccionarios, como
 se muestra en el siguiente ejemplo:
@@ -612,10 +615,10 @@ se muestra en el siguiente ejemplo:
     >>> self.env.cr.fetchall()
     [(4, u'demo'), (1, u'admin')]  
 
-También es posible ejecutar instrucciones en lenguaje de manipulación de
-datos (DML) como UPDATE e INSERT. Debido a que el servidor mantiene en
+También es posible ejecutar instrucciones en *lenguaje de manipulación de
+datos (DML)* como ``UPDATE`` e ``INSERT``. Debido a que el servidor mantiene en
 memoria (cache) los datos, estos puede hacerse inconsistente con los
-datos reales de la base de datos. Por lo tanto, cuando se use DML, la
+datos reales de la base de datos. Por lo tanto, cuando se use *DML*, la
 memoria (cache) debe ser limpiada después de su uso, a través de
 ``self.env.invalidate_all()``.
 
@@ -660,13 +663,16 @@ se muestran algunas otras funciones que pueden ayudar con esto:
 -  ``fields.Date.today()``: Este devuelve una cadena con la fecha actual
    en el formato esperado por el servidor y usando UTC como referencia.
    Es adecuado para calcular valores predeterminados.
+
 -  ``fields.Datetime.now()``: Este devuelve una cadena con la fecha y
    hora actual en el formato esperado por el servidor y usando UTC como
    referencia. Es adecuado para calcular valores predeterminados.
+
 -  ``fields.Date.context_today(record, timestamp=None)``: Este devuelve
    una cadena con la fecha actual en el contexto de sesión. El valor de
    la zona horaria es tomado del contexto del registro, y el parámetro
    opcional es la fecha y hora en vez de la hora actual.
+
 -  ``fields.Datetime.context_timestamp(record, timestamp)``: Este
    convierte una hora y fecha nativa (sin zona horaria) en una fecha y
    hora consciente de la zona horaria. La zona horaria se extrae del
@@ -677,6 +683,7 @@ Para facilitar la conversión entre formatos, tanto el objeto
 
 -  ``from_string(value)``: convierte una cadena a un objeto fecha o de
    fecha y hora.
+
 -  ``to_string(value)``: convierte un objeto fecha o de fecha y hora en
    una cadena en el formato esperado por el servidor.
 
@@ -687,7 +694,8 @@ Mientras se usa el patrón de registro activo, se pueden asignar
 conjuntos de registros a los campos relacionales.
 
 -  Para un campo muchos a uno, el valor asignado puede ser un único
-   registro (un conjunto de registros singleton).
+   registro (un conjunto de registros ``singleton``).
+
 -  Para campos a-muchos, sus valores pueden ser asignados con un
    conjunto de registros, reemplazando la lista de registros enlazados,
    si existen, con una nueva. Aquí se permite un conjunto de registros
@@ -714,17 +722,21 @@ algunas de operaciones soportadas:
 
 -  ``rs1 | rs2``: Como resultado se tendrá un conjunto con todos los
    elementos de ambos conjuntos de registros.
+
 -  ``rs1 + rs2``: Esto también concatena ambos conjuntos en uno.
+
 -  ``rs1 & rs2``: Como resultado se tendrá un conjunto con los elementos
    encontrados, que coincidan, en ambos conjuntos de registros.
+
 -  ``rs1 – rs2``: Como resultado se tendrá un conjunto con los elementos
-   de rs1 que no estén presentes en rs2.
+   de ``rs1`` que no estén presentes en ``rs2``.
 
 También se puede usar notación de porción, como se muestra a
 continuación:
 
 -  ``rs[0]`` y ``rs[-1]``, retornan el primer elemento y el último
    elemento.
+
 -  ``rs[1:]``, devuelve una copia del conjunto sin el primer elemento.
    Este produce los mismos registros que ``rs – rs[0]`` pero preservando
    el orden.
@@ -737,10 +749,12 @@ Podrá usar estas operaciones de conjuntos para cambiar la lista,
 eliminando o agregando elementos. Puede observar esto en el siguiente
 ejemplo:
 
--  ``self.task_ids |= task1``: Esto agrega el elemento task1 si no
+-  ``self.task_ids |= task1``: Esto agrega el elemento ``task1`` si no
    existe en el conjunto de registro.
--  ``self.task_ids    -= task1``: Elimina la referencia a task1 si esta
+
+-  ``self.task_ids -= task1``: Elimina la referencia a ``task1`` si esta
    presenta en el conjunto de registro.
+
 -  ``self.task_ids = self.task_ids[:-1]``: Esto elimina el enlace del
    último registro.
 
@@ -754,9 +768,11 @@ Esto fue explicado en el Capítulo 4, en la sección
 Se hace referencia a las siguientes operaciones de ejemplo equivalentes
 a las precedentes usando ``write()``:
 
--  ``self.write([(4, task1.id, False)])``: Agrega task1 al miembro.
+-  ``self.write([(4, task1.id, False)])``: Agrega ``task1`` al miembro.
+
 -  ``self.write([(3, task1.id, False)])``: Desconecta (quita el enlace)
-   task1.
+   ``task1``.
+
 -  ``self.write([(3, self.task_ids[-1].id, False)])``: Desconecta (quita
    en enlace) el último elemento.
 
@@ -771,13 +787,18 @@ También estas disponibles estas operaciones:
 
 -  ``recordset.ids``: Esto devuelve la lista con los Ids de los
    elementos del conjunto.
+
 -  ``recordset.ensure_one()``: Verifica si es un único registro
-   (singleton); si no lo es, arroja una excepción ValueError.
+   (*singleton*); si no lo es, arroja una excepción ``ValueError``.
+
 -  ``recordset.exists()``: Devuelve una copia solamente con los registros
    que todavía existen.
+
 -  ``recordset.filtered(func)``: Devuelve un conjunto de registros
    filtrado.
+
 -  ``recordset.mapped(func)``: Devuelve una lista de valores mapeados.
+
 -  ``recordset.sorted(func)``: Devuelve un conjunto de registros
    ordenado.
 
@@ -824,8 +845,10 @@ Para esto pueden usarse los siguientes métodos:
    usuario, se usa el usuario de administración, el cual permite
    ejecutar diferentes sentencias pasando por encima de las reglas de
    seguridad.
+
 -  ``env.with_context(dictionary)``: Reemplaza el contexto con uno
    nuevo.
+
 -  ``env.with_context(key=value,...)``: Fija los valores para las claves
    en el contexto actual.
 
@@ -888,7 +911,7 @@ representar la interfaz y ejecutar la interacción básica:
 
 -  ``name_search(name='', args=None, operator='ilike', limit=100)``:
    Este también devuelve una lista de tuplas (ID, name), donde el nombre
-   mostrado concuerda con el texto en el argumento name. Es usado por la
+   mostrado concuerda con el texto en el argumento ``name``. Es usado por la
    UI mientras se escribe en el campo de relación para producir la lista
    de registros sugeridos que coinciden con el texto escrito. Se usa
    para implementar la búsqueda de productos, por nombre y por
@@ -1012,12 +1035,12 @@ aquellos que están disponibles y de como deben usarse:
    empaquetado de listas en los valores del resultado.
 
 -  ``@api.model``: Este es un método estático de nivel de clase, y no
-   usa ningún dato de conjunto de registros. Por consistencia, self aún
-   es un conjunto, pero su contenido es irrelevante.
+   usa ningún dato de conjunto de registros. Por consistencia, ``self``
+   aún es un conjunto, pero su contenido es irrelevante.
 
 -  ``@api.returns(model)``: Este indica que el método devuelve
    instancias del modelo en el argumento para el modelo actual, como
-   ``res.partner`` o self.
+   ``res.partner`` o ``self``.
 
 Los decoradores que tiene propósitos más específicos y que fueron
 explicados en el Capítulo 5, se muestran a continuación:
@@ -1025,14 +1048,15 @@ explicados en el Capítulo 5, se muestran a continuación:
 -  ``@api.depends(fld1,...)``: Este es usado por funciones de campos
    calculados para identificar los cambios en los cuales se debe
    realizar el (re) calculo.
+
 -  ``@api.constraints(fld1,…)``: Este es usado por funciones de
    validación para identificar los cambios en los que se debe realizar
    la validación.
 
--  ``@api.onchange(fld1,...)``: Este es usado por funciones on-change
+-  ``@api.onchange(fld1,...)``: Este es usado por funciones ``on-change``
    para identificar los campos del formulario que detonarán la acción.
 
-En particular, los métodos on-change pueden enviar mensajes de
+En particular, los métodos ``on-change`` pueden enviar mensajes de
 advertencia a la interfaz. Por ejemplo, lo siguiente podría advertir al
 usuario que la cantidad ingresada del producto no esta disponible, sin
 impedir al usuario continuar. Esto es realizado a través de un método
@@ -1072,10 +1096,10 @@ la siguiente línea en el lugar deseado:
 
 .. code-block:: python
 
-    import pdb; pdb.set\_trace()
+    import pdb; pdb.set_trace()
 
 Ahora reinicie el servidor para que se cargue la modificación del código. Tan
-pronto como la ejecución del código alcance la línea, una (pdb) linea de entrada
+pronto como la ejecución del código alcance la línea, una (``pdb``) linea de entrada
 de Python será mostrada en la ventana de la terminal en la cual el servidor se
 esta ejecutando, esperando por el ingreso de datos.
 
@@ -1084,16 +1108,23 @@ ejecutar cualquier comando o expresión en el actual contexto de ejecución. Est
 significa que las variables actuales pueden ser inspeccionadas e incluso modificadas.
 Estos son los comandos disponibles más importantes:
 
-- h: Es usado para mostrar un resumen de la ayuda del comando pdb.
-- p: Es usado para evaluar e imprimir una expresión.
-- pp: Este es para una impresión mas legible, la cual es útil para los diccionarios y listas muy largos.
-- l: Lista el código alrededor de la instrucción que será ejecutada a continuación.
-- n (next): Salta hasta la próxima instrucción.
-- s (step): Salta hasta la instrucción actual.
-- c (continue): Continua la ejecución normalmente.
-- u (up): 
-- u(up): Permite moverse hacia arriba de la pila de ejecución.
-- d (down): Permite moverse hacia abajo de la pila de ejecución.
+- ``h``: Es usado para mostrar un resumen de la ayuda del comando ``pdb``.
+
+- ``p``: Es usado para evaluar e imprimir una expresión.
+
+- ``pp``: Este es para una impresión más legible, la cual es útil para los diccionarios y listas muy largos.
+
+- ``l``: Lista el código alrededor de la instrucción que será ejecutada a continuación.
+
+- ``n`` *(next)*: Salta hasta la próxima instrucción.
+
+- ``s`` *(step)*: Salta hasta la instrucción actual.
+
+- ``c`` *(continue)*: Continua la ejecución normalmente.
+
+- ``u`` *(up)*: Permite moverse hacia arriba de la pila de ejecución.
+
+- ``d`` *(down)*: Permite moverse hacia abajo de la pila de ejecución.
 
 El servidor Odoo también soporta la opción ``--debug``. Si se usa, el servidor
 entrara en un modo *post mortem* cuando encuentre una excepción, en la línea
@@ -1101,7 +1132,7 @@ donde se encuentre el error. Es una consola ``pdb`` y les permite inspeccionar e
 estado del programa en el momento en que es encontrado el error.
 
 Existen alternativas al depurador de Python. Puede provee los mismos comandos
-que pdb y funciona en terminales de solo texto, pero usa una visualización
+que ``pdb`` y funciona en terminales de solo texto, pero usa una visualización
 gráfica más amigable, haciendo que la información útil sea más legible como
 las variables del contexto actual y sus valores.
 
@@ -1111,7 +1142,7 @@ las variables del contexto actual y sus valores.
 
   Gráfico 7.2 - Vista del modelo todo.task
 
-Puede ser instalado a través del sistema de paquetes o por pip, como se muestra
+Puede ser instalado a través del sistema de paquetes o por ``pip``, como se muestra
 a continuación:
 
 .. code-block:: console
@@ -1119,9 +1150,9 @@ a continuación:
     $ sudo apt-get install python-pudb # using OS packages
     $ pip install pudb # using pip, possibly in a virtualenv
 
-Funciona como pdb; solo necesita usar pudb en vez de pdb en el código.
+Funciona como ``pdb``; solo necesita usar ``pudb`` en vez de ``pdb`` en el código.
 
-Otra opción es el depurador Iron Python, ipdb, el cual puede ser instalado:
+Otra opción es el depurador *Iron Python*, ``ipdb``, el cual puede ser instalado:
 
 .. code-block:: console
 
@@ -1129,8 +1160,8 @@ Otra opción es el depurador Iron Python, ipdb, el cual puede ser instalado:
 
 A veces solo necesita inspeccionar los valores de algunas
 variables o verificar si algunos bloques de código son ejecutados. Una
-sentencia "print" de Python puede perfectamente hacer el trabajo sin
-parar el flujo de ejecución. Como estamos ejecutando el servidor en una
+sentencia ``print`` de Python puede perfectamente hacer el trabajo sin
+parar el flujo de ejecución. Como esta ejecutando el servidor en una
 terminal, el texto impreso será mostrado en la salida estándar. Pero no
 será guardado en los registros del servidor si esta siendo escrito en un
 archivo.
@@ -1139,7 +1170,7 @@ Otra opción a tener en cuenta es fijar los mensajes de registros de los
 niveles de depuración en puntos sensibles de su código si siente
 que podrá necesitar investigar algunos problemas en la instancia de
 despliegue. Solo se requiere elevar el nivel de registro del servidor a
-DEBUG y luego inspeccionar los archivos de registro.
+``DEBUG`` y luego inspeccionar los archivos de registro.
 
 Resumen
 =======

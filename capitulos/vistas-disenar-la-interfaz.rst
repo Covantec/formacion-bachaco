@@ -63,9 +63,9 @@ código:
             </data> 
          </openerp> 
 
-Las acciones de ventana se almacenan en el modelo
-``ir.actions.act_window``, y pueden ser definidas en archivos XML usando
-el acceso directo ``<act_window>`` que recién usamos.
+Las acciones de ventana se almacenan en el modelo ``ir.actions.act_window``,
+y pueden ser definidas en archivos XML usando el acceso directo ``<act_window>``
+que recién uso.
 
 La primera acción abre el modelo de estados de la tarea, y solo usa los
 atributos básicos para una acción de ventana.
@@ -110,17 +110,17 @@ La tercera acción de ventana demuestra como agregar una opción bajo el
 botón "Mas", en la parte superior de la vista. Estos son los atributos
 usados para realizar esto:
 
--  ``multi``: Si esta fijado a "``True``", estará disponible en la vista de
+-  ``multi``: Si esta fijado a ``True``, estará disponible en la vista de
    lista. De lo contrario, estará disponible en la vista de formulario.
 
 Opciones de menú
 ----------------
 
 Las opciones de menú se almacenan en el modelo ``ir.ui.menu``, y pueden
-ser encontradas en el menú Configuraciones navegando a través de Técnico
-\| Interfaz de Usuario \| Opciones de Menú. Si buscamos Mensajería,
-veremos que tiene como submenú Organizador. Con la ayuda de las
-herramientas de desarrollo podemos encontrar el ID del XML para esa
+ser encontradas en el menú Configuraciones navegando a través de **Técnico**
+> **Interfaz de Usuario** > **Opciones de Menú**. Si busca Mensajería,
+verá que tiene como submenú Organizador. Con la ayuda de las
+herramientas de desarrollo podrá encontrar el ID del XML para esa
 opción de menú: la cual es ``mail.mail_my_stuff``.
 
 Reemplazará la opción de menú existente en Tareas por Hacer con un
@@ -183,7 +183,9 @@ agrega información al contexto sobre los registros seleccionados
 actualmente:
 
 -  ``active_id`` es el ID del registro seleccionado en el formulario,
+
 -  ``active_model`` es el modelo de los registros actuales,
+
 -  ``active_ids`` es la lista de los ID seleccionados en la vista de
    árbol/lista.
 
@@ -219,7 +221,7 @@ Por ejemplo, para limitar solo a las Tareas del usuario actual:
 
     domain=[('user_id', '=', uid)] 
 
-El valor "``uid``" usado aquí es provisto por el contexto de sesión. Cuando
+El valor ``uid`` usado aquí es provisto por el contexto de sesión. Cuando
 se usa en un campo relacional, limitara las opciones disponibles de
 selección para ese campo. El filtro de dominio puede también usar
 valores de otros campos en la vista. Con esto podrá tener diferentes
@@ -246,7 +248,7 @@ Los operadores que pueden ser usados son:
 -  ``child_of`` encuentra los hijos directos e indirectos, si las
    relaciones padre/hijo están configuradas en el modelo de destino.
 
--  "``in``" y "``not``" verifican la inclusión en una lista. En este caso, el
+-  ``in`` y ``not`` verifican la inclusión en una lista. En este caso, el
    valor de la derecha debe ser una lista Python. Estos son los únicos
    operadores que pueden ser usados con valores de una lista. Un caso
    especial es cuando el lado izquierdo es un campo "a-muchos": aquí el
@@ -266,8 +268,8 @@ Para los dominios de campo y las acciones de ventana, la evaluación es
 realizada desde el lado del cliente. El contexto de evaluación incluye
 aquí los campos disponibles para la vista actual, y la notación de
 puntos no esta disponible. Puede ser usados los valores del contexto de
-sesión, como "``uid``" y "``active_id``". Están disponibles los módulo de
-Python "``datetime``" y "``time``" para ser usado en las operaciones de fecha y
+sesión, como ``uid`` y ``active_id``. Están disponibles los módulo de
+Python ``datetime`` y ``time`` para ser usado en las operaciones de fecha y
 hora, y también esta disponible la función ``context_today()`` que
 devuelve la fecha actual del cliente.
 
@@ -276,7 +278,7 @@ código Pyhton del servidor son evaluados del lado el servidor. El
 contexto de evaluación tiene los campos los registros actuales
 disponibles, y se permite la notación de puntos. También están
 disponibles los registros de la sesión de usuario actual. Al usar
-``user.id`` es equivalente a usar "``uid``" en el contexto de evaluación del
+``user.id`` es equivalente a usar ``uid`` en el contexto de evaluación del
 lado del cliente.
 
 Las condiciones de dominio pueden ser combinadas usando los operadores
@@ -370,9 +372,9 @@ estructura genérica es esta:
 
 Las vistas de negocio se componen de tres área visuales:
 
--  Un encabezado, "``header``".
+-  Un encabezado, ``header``.
 
--  Un "``sheet``" para el contenido.
+-  Un ``sheet`` para el contenido.
 
 -  Una sección al final de historia y comunicación, "history and
    communication".
@@ -461,7 +463,7 @@ En el atributo ``options`` podrá usar algunas configuraciones
 específicas:
 
 -  ``fold_fields``, cuando de usa el atributo ``stages``, es el nombre del campo que
-   usa el atributo "``stage``" del modelo usa para indicar en cuales etapas debe ser
+   usa el atributo ``stage`` del modelo usa para indicar en cuales etapas debe ser
    mostrado en **negritas** o "**fold**".
 
 -  ``statusbar_visible``, cuando se usa el atributo ``states``, lista los estados que
@@ -555,7 +557,8 @@ Primero necesita agregar el campo calculado correspondiente a
 
 .. code-block:: python
 
-    @api.one def compute_user_todo_count(self): 
+    @api.one
+    def compute_user_todo_count(self):
         self.user_todo_count = self.search_count([('user_id', '=', self.user_id.id)])
         user_todo_count      = fields.Integer('User To-Do   Count', compute='compute_user_todo_count') 
 
@@ -689,7 +692,7 @@ Los botones soportar los siguientes atributos:
 
 -  ``string``, es el texto de descripción del botón.
 
--  ``type``, puede ser "``workflow``", ``object`` o ``action``, para activar una
+-  ``type``, puede ser ``workflow``, ``object`` o ``action``, para activar una
    señal de flujo de trabajo, llamar a un método Python o ejecutar una
    acción de ventana.
 
@@ -929,7 +932,7 @@ Los atributos para el elemento ``tree`` de nivel superior son:
 
 -  ``colors``: fija dinámicamente el color del texto para los registros,
    basándose en su contenido. Es una lista separada por punto y coma de
-   valores ``color:condition``. "color" es un color válido CSS (vea
+   valores ``color:condition``. ``color`` es un color válido CSS (vea
    http://www.w3.org/TR/css3-color/#html4), y ``condition`` es una
    expresión Python que evalúa el contexto del registro actual.
 
@@ -1006,7 +1009,7 @@ Estos son los atributos disponibles para los elementos ``filter``:
    a través de la clave ``search_default_`` en el contexto de acciones
    de ventana.
 
--  ``string``: proporciona el texto de la etiqueta que se mostrara para el
+-  ``string``: proporciona el texto de la etiqueta que se mostrará para el
    filtro (obligatorio)
 
 -  ``domain``: proporciona la expresión de dominio del filtro para ser
@@ -1109,7 +1112,7 @@ Vistas de Gráfico
 Los tipos de vista de gráfico proporcionan un análisis de los datos, en
 forma de gráfico o una tabla pivote interactiva.
 
-Agregará una tabla pivote a las tareas por hacer. Primero, necesita 
+Agregará una tabla pivote a las tareas por hacer. Primero, necesita
 agregar un campo. En la clase ``TodoTask``, del archivo
 ``todo_ui/todo_model.py``, agregue este línea:
 
@@ -1166,7 +1169,7 @@ conceptos de contexto y dominio.
 También aprendió como diseñar vistas de lista y configurar opciones de
 búsqueda usando las vistas de búsqueda. Luego, se describieron de modo
 general los otros tipos de vista disponibles: calendario, Gantt y
-gráfico. Las vistas Kanban será estudiadas mas adelante, cuando aprenda
+gráfico. Las vistas Kanban serán estudiadas más adelante, cuando aprenda
 como usar Qweb.
 
 Ya ha vistos los modelos y las vistas. En el próximo capítulo, aprenderá

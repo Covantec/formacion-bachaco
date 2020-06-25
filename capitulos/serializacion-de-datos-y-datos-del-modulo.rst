@@ -55,8 +55,8 @@ el mapeo entre los IDs externos con nombre y sus correspondiente IDs
 numéricos en la base de datos. Ese es el modelo ``ir.model.data``.
 
 Para inspeccionar la existencia de mapeo, diríjase a la sección
-**Técnico** en el menú **Configuración**, y seleccione **Secuencias e
-identificadores** \| el item de menu **Identificadores externos**.
+**Técnico** en el menú **Configuración**, y seleccione **Secuencias e identificadores**
+haga el item de menú **Identificadores externos**.
 
 Por ejemplo, si vuelve a visitar la lista de identificadores externos
 y filtra por el módulo ``todo_app``, vera los identificadores
@@ -68,7 +68,7 @@ identificador unido por un punto, por ejemplo,
 ``todo_app.action_todo_task``.
 
 Debido a que solo es obligatorio que el ID completo sea único, el nombre
-del módulo sirve como namespace para los identificadores. Esto significa
+del módulo sirve como ``namespace`` para los identificadores. Esto significa
 que el mismo identificador puede repetirse en diferentes módulos, y no
 tiene que preocuparnos por identificadores en su módulo que
 colisionen con identificadores en otros módulos.
@@ -191,7 +191,7 @@ Importar datos
 
 Primero tiene que asegurarse que la función de importar este
 habilitada. Esto se hace en el menú de **Configuración**,
-**Configuración** \| opción de **Configuraciones Generales**. En
+**Configuración** > opción de **Configuraciones Generales**. En
 **Importar/Exportar**, asegúrese que la opción **Permitir a los usuarios
 importar datos desde archivos CSV** esté habilitada.
 
@@ -232,7 +232,7 @@ Registros relacionados en archivos de datos CSV
 
 En el ejemplo visto anteriormente, el usuario responsable de cada tarea
 es un registro relacionado en el modelo de los usuarios, con la relación
-many to one - muchos a uno - (o foreign key - clave foránea). El nombre
+*many to one* - muchos a uno - (o foreign key - clave foránea). El nombre
 de la columna para ello fue ``usuario_id/id`` y los valores de los
 campos eran identificadores externos para los registros relacionados,
 tales como ``base.user_root`` para el usuario administrador.
@@ -242,8 +242,8 @@ usan IDs externos, o ``/.id``, si se usan IDs (numéricos) de base de
 datos. Alternativamente, dos puntos ``(:)`` se puede utilizar en lugar
 de la barra para el mismo efecto.
 
-Del mismo modo, la relación many to many - muchos a muchos - son
-soportables. Un ejemplo de relación many to many es la que existe entre
+Del mismo modo, la relación *many to many* - muchos a muchos - son
+soportables. Un ejemplo de relación *many to many* es la que existe entre
 usuarios y grupos: cada usuario puede estar en muchos grupos, y cada
 grupo puede tener muchos usuarios. La columna nombre para este tipo de
 campo debería haber añadido un ``/id``. Los valores de los campos
@@ -251,25 +251,25 @@ aceptan una lista separada por comas de Id externos, entre comillas
 dobles.
 
 Por ejemplo, los Seguidores de las tareas a realizar es una relación
-many-to-many entre Tareas por hacer y Socios. El nombre de la columna
+*many-to-many* entre Tareas por hacer y Socios. El nombre de la columna
 puede ser ``follower_ids/id`` y un valor de campo con dos seguidores
 podría ser: ``"__export__.res_partner_1,__export__.res_partner_2"``
 
-Finalmente, las relaciones one to many también se pueden importar a
+Finalmente, las relaciones *one to many* también se pueden importar a
 través de CSV. El ejemplo típico de esta relación es un documento "head"
 con varias "lines".
 
 Podrá ver un ejemplo de tal relación en el modelo de empresa (la vista
 de formulario esta disponible en el menú configuración): una empresa
 puede tener varias cuentas bancarias, cada una con sus propios detalles,
-y cada cuenta bancaria pertenece a (tiene una relación many-to-one con)
+y cada cuenta bancaria pertenece a (tiene una relación *many-to-one* con)
 solo una empresa.
 
 Es posible importar las empresa junto con sus cuentas bancarias en un
 solo archivo. Para esto, algunas columnas corresponderán a empresas, y
 otras columnas corresponderán a cuentas bancarias detalladas. Los
 nombres de columnas de los detalles del banco deben ser precedidos de
-los campos con la relación one-to-many que vincula a la empresa con los
+los campos con la relación *one-to-many* que vincula a la empresa con los
 bancos; ``bank_ids`` en este caso.
 
 Los primeros datos de la cuenta bancaria van en la misma fila de los
@@ -446,16 +446,16 @@ datos con ``noupdate="1"`` y otro con ``noupdate="0"``.
 
 La etiqueta ``noupdate`` se almacena en la información de Identificador
 Externo para cada registro. Es posible editar la directamente utilizando
-el formulario de Identificador Externo disponible en el menú Técnico \|
-opción Secuencias e identificadores \| Identificadores externos, con la
+el formulario de Identificador Externo disponible en el menú **Técnico** >
+opción **Secuencias e identificadores** > **Identificadores externos**, con la
 casilla de verificación **No actualizable**.
 
 .. tip::
-    El atributo noupdate es difícil de manejar cuando se esta
+    El atributo ``noupdate`` es difícil de manejar cuando se esta
     desarrollando el módulo, ya que los cambios hechos a los datos más tarde
     serán ignorados y Odoo no recogerá las modificaciones. Una solución es
-    mantener ``noupdate =" 0 "`` durante el desarrollo y sólo ponerlo a * 1
-    \_ una vez terminado.\_
+    mantener ``noupdate="0"`` durante el desarrollo y sólo ponerlo a * 1
+    *una vez terminado*.
 
 Definición de registros en XML
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -479,9 +479,9 @@ escrito.
 El valor a escribir es el contenido del elemento: el texto entre la
 etiqueta de apertura y la etiqueta de cierre del elemento ``field``. En
 general, esto también es adecuado para establecer los valores que no son
-texto: para Booleanos, ``"0"/    "1"`` o valores ``"False"/"True"``;
-para fechas, fechas y horas, cadenas de texto como ``"YYYY-MM-DD"`` y
-``"YYYY-MM-DD    HH:MI:SS"``, se realizará una correcta conversión.
+texto: para Booleanos, ``0`` y ``1`` o valores ``False`` y ``True``;
+para fechas, fechas y horas, cadenas de texto como ``YYYY-MM-DD`` y
+``YYYY-MM-DD HH:MI:SS``, se realizará una correcta conversión.
 
 Ajuste de valores utilizando expresiones
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -538,7 +538,7 @@ Usándolo, podrá establecer el valor de ``user_id`` con solo:
 
     <field name="user_id" ref="base.group_user" />
 
-Para campos one-to-many y many-to-many, se espera una lista de ID
+Para campos *one-to-many* y *many-to-many*, se espera una lista de ID
 relacionados, por lo que es necesaria una sintaxis diferente, y Odoo
 proporciona una sintaxis especial para escribir sobre este tipo de
 campos.
@@ -552,17 +552,24 @@ lista de registros relacionados de un campo ``tag_ids``:
 
 Para escribir sobre un campo a-muchos se utiliza una lista de tripletas.
 Cada tripleta es un comando de escritura que hace cosas diferentes según
-el código utilizado: - ``(0,_    ,{'field':    value})``: Esto crea un
-nuevo registro y lo vincula a ésta - ``(1,id,{'field':    value})``:
-Esto actualiza los valores en un registro ya vinculados - ``(2,id,_)``:
-Esto desvincula y elimina un registro relacionado - ``(3,id,_)``: Esto
-desvincula pero no elimina un registro relacionado - ``(4,id,_)``: Esto
-vincula un registro ya existente - ``(5,_,_)``: Esto desvincula pero no
-elimina todos los registros vinculados - ``(6,_,[ids])``: Esto reemplaza
-la lista de registros vinculados con la lista proporcionada
+el código utilizado:
+
+- ``(0,_,{'field':value})``: Esto crea un nuevo registro y lo vincula a ésta.
+
+- ``(1,id,{'field':value})``: Esto actualiza los valores en un registro ya vinculados.
+
+- ``(2,id,_)``: Esto desvincula y elimina un registro relacionado.
+
+- ``(3,id,_)``: Esto desvincula pero no elimina un registro relacionado.
+
+- ``(4,id,_)``: Esto vincula un registro ya existente.
+
+- ``(5,_,_)``: Esto desvincula pero no elimina todos los registros vinculados.
+
+- ``(6,_,[ids])``: Esto reemplaza la lista de registros vinculados con la lista proporcionada.
 
 El símbolo guión bajo utilizado anteriormente representa valores
-irrelevantes, por lo general lleno de 0 o False.
+irrelevantes, por lo general lleno de 0 o ``False``.
 
 Atajos para modelos de uso frecuente
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -580,13 +587,17 @@ usuario, se estudiarán con detalle más adelante, en el capítulo 6,
 Como referencia, de manera que podrá comprender mejor los archivos XML
 que podrá encontrar en los módulos existentes, los siguientes
 elementos de acceso directo están disponibles con los modelos
-correspondientes donde cargan los datos: - ``<act_window>``: Este es el
-modelo de acciones de ventana ``ir.actions.act_window`` -
-``<menuitem>``: Este es el modelo de elementos de menú ``ir.ui.menu`` -
-``<report>``: Este es el modelo de acciones de reporte
-``ir.actions.report.xml`` - ``<template>``: Esto es el modelo de
-plantillas de vistas QWeb almacenadas en ``ir.ui.view`` - ``<url>``:
-Este es el modelo de acciones de URL ``ir.actions.act_url``
+correspondientes donde cargan los datos:
+
+- ``<act_window>``: Este es el modelo de acciones de ventana ``ir.actions.act_window``.
+
+- ``<menuitem>``: Este es el modelo de elementos de menú ``ir.ui.menu``.
+
+- ``<report>``: Este es el modelo de acciones de reporte ``ir.actions.report.xml``.
+
+- ``<template>``: Esto es el modelo de plantillas de vistas QWeb almacenadas en ``ir.ui.view``.
+
+- ``<url>``: Este es el modelo de acciones de URL ``ir.actions.act_url``.
 
 Otras acciones en archivos de datos XML
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

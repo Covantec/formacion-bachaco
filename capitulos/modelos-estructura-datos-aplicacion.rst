@@ -67,6 +67,7 @@ que necesitara agregar dos modelos adicionales, y tendrán estas
 relaciones:
 
 -  Cada tarea tiene un estado, y puede haber muchas tareas en un estado.
+
 -  Cada tarea puede tener muchas etiquetas, y cada etiqueta puede estar
    en muchas tareas.
 
@@ -265,8 +266,8 @@ Inspeccionar modelos existentes
 
 La información sobre los modelos y los campos creados con clases Python
 esta disponible a través de la interfaz. En el menú principal de
-**Configuración**, seleccione la opción de menú **Técnico** \|
-**Estructura de base de datos** \| **Modelos**. Allí, encontrará la
+**Configuración**, seleccione la opción de menú **Técnico** >
+**Estructura de base de datos** > **Modelos**. Allí, encontrará la
 lista de todos los modelos disponibles en la base de datos. Al hacer
 clic en un modelo de la lista se abrirá un formulario con sus detalles.
 
@@ -340,37 +341,45 @@ título por el nombre del campo.
 Existe una convención para los campos de fecha que usa ``date`` como
 prefijo para el nombre. Por ejemplo, debería usar ``date_effective``
 en vez de ``effective_date``. Esto también puede aplicarse a otros
-campos, como "amount\_", "price\_" o "qty\_".
+campos, como ``amount_``, ``price_`` o ``qty_``.
 
 Algunos otros argumentos están disponibles para la mayoría de los tipos
 de campo:
 
--  **Char**, acepta un segundo argumento opcional, "size", que
+-  ``Char``, acepta un segundo argumento opcional, ``size``, que
    corresponde al tamaño máximo del texto. Es recomendable usarlo solo
    si se tiene una buena razón.
--  **Text**, se diferencia de Char en que puede albergar texto de varias
+
+-  ``Text``, se diferencia de ``Char`` en que puede albergar texto de varias
    líneas, pero espera los mismos argumentos.
--  **Selecction**, es una lista de selección desplegable. El primer
+
+-  ``Selecction``, es una lista de selección desplegable. El primer
    argumento es la lista de opciones seleccionables y el segundo es la
    cadena de título. La lista de selección es una tupla
    ``('value', 'Title')`` para el valor almacenado en la base de datos y
    la cadena de descripción correspondiente. Cuando se amplía a través
    de la herencia, el argumento ``selection_add`` puede ser usado para
    agregar opciones a la lista de selección existente.
--  **Html**, es almacenado como un campo de texto, pero tiene un manejo
+
+-  ``Html``, es almacenado como un campo de texto, pero tiene un manejo
    específico para presentar el contenido HTML en la interfaz.
--  **Integer**, solo espera un argumento de cadena de texto para el
+
+-  ``Integer``, solo espera un argumento de cadena de texto para el
    campo de título.
--  **Float**, tiene un argumento opcional, una tupla ``(x,y)`` con los
+
+-  ``Float``, tiene un argumento opcional, una tupla ``(x,y)`` con los
    campos de precisión: 'x' como el número total de dígitos; 'y'
    representa los dígitos decimales.
--  **Date y Datetime**, estos datos son almacenados en formato UTC. Se
-   realizan conversiones automáticas, basadas en las preferencias del
-   usuario o la usuaria, disponibles a través del contexto de la sesión
-   de usuario. Esto es discutido con mayor detalle en el Capítulo 6.
--  **Boolean**, solo espera sea fijado el campo de título, incluso si es
+
+-  ``Date`` y ``Datetime``, estos datos son almacenados en formato UTC.
+   Se realizan conversiones automáticas, basadas en las preferencias del
+   usuario, disponibles a través del contexto de la sesión de usuario.
+   Esto es discutido con mayor detalle en el Capítulo 6.
+
+-  ``Boolean``, solo espera sea fijado el campo de título, incluso si es
    opcional.
--  **Binary** también espera este único argumento.
+
+-  ``Binary`` también espera este único argumento.
 
 Además de estos, también existen los campos relacionales, los cuales
 serán introducidos en este mismo capítulo. Pero por ahora, hay mucho que
@@ -379,42 +388,53 @@ aprender sobre los tipos de campos y sus atributos.
 Atributos de campo comunes
 --------------------------
 
-Los campos también tienen un conjunto de atributos los cuales podemos
-usar, y los explicaremos aquí con más detalle:
+Los campos también tienen un conjunto de atributos los cuales podrá
+usar, y se explicara aquí con más detalle:
 
 -  ``string``, es el título del campo, usado como su etiqueta en la UI.
    La mayoría de las veces no es usado como palabra clave, ya que puede
    ser fijado como un argumento de posición.
+
 -  ``default``, fija un valor predefinido para el campo. Puede ser un
    valor estático o uno fijado anticipadamente, pudiendo ser una
-   referencia a una función o una expresión lambda.
--  ``size``, aplica solo para los campos Char, y pueden fijar el tamaño
+   referencia a una función o una expresión ``lambda``.
+
+-  ``size``, aplica solo para los campos ``Char``, y pueden fijar el tamaño
    máximo permitido.
--  ``translate``, aplica para los campos de texto, Char, Text y Html, y
-   hacen que los campos puedan ser traducidos: puede tener varios
-   valores para diferentes idiomas.
+
+-  ``translate``, aplica para los campos de texto, ``Char``, ``Text``
+   y ``Html``, hacen que los campos puedan ser traducidos: puede tener
+   varios valores para diferentes idiomas.
+
 -  ``help``, proporciona el texto de ayuda desplegable mostrado a los
-   usuarios y usuarias.
+   usuarios.
+
 -  ``readonly = True``, hace que el campo no pueda ser editado en la
    interfaz.
+
 -  ``required = True``, hace que el campo sea obligatorio.
+
 -  ``index = True``, creara un índice en la base de datos para el campo.
+
 -  ``copy = False``, hace que el campo sea ignorado cuando se usa la
    función Copiar. Los campos no relacionados de forma predeterminada
    pueden ser copiados.
+
 -  ``groups``, permite limitar la visibilidad y el acceso a los campos
    solo a determinados grupos. Es una lista de cadenas de texto
    separadas por comas, que contiene los ID XML del grupo de seguridad.
+
 -  ``states``, espera un diccionario para los atributos de la UI
    dependiendo de los valores de estado del campo. Por ejemplo:
    ``states={'done':[('readonly', True)]}``. Los atributos que pueden
-   ser usados son, "readonly", "required" e "invisible".
+   ser usados son, ``readonly``, ``required`` e ``invisible``.
 
 Para completar, a veces son usados dos atributos más cuando se actualiza
 entre versiones principales de Odoo:
 
 -  ``deprecated = True``, registra un mensaje de alerta en cualquier
    momento que el campo sea usado.
+
 -  ``oldname = 'field'``, es usado cuando un campo es re-nombrado en una
    versión nueva, permitiendo que la data en el campo viejo sea copiada
    automáticamente dentro del campo nuevo.
@@ -433,9 +453,12 @@ Los siguientes campos son creados automáticamente en los modelos nuevos,
 a menos que sea fijado el atributo ``_log_access=False``:
 
 -  ``create_uid``, para el usuario que crea el registro.
+
 -  ``created_date``, para la fecha y la hora en que el registro es
    creado.
+
 -  ``write_uid``, para el último usuario que modifica el registro.
+
 -  ``write_date``, para la última fecha y hora en que el registro fue
    modificado.
 
@@ -448,23 +471,27 @@ fueron creados. Algunos de ellos incluso están reservados y no pueden
 ser usados para ningún otro propósito:
 
 -  ``name``, es usado de forma predeterminada como el nombre del
-   registro que será mostrado. Usualmente es un Char, pero se permiten
+   registro que será mostrado. Usualmente es un ``Char``, pero se permiten
    otros tipos de campos. Puede ser sobre escrito configurando el
    atributo ``_rec_name`` del modelo.
--  ``active`` (tipo Boolean), permite desactivar registros. Registros
+
+-  ``active`` (tipo ``Boolean``), permite desactivar registros. Registros
    con ``active==False`` serán excluidos automáticamente de las
    consultas. Para acceder a ellos debe ser agregada la condición
    ``('active','=', False)`` al dominio de búsqueda o agregar
    ``'active_test':False`` al contexto actual.
--  ``sequence`` (tipo Integer), si esta presente en una vista de lista,
+
+-  ``sequence`` (tipo ``Integer``), si esta presente en una vista de lista,
    permite definir manualmente el orden de los registros. Para funcionar
    correctamente debe estar también presente en el ``_order`` del
    modelo.
--  ``state`` (tipo Selection), representa los estados básicos del ciclo
-   de vida del registro, y puede ser usado por el atributo "field" del
+
+-  ``state`` (tipo ``Selection``), representa los estados básicos del ciclo
+   de vida del registro, y puede ser usado por el atributo ``field`` del
    estado para modificar de forma dinámica la vista: algunos campos de
    formulario pueden ser de solo lectura, requeridos o invisibles en
    estados específicos del registro.
+
 -  ``parent_id``, ``parent_left``, y ``parent_right``; tienen
    significado especial para las relaciones jerárquicas padre/hijo. En
    un momento se discutirá con mayor detalle.
@@ -516,7 +543,7 @@ Vea con mayor detalle las definiciones de los campos relacionales.
 Relaciones muchos a uno
 -----------------------
 
-Many2one, acepta dos argumentos de posición: el modelo relacionado (que
+``Many2one``, acepta dos argumentos de posición: el modelo relacionado (que
 corresponde al argumento de palabra clave del ``comodel``) y la cadena
 de título. Este crea un campo en la tabla de la base de datos con una
 clave foránea a la tabla relacionada.
@@ -525,18 +552,20 @@ Algunos nombres adicionales de argumentos también están disponibles para
 ser usados con estos tipos de campo:
 
 -  ``ondelete``, define lo que pasa cuando el registro relacionado es
-   eliminado. De forma predeterminada esta fijado como null, lo que
+   eliminado. De forma predeterminada esta fijado como ``null``, lo que
    significa que al ser eliminado el registro relacionado se fija a un
-   valor vacío. Otros valores posibles son "restrict", que arroja un
-   error que previene la eliminación, y "cascade" que también elimina
+   valor vacío. Otros valores posibles son ``restrict``, que arroja un
+   error que previene la eliminación, y ``cascade`` que también elimina
    este registro.
+
 -  ``context`` y ``domain``, son significativos para las vistas del
    cliente. Pueden ser configurados en el modelo para ser usados de
    forma predeterminada en cualquier vista donde sea usado el campo.
    Estos serán explicados con más detalle en el Capítulo 6.
+
 -  ``auto_join = True``, permite que el ORM use uniones SQL haciendo
    búsquedas usando esta relación. De forma predeterminada esto esta
-   fijado como False para reforzar las reglas de seguridad. Si son
+   fijado como ``False`` para reforzar las reglas de seguridad. Si son
    usadas uniones, las reglas de seguridad serán pasadas por alto, y el
    usuario podrá tener acceso a los registros relacionados que las
    reglas de seguridad no le permitirían, pero las consultas SQL serán
@@ -545,7 +574,7 @@ ser usados con estos tipos de campo:
 Relaciones muchos a muchos
 --------------------------
 
-La forma mas simple de la relación Many2many acepta un argumento para el
+La forma más simple de la relación ``Many2many`` acepta un argumento para el
 modelo relacionado, y es recomendable también proporcionar el argumento
 de cadena con el título del campo.
 
@@ -583,7 +612,7 @@ clave:
                                relation='todo_task_tag_rel', # nombre de la tabla de relación
                                column1='task_id', # campo para "este" registro
                                column2='tag_id', # campo para "otro" registro
-                               string='Tasks') 
+                               string='Tasks')
 
 Como los campos muchos a uno, los campos muchos a muchos también
 soportan los atributos de palabra clave de dominio y contexto.
@@ -601,8 +630,8 @@ modelos.
      tendrá que configurar manualmente el nombre de la tabla de
      relación usando el atributo ``relation``.
 
-Lo inverso a la relación Many2many es también un campo Many2many. Si
-también agregamos un campo Many2many a las etiquetas, Odoo infiere que
+Lo inverso a la relación ``Many2many`` es también un campo ``Many2many``. Si
+también agrega un campo ``Many2many`` a las etiquetas, Odoo infiere que
 esta relación de muchos a muchos es la inversa a la del modelo de
 tareas.
 
@@ -614,13 +643,13 @@ La relación inversa entre tareas y etiquetas puede ser implementada así:
         _name = 'todo.task.tag' 
 
         #Tag class relación a Tasks: 
-        task_ids = fields.Many2many( 'todo.task', # modelo relacionado
-                                     string='Tasks') 
+        task_ids = fields.Many2many('todo.task', # modelo relacionado
+                                    string='Tasks')
 
 Relaciones inversas de uno a muchos
 -----------------------------------
 
-La inversa de Many2many puede ser agregada al otro extremo de la
+La inversa de ``Many2many`` puede ser agregada al otro extremo de la
 relación. Esto no tiene un impacto real en la estructura de la base de
 datos, pero le permite navegar fácilmente desde "un" lado a "muchos"
 lados de los registros. Un caso típico es la relación entre un
@@ -641,21 +670,21 @@ código mostrado a continuación:
                                 'stage_id',# campo para "este" en el modelo relacionado 
                                 'Tasks in this stage') 
 
-One2many acepta tres argumentos de posición: el modelo relacionado, el
+``One2many`` acepta tres argumentos de posición: el modelo relacionado, el
 nombre del campo en aquel modelo que referencia este registro, y la
 cadena de título. Los dos primeros corresponden a los argumentos
 ``comodel_name`` e ``inverse_name``.
 
 Los parámetros adicionales disponibles son los mismos que para el muchos
-a uno: contexto, dominio, ondelete (aquí actúa en el lado "muchos" de la
+a uno: contexto, dominio, ``ondelete`` (aquí actúa en el lado "muchos" de la
 relación), y ``auto_join``.
 
 Relaciones jerárquicas
 ----------------------
 
 Las relaciones padre-hijo pueden ser representadas usando una relación
-Many2one al mismo modelo, para dejar que cada registro haga referencia a
-su padre. Y la inversa One2many hace más fácil para un padre mantener el
+``Many2one`` al mismo modelo, para dejar que cada registro haga referencia a
+su padre. Y la inversa ``One2many`` hace más fácil para un padre mantener el
 registro de sus hijos.
 
 Odoo también provee soporte mejorado para estas estructuras de datos
@@ -722,9 +751,9 @@ la lista, y luego elegirá un registro de ese modelo.
 
 Esto puede ser llevado a otro nivel de flexibilidad: existe una tabla de
 configuración de Modelos Referenciables para configurar los modelos que
-pueden ser usados en campos Reference. Esta disponible en el menú
-**Configuración** \| **Técnico** \| **Estructuras de base de datos**.
-Cuando se crea un campo como este podemos ajustarlo para que use
+pueden ser usados en campos ``Reference``. Esta disponible en el menú
+**Configuración** > **Técnico** > **Estructuras de base de datos**.
+Cuando se crea un campo como este podrá ajustarlo para que use
 cualquier modelo registrado allí, con la ayuda de la función
 ``referencable_models()`` en el módulo
 ``openerp.addons.res.res_request``. En la versión 8 de Odoo, todavía se
@@ -752,7 +781,7 @@ Campos calculados
 Los campos pueden tener valores calculados por una función, en vez de
 simplemente leer un valor almacenado en una base de datos. Un campo
 calculado es declarado como un campo regular, pero tiene el argumento
-"compute" adicional con el nombre de la función que se usará para
+``compute`` adicional con el nombre de la función que se usará para
 calcularlo.
 
 En la mayoría de los casos los campos calculados involucran alguna
@@ -783,9 +812,9 @@ de la función es pasado como una cadena, pero también es posible pasarla
 como una referencia obligatoria (el identificador de la función son
 comillas).
 
-Debido a que estamos usando el decorador ``@api.one``, self tendrá un
-solo registro. Si en vez de esto usamos ``@api.multi``, representara un
-conjunto de registros y nuestro código necesitará gestionar la iteración
+Debido a que esta usando el decorador ``@api.one``, ``self`` tendrá un
+solo registro. Si en vez de esto usa ``@api.multi``, representara un
+conjunto de registros y su código necesitará gestionar la iteración
 sobre cada registro.
 
 El ``@api.depends`` es necesario si el calculo usa otros campos: le dice
@@ -794,8 +823,8 @@ acepta uno o más nombres de campo como argumento y la notación de puntos
 puede ser usada para seguir las relaciones de campo.
 
 Se espera que la función de calculo asigne un valor al campo o campos a
-calcular. Si no lo hace, arrojara un error. Debido a que self es un
-objeto de registro, nuestro calculo es simplemente para obtener el campo
+calcular. Si no lo hace, arrojara un error. Debido a que ``self`` es un
+objeto de registro, su calculo es simplemente para obtener el campo
 "Folded?" usando ``self.stage_id.fold``. El resultado es conseguido
 asignando ese valor (escribiéndolo) en el campo calculado,
 ``self.stage_fold``.
@@ -845,14 +874,14 @@ una condición ``(campo, operador, valor)`` dentro de una expresión de
 dominio de búsqueda.
 
 La función inversa realiza la lógica reversa del cálculo, para hallar el
-valor que sera escrito en el campo de origen. En nuestro ejemplo, es
+valor que sera escrito en el campo de origen. En su ejemplo, es
 solo escribir en ``stage_id.fold``.
 
 Guardar campos calculados
 -------------------------
 
 Los valores de los campos calculados también pueden ser almacenados en
-la base de datos, configurando "store" a "True" en su definición. Estos
+la base de datos, configurando ``store`` a ``True`` en su definición. Estos
 serán calculados cuando cualquiera de sus dependencias cambie. Debido a
 que los valores ahora estarán almacenados, pueden ser buscados como un
 campo regular, entonces no es necesaria una función de búsqueda.

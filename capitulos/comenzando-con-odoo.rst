@@ -381,7 +381,7 @@ Unas palabras sobre las versiones de Odoo
 -----------------------------------------
 
 A la fecha de publicación, la última versión estable de Odoo es la 8,
-marcada en GitHub como branch 8.0. Ésta es la versión con la que se
+marcada en GitHub como branch ``8.0``. Ésta es la versión con la que se
 trabajará a lo largo de éste libro.
 
 Es importante saber que las bases de datos de Odoo son incompatibles
@@ -403,7 +403,7 @@ de vista de los elementos se mantendrán estables. Esto es importante
 porque significa que no habrá riesgo de estropear los módulos
 personalizados por causa de cambios incompatibles en los módulos base.
 
-Sea consciente que la versión en la rama master se convertirá en la
+Sea consciente que la versión en la rama ``master`` se convertirá en la
 próxima versión principal estable, pero hasta entonces no será "estable
 para la API" y no debe usarla para construir módulos personalizados.
 Hacer esto es como moverse en arena movediza: no hay formar de asegurar
@@ -492,16 +492,19 @@ el servidor. Por ejemplo, para habilitar el nivel de registro de
 depuración utilice: ``--log-level=debug``
 
 Los siguientes niveles de registro pueden ser particularmente
-interesantes: - ``debug_sql`` para inspeccionar el SQL generado por el
-servidor - ``debug_rpc`` para detallar las peticiones recibidas por el
-servidor - ``debug_rpc`` para detallar las respuestas enviadas por el
-servidor
+interesantes:
+
+- ``debug_sql`` para inspeccionar el SQL generado por el servidor.
+
+- ``debug_rpc`` para detallar las peticiones recibidas por el servidor.
+
+- ``debug_rpc`` para detallar las respuestas enviadas por el servidor.
 
 La salida del registro es enviada de forma predeterminada a la salida
 estándar (la terminal), pero puede ser dirigida a un archivo de registro
 con la opción ``--logfile=<filepath>``.
 
-Finalmente, la opción ``--debug`` llamará al depurador Python (pdb)
+Finalmente, la opción ``--debug`` llamará al *depurador Python* (``pdb``)
 cuando aparezca una excepción. Es útil hacer un análisis post-mortem de
 un error del servidor. Note que esto no tiene ningún efecto en el nivel
 de detalle del registro. Se pueden encontrar más detalles sobre los
@@ -533,9 +536,10 @@ Usar un editor de texto Linux
 Tarde o temprano, será necesario editar archivos desde la línea de
 comandos. En muchos sistemas Debian el editor de texto predeterminado es
 vi. Si no se siente a gusto con éste, puede usar una alternativa más
-amigable. En sistemas Ubuntu el editor de texto predeterminado es nano.
+amigable. En sistemas Ubuntu el editor de texto predeterminado es ``nano``.
 Puede que prefiera usar éste ya que es más fácil de usar. En caso que no
-esté disponible en su servidor, puede instalarlo, ejecutando el siguiente comando:
+esté disponible en su servidor, puede instalarlo, ejecutando el siguiente
+comando:
 
 .. code:: shell
 
@@ -567,8 +571,8 @@ los archivos compartidos, ejecutando el siguiente comando:
 
     $ sudo smbpasswd -a odoo
 
-Después de esto el usuario odoo podrá acceder a un recurso compartido de
-archivos para su directorio home, pero será de solo lectura. Se requiere
+Después de esto el usuario ``odoo`` podrá acceder a un recurso compartido de
+archivos para su directorio *home*, pero será de solo lectura. Se requiere
 el acceso a escritura, así que es necesario editar los archivos de
 configuración de Samba para cambiar eso, ejecutando el siguiente comando:
 
@@ -671,7 +675,7 @@ Encontrar módulos de la comunidad
 
 Existen muchos módulos para Odoo disponibles en Internet. El sitio web
 https://www.odoo.com/apps es un catalogo de módulos que pueden ser
-descargados e instalados. La Odoo Community Association (OCA) coordina
+descargados e instalados. La **Odoo Community Association (OCA)** coordina
 las contribuciones de la comunidad y mantiene unos pocos repositorios en
 GitHub, en https://github.com/OCA.
 

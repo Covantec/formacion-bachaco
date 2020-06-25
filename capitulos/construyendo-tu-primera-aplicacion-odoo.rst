@@ -18,10 +18,13 @@ Deberá permitir agregar nuevas tareas, marcarlas como culminadas, y
 finalmente borrar de la lista todas las tareas finalizadas.
 
 Aprenderá como Odoo sigue una arquitectura MVC, y recorrerá las
-siguientes capas durante la implementación de la aplicación: - El
-**modelo**, define la estructura de los datos. - La **vista**, describe
-la interfaz con el usuario o la usuaria. - El **controlador**, soporta
-la lógica de negocio de la aplicación.
+siguientes capas durante la implementación de la aplicación:
+
+- El **modelo**, define la estructura de los datos.
+
+- La **vista**, describe la interfaz con el usuario.
+
+- El **controlador**, soporta la lógica de negocio de la aplicación.
 
 La capa modelo es definida por objetos Python cuyos datos son
 almacenados en una base de datos PostgreSQL. El mapeo de la base de
@@ -180,24 +183,30 @@ real es recomendable usar claves adicionales, ya que estas son
 relevantes para la app-store de Odoo:
 
 -  ``summary``, muestra un subtitulo del módulo.
+
 -  ``version``, de forma predeterminada, es 1.0. Se debe seguir las
    reglas de versionamiento semántico (para más detalles ver
    `semver.org <http://semver.org/lang/es/>`__).
 -  ``license``, de forma predeterminada es AGPL-3.
+
 -  ``website``, es una URL para encontrar más información sobre el
    módulo. Esta puede servir a las personas a encontrar documentación,
    informar sobre errores o hacer sugerencias.
+
 -  ``category``, es la categoría funcional del módulo, la cual de forma
    predeterminada es Sin Categoría. La lista de las categorías
    existentes puede encontrarse en el formato de Grupos (Configuraciones
-   \| Usuarios \| menú Grupos), en la lista desplegable del campo
+   > Usuarios > menú Grupos), en la lista desplegable del campo
    Aplicación.
 
-Estos descriptores también están disponibles: - ``installable``, de
-forma predeterminada es ``True``, pero puede ser fijada ``False`` para
-deshabilitar el módulo. - ``auto_install``, si esta fijada en ``True``
-este módulo es automáticamente instalado si todas las dependencias han
-sido instaladas. Esto es usado en módulos asociados.
+Estos descriptores también están disponibles:
+
+- ``installable``, de forma predeterminada es ``True``, pero puede ser
+  fijada ``False`` para deshabilitar el módulo.
+
+- ``auto_install``, si esta fijada en ``True`` este módulo es automáticamente
+  instalado si todas las dependencias han sido instaladas. Esto es usado en
+  módulos asociados.
 
 Desde Odoo 8.0, en vez de la clave ``description`` podrá usar un
 archivo ``README.rst`` o ``README.md`` en el directorio raíz del módulo.
@@ -223,7 +232,7 @@ servidor con la configuración de la ruta de complementos o addons:
 
 La opción ``--save`` guarda la configuración usada en un archivo de
 configuración. Esto evita repetirlo cada vez que el servidor es
-iniciado: simplemente ejecute ./odoo.py y serán ejecutadas las últimas
+iniciado: simplemente ejecute ``./odoo.py`` y serán ejecutadas las últimas
 opciones guardadas.
 
 Mira detenidamente en el registro del servidor. Debería haber una línea
@@ -232,7 +241,7 @@ directorio ``custom-addons``.
 
 Recuerde incluir cualquier otro directorio que pueda estar usando. Por
 ejemplo, si siguió las instrucciones del último capítulo para instalar
-el repositorio department, puede querer incluirlo y usar la opción:
+el repositorio ``department``, puede querer incluirlo y usar la opción:
 
 .. code:: shell
 
@@ -403,12 +412,16 @@ obligar que todo el código Python sea cargado nuevamente.
 
 También podrá ver algunos campos adicionales que no declarara. Estos
 son cinco campos reservados que Odoo agrega automáticamente a cualquier
-modelo. Son los siguientes: - ``id``: Este es el identificador único
-para cada registro en un modelo en particular. - ``create_date`` y
-``create_uid``: Estos nos indican cuando el registro fue creado y quien
-lo creó, respectivamente. - ``write_date`` y ``write_uid``: Estos nos
-indican cuando fue la última vez que el registro fue modificado y quien
-lo modificó, respectivamente.
+modelo. Son los siguientes:
+
+- ``id``: Este es el identificador único para cada registro en un modelo en
+  particular.
+
+- ``create_date`` y ``create_uid``: Estos les indican cuando el registro fue
+  creado y quien lo creó, respectivamente.
+
+- ``write_date`` y ``write_uid``: Estos les indican cuando fue la última vez
+  que el registro fue modificado y quien lo modificó, respectivamente.
 
 Agregar entradas al menú
 ------------------------
@@ -449,20 +462,22 @@ ejecutada por este:
             </data>
         </openerp>
 
-La interfaz con el usuario y usuaria, incluidas las opciones del menú y
-las acciones, son almacenadas en tablas de la base de datos. El archivo
-XML es un archivo de datos usado para cargar esas definiciones dentro de
-la base de datos cuando el módulo es instalado o actualizado. Esto es un
-archivo de datos de Odoo, que describe dos registros para ser agregados
-a Odoo: - El elemento ``<act_window>`` define una Acción de Ventana del
-lado del cliente para abrir el modelo ``todo.task`` definido en el
-archivo Python, con las vistas de árbol y formulario habilitadas, en ese
-orden. - El elemento ``<menuitem>`` define un ítem de menú bajo el menú
-Mensajería (identificado por ``mail.mail_feeds``), llamando a la acción
-``action_todo_task``, que fue definida anteriormente. el atributo
-``sequence`` nos deja fijar el orden de las opciones del menú.
+La interfaz con el usuario, incluidas las opciones del menú y las acciones,
+son almacenadas en tablas de la base de datos. El archivo XML es un archivo
+de datos usado para cargar esas definiciones dentro de la base de datos cuando
+el módulo es instalado o actualizado. Esto es un archivo de datos de Odoo, que
+describe dos registros para ser agregados a Odoo:
 
-Ahora necesitamos decirle al módulo que use el nuevo archivo de datos
+- El elemento ``<act_window>`` define una Acción de Ventana del lado del
+  cliente para abrir el modelo ``todo.task`` definido en el archivo Python,
+  con las vistas de árbol y formulario habilitadas, en ese orden.
+
+- El elemento ``<menuitem>`` define un ítem de menú bajo el menú Mensajería
+  (identificado por ``mail.mail_feeds``), llamando a la acción ``action_todo_task``,
+  que fue definida anteriormente. el atributo ``sequence`` les deja fijar
+  el orden de las opciones del menú.
+
+Ahora necesita decirle al módulo que use el nuevo archivo de datos
 XML. Esto es hecho en el archivo ``__openerp__.py`` usando el atributo
 ``data``. Este define la lista de archivos que son cargados por el
 módulo. Agregue este atributo al diccionario del descriptor:
@@ -606,8 +621,8 @@ Organizar formularios usando grupos
 La etiqueta ``<group>`` permite organizar el contenido del formulario.
 Colocando los elementos ``<group>`` dentro de un elemento ``<group>``
 crea una disposición de dos columnas dentro del grupo externo. Se
-recomienda que los elementos Group tengan un nombre para hacer más fácil
-su extensión en otros módulos.
+recomienda que los elementos ``Group`` tengan un nombre para hacer más
+fácil su extensión en otros módulos.
 
 Usara esto para mejorar la organización de su contenido.
 Cambio el contenido de ``<sheet>`` de su formulario:
@@ -662,8 +677,7 @@ Recuerde que para que los cambios tengan efecto en la base de datos de
 Odoo, es necesario actualizar el módulo. Para ver los cambio en el
 cliente web, es necesario volver a cargar el formulario: haciendo
 nuevamente clic en la opción de menú que abre el formulario, o volviendo
-a cargar la página en el navegador (*F5* en la mayoría de los
-navegadores).
+a cargar la página en el navegador (*F5* en la mayoría de los navegadores).
 
 Ahora, agregue la lógica de negocio para las acciones de los botones.
 
@@ -748,15 +762,16 @@ Dentro de la clase ``TodoTask`` agregue:
 
 .. code:: Python
 
-    @api.one def do_toggle_done(self):
+    @api.one
+    def do_toggle_done(self):
         self.is_done = not self.is_done
         return True
 
 Como puede observar, simplemente modifica el campo ``is_done``,
 invirtiendo su valor. Luego los métodos pueden ser llamados desde el
-lado del client y siempre deben devolver algo. Si no devuelven nada, las
-llamadas del cliente usando el protocolo XMLRPC no funcionará. Si no
-tenemos nada que devolver, la práctica común es simplemente devolver
+lado del cliente y siempre deben devolver algo. Si no devuelven nada, las
+llamadas del cliente usando el protocolo ``XMLRPC`` no funcionará. Si no
+tiene nada que devolver, la práctica común es simplemente devolver
 ``True``.
 
 Después de esto, si reinicie el servidor Odoo para cargar nuevamente
@@ -770,7 +785,8 @@ hará un poco de trampa, y también actuará sobre los demás botones:
 
 .. code:: Python
 
-    @api.multi def do_clear_done(self):
+    @api.multi
+    def do_clear_done(self):
         done_recs = self.search([('is_done', '=', True)])
         done_recs.write({'active': False})
         return True
@@ -815,7 +831,7 @@ debe arreglar esto antes que otros usuarios puedan usarlo.
 
 Para tener una muestra de la información requerida para agregar reglas
 de acceso a un modelo, use el cliente web y diríjase a: **Configuración
-\| Técnico \| Seguridad \| Lista controles de acceso**.
+> Técnico > Seguridad > Lista controles de acceso**.
 
 .. figure:: images/112_1.jpg
   :align: center
@@ -923,7 +939,7 @@ Como se hizo anteriormente, debe agregar el archivo a
 
 .. code:: Python
 
-    'data':    [
+    'data': [
         'todo_view.xml',
         'security/ir.model.access.csv',
         'security/todo_access_rules.xml',

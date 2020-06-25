@@ -53,7 +53,7 @@ Calling the Odoo API using XML-RPC
 ==================================
 
 The simplest method to access the server is using XML-RPC. We can use
-the xmlrpclib library from Python’s standard library for this. Remember
+the ``xmlrpclib`` library from Python’s standard library for this. Remember
 that we are programming a client in order to connect to a server, so we
 need an Odoo server instance running to connect to. In our examples, we
 will assume that an Odoo server instance is running on the same machine
@@ -79,11 +79,11 @@ with the information for the server location and connection credentials.
 Feel free to adapt these to your specific setup.
 
 Next, we set up access to the server’s public services (not requiring a
-login), exposed at the /xmlrpc/2/common endpoint. One of the methods
+login), exposed at the ``/xmlrpc/2/common`` endpoint. One of the methods
 that are available is version(), which inspects the server version. We
 use it to confirm that we can communicate with the server.
 
-Another public method is authenticate(). In fact, this does not create a
+Another public method is ``authenticate()``. In fact, this does not create a
 session, as you might be led to believe. This method just confirms that
 the username and password are accepted and returns the user ID that
 should be used in requests instead of the username, as shown here:
@@ -101,7 +101,7 @@ With XML-RPC, no session is maintained and the authentication
 credentials are sent with every request. This adds some overhead to the
 protocol, but makes it simpler to use. Next, we set up access to the
 server methods that need a login to be accessed. These are exposed at
-the /xmlrpc/2/object endpoint, as shown in the following:
+the ``/xmlrpc/2/object`` endpoint, as shown in the following:
 
 .. code-block:: python
 
@@ -110,19 +110,19 @@ the /xmlrpc/2/object endpoint, as shown in the following:
     70 
 
 Here, we are doing our first access to the server API, performing a
-count on the Partner records. Methods are called using the execute\_kw()
+count on the Partner records. Methods are called using the ``execute_kw()``
 method that takes the following arguments: The name of the database to
 connect to The connection user ID The user password The target model
 identifier name The method to call A list of positional arguments An
 optional dictionary with keyword arguments
 
-The preceding example calls the search\_count method of the res.partner
+The preceding example calls the ``search_count`` method of the res.partner
 model with one positional argument, [], and no keyword arguments. The
 positional argument is a search domain; since we are providing an empty
 list, it counts all the Partners.
 
 Frequent actions are search and read. When called from the RPC, the
-search method returns a list of IDs matching a domain. The browse method
+``search`` method returns a list of IDs matching a domain. The browse method
 is not available from the RPC, and read should be used in its place to,
 given a list of record IDs, retrieve their data, as shown in the
 following code:
@@ -134,13 +134,13 @@ following code:
     >>> api.execute_kw(db, uid, pwd, 'res.partner', 'read', [[43]], {'fields': ['id', 'name', 'parent_id']})
     [{'parent_id': [7, 'Agrolait'], 'id':43, 'name': 'Michel Fletcher'}] 
 
-Note that for the read method, we are using one positional argument for
+Note that for the ``read`` method, we are using one positional argument for
 the list of IDs, [43], and one keyword argument, fields. We can also
 notice that relational fields are retrieved as a pair, with the related
 record’s ID and display name. That’s something to keep in mind when
 processing the data in your code.
 
-The search and read combination is so frequent that a search\_read
+The search and read combination is so frequent that a ``search_read``
 method is provided to perform both operations in a single step. The same
 result as the previous two steps can be obtained with the following:
 
@@ -148,17 +148,17 @@ result as the previous two steps can be obtained with the following:
 
     >>> api.execute_kw(db, uid, pwd, 'res.partner', 'search_read', [[('country_id', '=',    'be'), ('parent_id', '!=', False)]], {'fields': ['id', 'name', 'parent_id']}) 
 
-The search\_read method behaves like read, but expects as first
+The ``search_read`` method behaves like read, but expects as first
 positional argument a domain instead of a list of IDs. It’s worth
-mentioning that the field argument on read and search\_read is not
+mentioning that the field argument on read and search_read is not
 mandatory. If not provided, all fields will be retrieved.
 
 Calling other methods
 =====================
 
 The remaining model methods are all exposed through RPC, except for
-those starting with "\_" that are considered private. This means that we
-can use create, write, and unlink to modify data on the server as
+those starting with "_" that are considered private. This means that we
+can use ``create``, ``write``, and ``unlink`` to modify data on the server as
 follows:
 
 .. code-block:: python
@@ -190,16 +190,16 @@ from their computer’s desktop? Let’s write a simple Python application
 to do just that, as shown in the following screenshot:
 
 For clarity, we will split it into two files: one concerned to interact
-with the server backend, note\_api.py, and another with the graphical
-user interface, note\_gui.py.
+with the server backend, note_api.py, and another with the graphical
+user interface, note_gui.py.
 
 Communication layer with Odoo
 -----------------------------
 
 We will create a class to set up the connection and store its
-information. It should expose two methods: get() to retrieve task data
-and set() to create or update tasks. Select a directory to host the
-application files and create the note\_api.py file. We can start by
+information. It should expose two methods: ``get()`` to retrieve task data
+and ``set()`` to create or update tasks. Select a directory to host the
+application files and create the ``note_api.py`` file. We can start by
 adding the class constructor, as follows:
 
 .. code-block:: python
@@ -218,8 +218,8 @@ adding the class constructor, as follows:
             self.model = 'todo.task' 
 
 Here we store in the created object all the information needed to
-execute calls on a model: the API reference, uid, password, database
-name, and the model to use. Next we will define a helper method to
+execute calls on a model: the API reference, ``uid``, ``password``, ``database
+name``, and the ``model`` to use. Next we will define a helper method to
 execute the calls. It takes advantage of the object stored data to
 provide a smaller function signature, as shown next:
 
@@ -235,8 +235,8 @@ provide a smaller function signature, as shown next:
                                        arg_list,
                                        kwarg_dict or {}) 
 
-Now we can use it to implement the higher level get() and set() methods.
-The get() method will accept an optional list of IDs to retrieve. If
+Now we can use it to implement the higher level ``get()`` and ``set()`` methods.
+The ``get()`` method will accept an optional list of IDs to retrieve. If
 none are listed, all records will be returned, as shown here:
 
 .. code-block:: python
@@ -247,7 +247,7 @@ none are listed, all records will be returned, as shown here:
             fields = ['id', 'name']
             return  self.execute('search_read', [domain, fields]) 
 
-The set() method will have as arguments the task text to write, and an
+The ``set()`` method will have as arguments the task text to write, and an
 optional ID. If ID is not provided, a new record will be created. It
 returns the ID of the record written or created, as shown here:
 
@@ -283,9 +283,9 @@ Our goal here was to learn to write the interface between an external
 application and the Odoo server, and this was done in the previous
 section. But it would be a shame not going the extra step and actually
 making it available to the end user. To keep the setup as simple as
-possible, we will use Tkinter to implement the graphical user interface.
+possible, we will use ``Tkinter`` to implement the graphical user interface.
 Since it is part of the standard library, it does not require any
-additional installation. It is not our goal to explain how Tkinter
+additional installation. It is not our goal to explain how ``Tkinter``
 works, so we will be short on explanations about it.
 
 Each Task should have a small yellow window on the desktop. These
@@ -293,12 +293,17 @@ windows will have a single Text widget. Pressing *Ctrl* + *N* will open
 a new Note, and pressing *Ctrl* + *S* will write the content of the
 current note to the Odoo server.
 
-Now, alongside the note\_api.py file, create a new note\_gui.py file. It
-will first import the Tkinter modules and widgets we will use, and then
-the NoteAPI class, as shown in the following: from Tkinter import Text,
-Tk import tkMessageBox from note\_api import NoteAPI
+Now, alongside the ``note_api.py`` file, create a new ``note_gui.py`` file. It
+will first import the ``Tkinter`` modules and widgets we will use, and then
+the NoteAPI class, as shown in the following:
 
-Next we create our own Text widget derived from the Tkinter one. When
+.. code-block:: python
+
+    from Tkinter import Text, Tk
+    import tkMessageBox
+    from note_api import NoteAPI
+
+Next we create our own Text widget derived from the ``Tkinter`` one. When
 creating an instance, it will expect an API reference, to use for the
 save action, and also the Task’s text and ID, as shown in the following:
 
@@ -320,7 +325,7 @@ save action, and also the Task’s text and ID, as shown in the following:
                 self.master.geometry('220x235')
                 self.pack(fill='both',  expand=1) 
 
-The Tk() constructor creates a new UI window and the Text widget places
+The ``Tk()`` constructor creates a new UI window and the Text widget places
 itself inside it, so that creating a new NoteText instance automatically
 opens a desktop window. Next, we will implement the create and save
 actions. The create action opens a new empty window, but it will be
@@ -339,7 +344,7 @@ the following code:
 
 The save action can be performed either on existing or on new tasks, but
 there is no need to worry about that here since those cases are already
-handled by the set() method of NoteAPI.
+handled by the ``set()`` method of ``NoteAPI``.
 
 Finally, we will add the code that retrieves and creates all note
 windows when the program is started, as shown in the following code:
@@ -354,7 +359,7 @@ windows when the program is started, as shown in the following code:
             x = NoteText(api, note['name'], note['id'])
             x.master.mainloop() 
 
-The last command runs mainloop() on the last Note window created, to
+The last command runs ``mainloop()`` on the last Note window created, to
 start waiting for window events.
 
 This is a very basic application, but the point here is to make an
@@ -363,9 +368,9 @@ example of interesting ways to leverage the Odoo RPC API.
 Introducing the ERPpeek client
 ==============================
 
-ERPpeek is a versatile tool that can be used both as an interactive
+``ERPpeek`` is a versatile tool that can be used both as an interactive
 Command-line Interface (CLI ) and as a Python library , with a more
-convenient API than the one provided by xmlrpclib. It is available from
+convenient API than the one provided by ``xmlrpclib``. It is available from
 the PyPi index and can be installed with the following:
 
 .. code-block:: console
@@ -378,12 +383,12 @@ to prepend sudo to the command.
 The ERPpeek API
 ---------------
 
-The erppeek library provides a programming interface, wrapping around
-xmlrpclib, which is similar to the programming interface we have for the
-server-side code. Our point here is to provide a glimpse of what ERPpeek
+The ``erppeek`` library provides a programming interface, wrapping around
+``xmlrpclib``, which is similar to the programming interface we have for the
+server-side code. Our point here is to provide a glimpse of what ``ERPpeek``
 has to offer, and not to provide a full explanation of all its features.
 
-We can start by reproducing our first steps with xmlrpclib using erppeek
+We can start by reproducing our first steps with ``xmlrpclib`` using ``erppeek``
 as follows:
 
 .. code-block:: python
@@ -398,9 +403,9 @@ as follows:
 As you can see, the API calls use fewer arguments and are similar to the
 server-side counterparts.
 
-But ERPpeek doesn’t stop here, and also provides a representation for
+But ``ERPpeek`` doesn’t stop here, and also provides a representation for
 Models. We have the following two alternative ways to get an instance
-for a model, either using the model () method or accessing an attribute
+for a model, either using the ``model()`` method or accessing an attribute
 in camel case:
 
 .. code-block:: python
@@ -426,7 +431,7 @@ follows:
     >>> recs <RecordList 'res.partner,[76]'> 
     >>> recs.name ['Packt'] 
 
-As you can see, ERPpeek goes a long way from plain xmlrpclib, and makes
+As you can see, ``ERPpeek`` goes a long way from plain ``xmlrpclib``, and makes
 it possible to write code that can be reused server side with little or
 no modification.
 
@@ -465,20 +470,23 @@ Let’s see a sample session as follows:
     >>> rec.name 'Michel Fletcher'  
 
 As you can see, a connection was made to the server, and the execution
-context provided a reference to the model() method to get model
+context provided a reference to the ``model()`` method to get model
 instances and perform actions on them.
 
-The erppeek.Client instance used for the connection is also available
+The ``erppeek.Client`` instance used for the connection is also available
 through the client variable. Notably, it provides an alternative to the
 web client to manage the following modules installed:
 
--  client.modules(): This can search and list modules available or
+-  ``client.modules()``: This can search and list modules available or
    installed
--  client.install(): This performs module installation
--  client.upgrade(): This orders modules to be upgraded
--  client.uninstall(): This uninstalls modules
 
-So, ERPpeek can also provide good service as a remote administration
+-  ``client.install()``: This performs module installation
+
+-  ``client.upgrade()``: This orders modules to be upgraded
+
+-  ``client.uninstall()``: This uninstalls modules
+
+So, ``ERPpeek`` can also provide good service as a remote administration
 tool for Odoo servers.
 
 Resumen

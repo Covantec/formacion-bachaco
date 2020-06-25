@@ -120,7 +120,7 @@ archivos iniciales tal como sigue:
     $ mkdir todo_kanban 
     $ touch todo_kanban/__init__.py
 
-Ahora, edita el archivo descriptor todo\_kanban/\ **opernerp**.py tal
+Ahora, edita el archivo descriptor ``todo_kanban/__opernerp__.py`` tal
 como sigue:
 
 .. code-block:: python
@@ -158,8 +158,7 @@ se muestra a continuación:
 Ahora tiene ubicado el esqueleto básico para su módulo. Las
 plantillas usada en las vistas ``kanban`` y los reportes son extendidos
 usando las técnicas regulares usadas para otras vistas, por ejemplos
-usando expresiones XPATH. Para más detalles, ve al `Capítulo
-3 <capitulo_iii_herencia.md>`__, Herencia – Extendiendo Aplicaciones
+usando expresiones XPATH. Para más detalles, ve al `Capítulo 3 <herencia-extendiendo-funcionalidad-aplicaciones-existentes.rst>`_, Herencia – Extendiendo Aplicaciones
 Existentes.
 
 Antes de iniciar con las vistas kanban, necesita agregar un para de
@@ -168,41 +167,49 @@ campos en el modelo de la aplicación *tareas por hacer*.
 Prioridad y estado Kanban
 -------------------------
 
-Los dos campos que son frecuentemente usados en las vistas kanban son:
-priority y kanban state. **Priority** permite a los usuarios organizar
-sus elementos de trabajo, señalando lo que debería estar ubicado
-primero. **Kanban state** señala cuando una tarea está lista para pasar
-a la siguiente etapa o si es bloqueada por alguna razón. Ambos son
-soportados por campos selection y tienen widgets específicos para ser
-usados en las vistas de formulario y kanban.
+Los dos campos que son frecuentemente usados en las vistas ``kanban`` son:
+priority y kanban state.
 
-Para agrega estos campos a nuestro modelo, agregaremos al archivo
-todo\_kanban/todo\_task.py, tal como se muestra a continuación:
+- **Priority** permite a los usuarios organizar sus elementos de trabajo,
+  señalando lo que debería estar ubicado primero.
+
+- **Kanban state** señala cuando una tarea está lista para pasar a la siguiente
+  etapa o si es bloqueada por alguna razón. Ambos son soportados por campos
+  ``selection`` y tienen widgets específicos para ser usados en las vistas de
+  formulario y kanban.
+
+Para agrega estos campos a su modelo, agregara al archivo ``todo_kanban/todo_task.py``,
+tal como se muestra a continuación:
 
 .. code-block:: python
 
     from openerp import models, fields
-        class TodoTask(models.Model):
-            _inherit = 'todo.task'
-            priority = fields.Selection([
-                                        ('0','Low'),
-                                        ('1','Normal'),
-                                        ('2','High')],
-                                        'Priority',default='1')
-            kanban_state = fields.Selection([
-                                            ('normal', 'In Progress'),
-                                            ('blocked', 'Blocked'),
-                                            ('done', 'Ready for next stage')],
-                                            'Kanban State', default='normal')
 
-No olvidemos el archivo todo\_kanban/\ **init**.py que cargará el código
+    class TodoTask(models.Model):
+        _inherit = 'todo.task'
+
+        priority = fields.Selection([
+                                    ('0','Low'),
+                                    ('1','Normal'),
+                                    ('2','High')],
+                                    'Priority',default='1')
+        kanban_state = fields.Selection([
+                                        ('normal', 'In Progress'),
+                                        ('blocked', 'Blocked'),
+                                        ('done', 'Ready for next stage')],
+                                        'Kanban State', default='normal')
+
+
+No olvide el archivo ``todo_kanban/__init__.py`` que cargará el código
 precedente:
 
 .. code-block:: python
 
     from . import todo model
 
+
 Elementos de la vista kanban
+----------------------------
 
 La arquitectura de la vista kanban tiene un elemento superior y la
 siguiente estructura básica:
@@ -220,20 +227,20 @@ siguiente estructura básica:
     </kanban>
 
 El elemento contiene las plantillas para los fragmentos HTML a usar —uno
-o más. La plantilla principal a ser usada debe ser nombrada kanban-box.
+o más. La plantilla principal a ser usada debe ser nombrada ``kanban-box``.
 Otras plantillas son permitidas para fragmentos HTML para se incluido en
 la plantilla principal.
 
 Las plantillas usan html estándar, pero pueden incluir etiquetas
 ``<field>`` para insertar campos del modelo. También pueden ser usadas
 algunas directivas especiales de Qweb para la generación dinámica de
-contenido, tal como el t-name usado en el ejemplo previo.
+contenido, tal como el ``t-name`` usado en el ejemplo previo.
 
 Todos los campos del modelo usados deben ser declarados con una etiqueta
-``<field>``. Si ellos son usados solo en expresiones, tenemos que
+``<field>``. Si ellos son usados solo en expresiones, tiene que
 declararlos antes de la sección ``<templates>``. Uno de esos campos se
 le permite tener un valor agregado, mostrado en en el área superior de
-las columnas kanban. Esto se logra mediante la adición de un atributo
+las columnas ``kanban``. Esto se logra mediante la adición de un atributo
 con la agregación a usar, por ejemplo:
 
 .. code-block:: XML
@@ -241,24 +248,27 @@ con la agregación a usar, por ejemplo:
     <field name="effort_estimated" sum="Total Effort" />
 
 Aquí, la suma para el campo de estimación de esfuerzo es presentada en
-el área superior de las columnas kanban con la etiqueta Total Effort.
-Las agregaciones soportadas son sum, avg, min, max y count.
+el área superior de las columnas ``kanban`` con la etiqueta Total Effort.
+Las agregaciones soportadas son ``sum``, ``avg``, ``min``, ``max`` y ``count``.
 
 El elemento superior también soporta algunos atributos interesantes:
 
--  default\_group\_by: Establece el campo a usar para la agrupación por
-   defecto de columnas
--  default\_order: Establece un orden por defecto para usarse en los
-   elementos kanban
--  quick\_create="false": Deshabilita la opción de creación rápida en la
-   vista kanban
--  class: Añade una clase CSS al elemento raíz en la vista kanban
+-  ``default_group_by``: Establece el campo a usar para la agrupación por
+   defecto de columnas.
+
+-  ``default_order``: Establece un orden por defecto para usarse en los
+   elementos ``kanban``.
+
+-  ``quick_create="false"``: Deshabilita la opción de creación rápida en la
+   vista ``kanban``.
+
+-  ``class``: Añade una clase CSS al elemento raíz en la vista ``kanban``
    renderizada.
 
 Ahora de una mirada más de cerca a las plantillas Qweb usadas en
 las vistas ``kanban``.
 
-La vista kanban viñeta
+La vista ``kanban`` viñeta
 
 Para las plantillas QWeb de las viñetas kanban, el esqueleto se ve así:
 
@@ -279,11 +289,11 @@ Para las plantillas QWeb de las viñetas kanban, el esqueleto se ve así:
         </div>
     </t>
 
-Puedes ver las dos clases CSS principales provistas para los kanban de
-estilo viñeta: oe\_kanban\_vignette para el contenedor superior y
-oe\_kanban\_details para el contenido de datos.
+Puedes ver las dos clases CSS principales provistas para los ``kanban`` de
+estilo viñeta: ``oe_kanban_vignette`` para el contenedor superior y
+``oe_kanban_details`` para el contenido de datos.
 
-La vista completa de viñeta kanban para las tareas por hacer es como
+La vista completa de viñeta ``kanban`` para las tareas por hacer es como
 sigue:
 
 .. code-block:: XML
@@ -313,18 +323,18 @@ sigue:
         </templates>
     </kanban>
 
-Podemos ver los elementos discutidos hasta ahora, y también algunos
-nuevos. En la etiqueta , tenemos el atributo QWeb especial t-att-src.
-Esto puede calcular el contenido src de la imagen desde un campo
-almacenado en la base de datos. Explicaremos esto en otras directivas
-QWeb en un momento. También podemos ver el uso del atributo especial
-type en la etiqueta ``<a>``. Echemos un vistazo más de cerca.
+Podrá ver los elementos discutidos hasta ahora, y también algunos
+nuevos. En la etiqueta , tiene el atributo QWeb especial ``t-att-src``.
+Esto puede calcular el contenido ``src`` de la imagen desde un campo
+almacenado en la base de datos. Se explicara esto en otras directivas
+QWeb en un momento. También podrá ver el uso del atributo especial
+``type`` en la etiqueta ``<a>``. Eche un vistazo más de cerca.
 
 Acciones en las vistas Kanban
 -----------------------------
 
 En las plantillas Qweb, la etiqueta para enlaces puede tener un atributo
-type. Este establece el tipo de acción que el enlace ejecutará para que
+``type``. Este establece el tipo de acción que el enlace ejecutará para que
 los enlaces puedan actuar como los botones en los formularios regulares.
 En adición a los elementos ``<button>``, las etiquetas ``<a>`` también
 pueden ser usadas para ejecutar acciones Odoo.
@@ -334,12 +344,14 @@ u objeto, y debería ser acompañado por atributo nombre, que identifique
 la acción específica a ejecutar. Adicionalmente, los siguientes tipos de
 acción también están disponibles:
 
--  open: Abre la vista formulario correspondiente
--  edit: Abre la vista formulario correspondiente directamente en el
-   modo de edición
--  delete: Elimina el registro y remueve el elemento de la vista kanban.
+-  ``open``: Abre la vista formulario correspondiente.
 
-**La vista kanban de tarjeta** El kanban de **tarjeta** puede ser un
+-  ``edit``: Abre la vista formulario correspondiente directamente en el
+   modo de edición.
+
+-  ``delete``: Elimina el registro y remueve el elemento de la vista kanban.
+
+**La vista kanban de tarjeta** El ``kanban`` de **tarjeta** puede ser un
 poco más complejo. Este tiene un área de contenido principal y dos
 sub-contenedores al pie, alineados a cada lado de la tarjeta. También
 podría contener un botón de apertura de una acción de menú en la esquina
@@ -362,8 +374,8 @@ El esqueleto para esta plantilla se vería así:
         </div>
     </t>
 
-Un kanban **tarjeta** es más apropiada para las tareas to-do, así que en
-lugar de la vista descrita en la sección anterior, mejor deberíamos usar
+Un **tarjeta** ``kanban`` es más apropiada para las tareas to-do, así que en
+lugar de la vista descrita en la sección anterior, mejor debería usar
 la siguiente:
 
 .. code-block:: XML
@@ -401,7 +413,7 @@ Agregando contenido dinámico Qweb
 El analizador Qweb busca atributos especiales (directivas) en las
 plantillas y las reemplaza con HTML generado dinámicamente.
 
-Para las vistas kanban, el análisis se realiza mediante Javascript del
+Para las vistas ``kanban``, el análisis se realiza mediante Javascript del
 lado del cliente. Esto significa que las evaluaciones de expresiones
 hechos por Qweb deberían ser escritas usando la sintaxis Javascript, no
 Python.
@@ -409,11 +421,14 @@ Python.
 Al momento de mostrar una vista kanban, los pasos internos son
 aproximadamente los siguientes:
 
--  Obtiene el XML de la plantilla a renderizar
+-  Obtiene el XML de la plantilla a renderizar.
+
 -  Llama al método de servidor ``read()`` para obtener la data de los
    campos en las plantillas.
+
 -  Ubica la plantilla ``kanban-box`` y la analiza usando Qweb para la
    salida de los fragmentos HTML finales.
+
 -  Inyecta el HTML en la visualización del navegador (el DOM).
 
 Esto no significa que sea exacto técnicamente. Es solo un mapa mental
@@ -448,43 +463,52 @@ usando el atributo ``raw_value`` o el ``value``:
 -  ``raw_value``: Este es el valor retornado por el método de servidor
    ``read()``, así que se ajusta más para usarse en expresiones
    condicionales.
+
 -  ``value``: Este es formateado de acuerdo a las configuraciones de
    usuario, y está destinado a ser mostrado en la interfaz del usuario.
 
 El contexto de evaluación de Qweb también tiene referencias disponibles
 para la instancia JavaScript del cliente web. Para hacer uso de ellos,
 se necesita una buena comprensión de la arquitectura de cliente web,
-pero no podremos llegar a ese nivel de detalle. Para propósitos
+pero no podrá llegar a ese nivel de detalle. Para propósitos
 referenciales, los identificadores siguientes están disponibles en la
 evaluación de expresiones Qweb:
 
--  ``widget``: Esta es una referencia al objeto widget KanbanRecord,
+-  ``widget``: Esta es una referencia al objeto widget ``KanbanRecord``,
    responsable por el renderizado del registro actual dentro de la
-   tarjeta kanban. Expone algunas funciones de ayuda útiles que podemos
+   tarjeta kanban. Expone algunas funciones de ayuda útiles que podrá
    usar.
+
 -  ``record``: Este es un atajo para ``widget.records`` y provee acceso
    a los campos disponibles, usando notación de puntos.
+
 -  ``read_only_mode``:
 
--  widget: This is a reference to the current KanbanRecord widget
+-  ``widget``: This is a reference to the current ``KanbanRecord`` widget
    object, responsible for the rendering of the current record into a
    kanban card. It exposes some useful helper functions we can use.
--  record: This is a shortcut for widget.records and provides access to
+
+-  ``record``: This is a shortcut for widget.records and provides access to
    the fields available, using dot notation.
--  read\_only\_mode: This indicates if the current view is in read mode
+
+-  ``read_only_mode``: This indicates if the current view is in read mode
    (and not in edit mode). It is a shortcut for
-   widget.view.options.read\_only\_mode.
--  instance: This is a reference to the full web client instance.
+   widget.view.options.read_only_mode.
+
+-  ``instance``: This is a reference to the full web client instance.
 
 It is also noteworthy that some characters are not allowed inside
 expressions. The lower than sign (*<*) is such a case. You may use a
 negated *>=* instead. Anyway, alternative symbols are available for
 inequality operations as follows:
 
--  lt: This is for less than.
--  lte: This is for less than or equal to.
--  gt: This is for greater than.
--  gte: This is for greater than or equal to.
+-  ``lt``: This is for less than.
+
+-  ``lte``: This is for less than or equal to.
+
+-  ``gt``: This is for greater than.
+
+-  ``gte``: This is for greater than or equal to.
 
 Renderinzando valores con t-esc y t-raw
 ---------------------------------------
@@ -525,7 +549,7 @@ collection to iterate. In most cases, this will be just the name of a
 name to be used to refer to each item in the iteration.
 
 In the previous example, we loop through the task followers, stored in
-the message\_follower\_ids field. Since there is limited space on the
+the message_follower_ids field. Since there is limited space on the
 kanban card, we could have used the slice() JavaScript function to limit
 the number of followers to display, as shown in the following:
 
@@ -535,7 +559,7 @@ the number of followers to display, as shown in the following:
 
 The rec variable holds each iterations avatar stored in the database.
 Kanban views provide a helper function to conveniently generate that:
-kanban\_image(). It accepts as arguments the model name, the field name
+kanban_image(). It accepts as arguments the model name, the field name
 holding the image we want, and the ID for the record to retrieve.
 
 With this, we can rewrite the followers loop as follows:
@@ -561,8 +585,8 @@ substitution. This is helpful to have parts of larger strings generated
 dynamically, such as a URL address or CSS class names.
 
 The directive contains expression blocks that will be evaluated and
-replaced by the result. These are delimited either by {{ and }} or by #{
-and }. The content of the blocks can be any valid JavaScript expression
+replaced by the result. These are delimited either by ``{{ and }}`` or by
+``#{ and }``. The content of the blocks can be any valid JavaScript expression
 and can use any of the variables available for QWeb expressions, such as
 record and widget.
 
@@ -573,12 +597,11 @@ another template to our XML file, inside the element, after the
 .. code-block:: XML
 
     <t t-name="follower_avatars">
-     <div>
-        <t t-foreach="record.message_follower_ids.raw_value.slice(0, 3)" t-as="rec">
-          <img t-att-src="kanban_image(
-                    'res.partner', 'image_small', rec)"
-                class="oe_kanban_image oe_kanban_avatar_smallbox"/>
-        </t>
+        <div>
+            <t t-foreach="record.message_follower_ids.raw_value.slice(0, 3)" t-as="rec">
+            <img t-att-src="kanban_image('res.partner', 'image_small', rec)"
+                 class="oe_kanban_image oe_kanban_avatar_smallbox"/>
+            </t>
       </div>
     </t>
 
@@ -589,7 +612,7 @@ as follows:
 .. code-block:: XML
 
     <t t-call="follower_avatars">
-       <t t-set="arg_max" t-value="3" />
+        <t t-set="arg_max" t-value="3" />
     </t>
 
 The entire content inside the t-call element is also available to the
@@ -629,7 +652,7 @@ button is possible. There is also available a widget to set the card
 
 It is basically an HTML list of elements. The Edit and Delete options
 use QWeb to make them visible only when their actions are enabled on the
-view. The widget.view.is\_action\_enabled function allows us to inspect
+view. The widget.view.is_action_enabled function allows us to inspect
 if the edit and delete actions are available and to decide what to make
 available to the current user.
 
@@ -671,7 +694,7 @@ with the following:
     <div t-attf-class="oe_kanban_card
                        #{kanban_color(record.color.raw_value)}"/>
 
-The kanban\_color helper function does the translation of the color
+The kanban_color helper function does the translation of the color
 index into the corresponding CSS class name.
 
 And that). A helper function for this is available in kanban views.
@@ -696,9 +719,10 @@ since we havenWebkit HTML to PDF.s probably not what you will get now on
 your system. Lett display the You need Wkhtmltopdf to print a pdf
 version of the reports time library
 
--  user: This is the record for the user running the report
--  res\_company: This is the record for the current user Designing the
-   User Interface\*, with an additional widget to set the widget to use
+-  ``user``: This is the record for the user running the report
+
+-  ``res_company``: This is the record for the current user Designing the
+   User Interface, with an additional widget to set the widget to use
    to render the field.
 
 A common example is a monetary field, as shown in the following:
@@ -721,17 +745,17 @@ addresses, as shown in the following:
                     "no_marker": true}' />
 
 By default, some pictograms, such as a phone, are displayed in the
-address. The no\_marker="true" option disables them.
+address. The no_marker="true" option disables them.
 
 Habilitando la traducción de idiomas en reportes
 ------------------------------------------------
 
-A helper function, translate\_doc(), is available to dynamically
+A helper function, ``translate_doc()``, is available to dynamically
 translate the report content to a specific language.
 
 It needs the name of the field where the language to use can be found.
 This will frequently be the Partner the document is to be sent to,
-usually stored at partner\_id.lang. In our case, we dons also a less
+usually stored at ``partner_id.lang``. In our case, we dons also a less
 efficient method.
 
 If you cans growing in importance in the Odoo toolset. Finally, you had
@@ -740,5 +764,5 @@ an overview on how to create reports, also using the QWeb engine.
 Resumen
 =======
 
-En el siguiente capítulo, exploraremos cómo aprovechar la API RPC para
+En el siguiente capítulo, explorara cómo aprovechar la API RPC para
 interactuar con Odoo desde aplicaciones externas.
