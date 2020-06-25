@@ -252,9 +252,9 @@ es detectado algún cambio. Aquí se muestra un ejemplo de su uso:
     $ ./odoo.py -d v8dev --auto-reload
 
 Pero esta es una característica única en sistemas Linux. Si esta usando
-Debian/Ubuntu, como se recomendó en el Capítulo 1, entonces debe
-funcionar. Se requiere el paquete Python pyinotify, y debe ser instalado
-a través de ``apt-get`` o ``pip``, como se muestra a continuación:
+Debian/Ubuntu, como se recomendó en el :doc:`Capítulo 1 <comenzando-con-odoo>`,
+entonces debe funcionar. Se requiere el paquete Python pyinotify, y debe
+ser instalado a través de ``apt-get`` o ``pip``, como se muestra a continuación:
 
 Usando paquetes OS, ejecutando el siguiente comando:
 
@@ -762,8 +762,8 @@ Una sintaxis especial es usada para modificar a muchos campos, mientras
 se usan los métodos ``create()`` y ``write()`` con valores en un
 diccionario.
 
-Esto fue explicado en el Capítulo 4, en la sección 
-*Configurar valores para los campos de relación*.
+Esto fue explicado en el :doc:`Capítulo 4 <serializacion-de-datos-y-datos-del-modulo>`,
+en la sección *Configurar valores para los campos de relación*.
 
 Se hace referencia a las siguientes operaciones de ejemplo equivalentes
 a las precedentes usando ``write()``:
@@ -887,9 +887,9 @@ continuación:
    es una lista de valores de cadena de caracteres para para analizar e
    importar, y este se asigna directamente a las columnas y filas de los
    datos del CSV. Implementa las características de importación de datos
-   CSV descritas en el Capítulo 4, como el soporte para Ids externos. Es
-   usado por la característica Import del cliente web. Reemplaza el
-   método obsoleto ``import_data``.
+   CSV descritas en el :doc:`Capítulo 4 <serializacion-de-datos-y-datos-del-modulo>`,
+   como el soporte para Ids externos. Es usado por la característica
+   Import del cliente web. Reemplaza el método obsoleto ``import_data``.
 
 -  ``export_data([fields], raw_data=False)``: Es usado por la función
    Export del cliente web. Devuelve un diccionario con una clave de
@@ -1043,7 +1043,8 @@ aquellos que están disponibles y de como deben usarse:
    ``res.partner`` o ``self``.
 
 Los decoradores que tiene propósitos más específicos y que fueron
-explicados en el Capítulo 5, se muestran a continuación:
+explicados en el :doc:`Capítulo 5 <modelos-estructura-datos-aplicacion>`,
+se muestran a continuación:
 
 -  ``@api.depends(fld1,...)``: Este es usado por funciones de campos
    calculados para identificar los cambios en los cuales se debe

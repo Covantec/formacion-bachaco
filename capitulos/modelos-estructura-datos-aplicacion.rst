@@ -8,11 +8,11 @@ Modelos – Estructura de los Datos de la Aplicación
 ==================================================
 
 En los capítulos anteriores, vio un resumen de extremo a extremo sobre
-la creación de módulos nuevos para Odoo. En el Capítulo 2, se construyo
-una aplicación totalmente nueva, y en el Capítulo 3, exploro la
+la creación de módulos nuevos para Odoo. En el :doc:`Capítulo 2 <construyendo-tu-primera-aplicacion-odoo>`, se construyo
+una aplicación totalmente nueva, y en el :doc:`Capítulo 3 <herencia-extendiendo-funcionalidad-aplicaciones-existentes>`, exploro la
 herencia y como usarla para crear un módulo de extensión para su
-aplicación. En el Capítulo 4, se discute como agregar datos iniciales y
-de demostración a sus módulos.
+aplicación. En el :doc:`Capítulo 4 <serializacion-de-datos-y-datos-del-modulo>`,
+se discute como agregar datos iniciales y de demostración a sus módulos.
 
 En estos resúmenes, se toco todas las capas que componen el desarrollo
 de aplicaciones *"backend"* para Odoo. Ahora, en los siguientes capítulos,
@@ -374,7 +374,7 @@ de campo:
 -  ``Date`` y ``Datetime``, estos datos son almacenados en formato UTC.
    Se realizan conversiones automáticas, basadas en las preferencias del
    usuario, disponibles a través del contexto de la sesión de usuario.
-   Esto es discutido con mayor detalle en el Capítulo 6.
+   Esto es discutido con mayor detalle en el :doc:`Capítulo 6 <vistas-disenar-la-interfaz>`.
 
 -  ``Boolean``, solo espera sea fijado el campo de título, incluso si es
    opcional.
@@ -561,7 +561,7 @@ ser usados con estos tipos de campo:
 -  ``context`` y ``domain``, son significativos para las vistas del
    cliente. Pueden ser configurados en el modelo para ser usados de
    forma predeterminada en cualquier vista donde sea usado el campo.
-   Estos serán explicados con más detalle en el Capítulo 6.
+   Estos serán explicados con más detalle en el :doc:`Capítulo 6 <vistas-disenar-la-interfaz>`.
 
 -  ``auto_join = True``, permite que el ORM use uniones SQL haciendo
    búsquedas usando esta relación. De forma predeterminada esto esta
@@ -786,8 +786,9 @@ calcularlo.
 
 En la mayoría de los casos los campos calculados involucran alguna
 lógica de negocio, por lo tanto este tema se desarrollara con más
-profundidad en el Capítulo 7. Igual podrá explicarlo aquí, pero
-manteniendo la lógica de negocio lo más simple posible.
+profundidad en el :doc:`Capítulo 7 <logica-aplicacion-orm>`. Igual
+podrá explicarlo aquí, pero manteniendo la lógica de negocio lo más
+simple posible.
 
 Trabaje en un ejemplo: los estados tienen un campo "fold".
 Agregue a las tareas un campo calculado con la marca "Folded?" para

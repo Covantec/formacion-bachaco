@@ -18,7 +18,7 @@ Usuario y modificara las vistas existentes que fueron agregadas en capítulos
 anteriores.
 
 La mejor manera de modificar vistas existentes es usar la herencia, como
-se explico en el *Capítulo 3*. Sin embargo, para mejorar la claridad en la
+se explico en el :doc:`Capítulo 3 <herencia-extendiendo-funcionalidad-aplicaciones-existentes>`. Sin embargo, para mejorar la claridad en la
 explicación, sobre escribirá las vistas existentes, y las
 reemplazara por unas vistas completamente nuevas. Esto hará que los
 temas sean más fáciles de entender y seguir.
@@ -345,7 +345,7 @@ estados son tablas auxiliares.
 
 Estos modelos de negocio pueden usar diseños de vista de negocio
 mejorados para mejorar la experiencia del usuario. Si vuelve a ejecutar
-la vista del formulario de tarea agregada en el Capítulo 2, notará que
+la vista del formulario de tarea agregada en el :doc:`Capítulo 2 <construyendo-tu-primera-aplicacion-odoo>`, notará que
 ya sigue la estructura de vista de negocio.
 
 La vista de formulario correspondiente debe ser agregada después de las
@@ -383,7 +383,7 @@ La sección historia y comunicación, con los widgets de red social en la
 parte inferior, es agregada por la herencia de su modelo de
 ``mail.thread`` (del módulo ``mail``), y agrega los elementos del ejemplo
 XML mencionado anteriormente al final de la vista de formulario. También
-vio esto en el *Capítulo 3*.
+vio esto en el :doc:`Capítulo 3 <herencia-extendiendo-funcionalidad-aplicaciones-existentes>`.
 
 La barra de estado del encabezado
 ---------------------------------
@@ -1028,7 +1028,8 @@ Otros tipos de vista
 Los tipos de vista que se usan con mayor frecuencia son los formularios
 y las listas, discutidos hasta ahora. A parte de estas, existen otros
 tipos de vista, y dará un vistazo a cada una de ellas. Las vistas
-``kanban`` no serán discutidas aquí, ya que las verá en el Capítulo 8.
+``kanban`` no serán discutidas aquí, ya que las verá en el
+:doc:`Capítulo 8 <qweb-creando-vistas-kanban-reportes>`.
 
 Recuerde que los tipos de vista disponibles están definidos en el
 atributo ``view_mode`` de la acción de ventana correspondiente.

@@ -103,10 +103,11 @@ Externos que se necesitan para realizar las referencias.
 
 Podrá utilizar identificadores externos en el menú mostrado
 anteriormente, pero el **menú de Desarrollo** puede proporcionar un
-método que sea más conveniente. Como recordara en el Capítulo 1,
-*Comenzando con el Desarrollo en Odoo*, el **menú de Desarrollo** es
-activado en la opción **Acerca de Odoo**, y entonces, estará disponible
-en la esquina superior izquierda de la vista del cliente web.
+método que sea más conveniente. Como recordara en el
+:doc:`Capítulo 1 <comenzando-con-odoo>`, *Comenzando con el Desarrollo
+en Odoo*, el **menú de Desarrollo** es activado en la opción
+**Acerca de Odoo**, y entonces, estará disponible en la esquina superior
+izquierda de la vista del cliente web.
 
 Para buscar el ID externo para un registro de datos, en el mismo
 formulario correspondiente, seleccione la opción **Ver metadatos** desde
@@ -426,7 +427,7 @@ realizados en los datos. Cabe destacar que, si las vistas fueron
 modificadas con personalizaciones, esos cambios se perderán con la
 próxima actualización del módulo. El procedimiento correcto es crear
 vistas heredadas de los cambios que necesita, como se explica en el
-Capítulo 3.
+:doc:`Capítulo 3 <herencia-extendiendo-funcionalidad-aplicaciones-existentes>`.
 
 Este comportamiento de sobrescribir es el valor predeterminado, pero se
 puede cambiar, por lo que cuando un registro ya creado se carga de nuevo
@@ -574,9 +575,10 @@ irrelevantes, por lo general lleno de 0 o ``False``.
 Atajos para modelos de uso frecuente
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Si se remonta al Capítulo 2, *La construcción de su primera
-aplicación Odoo*, podrá encontrar en los archivos XML otros elementos
-además de ``<record>`` , como ``<act_window>`` y ``<menuitem>``.
+Si se remonta al :doc:`Capítulo 2 <construyendo-tu-primera-aplicacion-odoo>`,
+*La construcción de su primera aplicación Odoo*, podrá encontrar en los
+archivos XML otros elementos además de ``<record>`` , como ``<act_window>``
+y ``<menuitem>``.
 
 Estos son los atajos convenientes para los modelos de uso frecuente, que
 también se pueden cargar utilizando elemento ``<record>`` regulares.

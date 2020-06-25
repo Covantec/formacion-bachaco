@@ -120,7 +120,7 @@ hacer la aplicación más interesante.
 Basta de charla, comience a escribir código y crear su nuevo
 módulo.
 
-Siguiendo las instrucciones del *Capítulo 1, Comenzando con Odoo*,
+Siguiendo las instrucciones del :doc:`Capítulo 1, Comenzando con Odoo <comenzando-con-odoo>`,
 debe tener el servidor Odoo en ``/odoo-dev/odoo/``. Para mantener las
 cosas ordenadas, creare un directorio junto a este para guardar
 sus propios módulos:

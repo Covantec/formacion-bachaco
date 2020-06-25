@@ -61,8 +61,9 @@ funcionalidades:
   los seguidores.
 
 Comience creando la estructura básica para el módulo junto al módulo
-``todo_app``. Siguiendo el ejemplo de instalación del Capítulo 1,
-sus módulos estarán alojados en ``~/odoo-dev/custom-addons/``:
+``todo_app``. Siguiendo el ejemplo de instalación del
+:doc:`Capítulo 1 <comenzando-con-odoo>`, sus módulos estarán alojados
+en ``~/odoo-dev/custom-addons/``:
 
 .. code:: bash
 
@@ -88,7 +89,7 @@ Ahora, podrá instalarlo. Debe ser suficiente con solo actualizar el
 **Lista de módulos** desde el menú **Configuración**, encuentre el
 módulo nuevo en la lista de **Módulos locales** y haga clic en el botón
 Instalar. Para instrucciones más detalladas sobre como encontrar e
-instalar un módulo puede volver al Capítulo 1.
+instalar un módulo puede volver al :doc:`Capítulo 1 <comenzando-con-odoo>`.
 
 Ahora, comience a agregar las nuevas características.
 
@@ -148,8 +149,8 @@ Las siguientes dos líneas son declaraciones de campos comunes. El
 ``user_id`` representa un usuario desde el modelo Users, ``res.users``.
 Es un campo de ``Many2one`` equivalente a una clave foránea en el argot
 de base de datos. El ``date_deadline`` es un simple campo de fecha. En
-el *Capítulo 5*, se explica con más detalle los tipos de campos
-disponibles en Odoo.
+el :doc:`Capítulo 5 <modelos-estructura-datos-aplicacion>`, se explica
+con más detalle los tipos de campos disponibles en Odoo.
 
 Aun le falta agregar al archivo ``__init__.py`` la declaración ``import``
 para incluirlo en el módulo:
@@ -230,7 +231,7 @@ Estas condiciones son unidas implícitamente con un operador ``AND``
 (``&`` en la sintaxis de dominio). Para agregar una operación ``OR`` se
 usa una "tubería" (``|``) en el lugar de la tupla, y afectara las
 siguientes dos condiciones. Ahondara más sobre este tema en el
-*Capítulo 6*.
+:doc:`Capítulo 6 <vistas-disenar-la-interfaz>`.
 
 El dominio usado aquí filtra todas las tareas con su etapa finalizadas
 (``'is_done', '=', True``) que también tengan al usuario actual como
@@ -288,7 +289,7 @@ Una vista heredada se ve así:
 El campo ``inherit_id`` identifica la vista que será ampliada, a través
 de la referencia de su identificador externo usando el atributo especial
 ``ref``. Los identificadores externos serán discutidos con mayor detalle
-en el *Capítulo 4*.
+en el :doc:`Capítulo 4 <serializacion-de-datos-y-datos-del-modulo>`.
 
 La forma natural de localizar los elementos XML es usando expresiones
 XPath. Por ejemplo, tomando la vista que fue definida en el capítulo
@@ -440,14 +441,16 @@ asignadas a alguien.
         <field name="arch" type="xml">
             <field name="name" position="after">
                 <field name="user_id" />
-                <filter name="filter_my_tasks" string="My Tasks" domain="[('user_id','in',[uid,False])]" />
-                <filter name="filter_not_assigned" string="Not Assigned" domain="[('user_id','=',False)]" />
+                <filter name="filter_my_tasks" string="My Tasks"
+                        domain="[('user_id','in',[uid,False])]" />
+                <filter name="filter_not_assigned" string="Not Assigned"
+                        domain="[('user_id','=',False)]" />
             </field>
         </field>
     </record>
 
 No se preocupe demasiado por la sintaxis específica de las vistas.
-Se describirá esto con más detalle en el *Capítulo 6*.
+Se describirá esto con más detalle en el :doc:`Capítulo 6 <vistas-disenar-la-interfaz>`.
 
 Más sobre el uso de la herencia para ampliar los modelos
 ========================================================
