@@ -9,23 +9,21 @@ Lógica de la Aplicación ORM – Apoyo a los Procesos de Negocio
 
 En este capítulo, aprenderá como escribir código para soportar la lógica
 de negocio en sus modelos y también como puede esto ser activado en
-eventos y acciones de usuario. Podemos escribir lógica compleja y
-asistentes usando la API de programación de Odoo, lo que nos permitirá
-proveer una interacción más dinámica con el usuario y la usuaria con
-estos programas.
+eventos y acciones de usuario. Podrá escribir lógica compleja y
+asistentes usando la API de programación de Odoo, lo que les permitirá
+proveer una interacción más dinámica con el usuario con estos programas.
 
 Asistente de tareas por hacer
 -----------------------------
 
-Con los asistentes, podemos pedir a los usuarios y las usuarias que
-ingresen información para ser usada en algunos procesos. Suponga que los
-usuarios y las usuarias de nuestra aplicación necesitan fijar fechas
-límites y personas responsables, regularmente, para un largo número de
-tareas. Podemos usar un asistente para ayudar con esto. El asistente
-permitirá escoger las tareas que serán actualizadas y luego seleccionar
-la fecha límite y/o la persona responsable.
+Con los asistentes, podrá pedir a los usuarios que ingresen información
+para ser usada en algunos procesos. Suponga que los usuarios de su aplicación
+necesitan fijar fechas límites y personas responsables, regularmente, para un
+largo número de tareas. Podrá usar un asistente para ayudar con esto. El
+asistente permitirá escoger las tareas que serán actualizadas y luego
+seleccionar la fecha límite y/o la persona responsable.
 
-Comenzaremos por crear un módulo nuevo para esta característica:
+Comenzara por crear un módulo nuevo para esta característica:
 ``todo_wizard``. Nuestro módulo tendrá un archivo Python y un archivo
 XML, por lo tanto la descripción ``todo_wizard/__openerp__.py`` será
 como se muestra en el siguiente código:
@@ -39,20 +37,20 @@ como se muestra en el siguiente código:
         'data': ['todo_wizard_view.xml'],   
     } 
 
-El código para cargar nuestro código en el archivo
+El código para cargar su código en el archivo
 ``todo_wizard/__init__.py``, es solo una línea:
 
 .. code-block:: python
 
     from . import todo_wizard_model
 
-Luego, necesitamos describir el modelo de datos que soporta nuestro
+Luego, necesita describir el modelo de datos que soporta su
 asistente.
 
 Modelo del asistente
 --------------------
 
-Un asistente muestra una vista de formulario al usuario o la usuario,
+Un asistente muestra una vista de formulario al usuario,
 usualmente dentro de una ventana de dialogo, con algunos campos para ser
 llenados. Esto será usado luego por la lógica del asistente.
 
@@ -67,7 +65,7 @@ datos viejos en los asistentes desde las tablas correspondientes de la
 base de datos.
 
 El archivo ``todo_wizard/todo_wizard_model.py`` definirá los tres campos
-que necesitamos: la lista de tareas que serán actualizadas, la persona
+que necesita: la lista de tareas que serán actualizadas, la persona
 responsable, y la fecha límite, como se muestra aquí:
 
 .. code-block:: python
@@ -83,16 +81,16 @@ responsable, y la fecha límite, como se muestra aquí:
         new_deadline = fields.Date('Deadline to Set')
         new_user_id  = fields.Many2one('res.users',string='Responsible to Set') 
 
-No vale de que nada, si usamos una relación uno a muchos tener que
-agregar el campo inverso muchos a uno. Deberíamos evitar las relaciones
+No vale de que nada, si usa una relación uno a muchos tener que
+agregar el campo inverso muchos a uno. Debería evitar las relaciones
 muchos a uno entre los modelos transitorios y regulares, y para ello
-usamos relaciones muchos a muchos que tengan el mismo propósito sin la
+use relaciones muchos a muchos que tengan el mismo propósito sin la
 necesidad de modificar el modelo de tareas por hacer.
 
-También estamos agregando soporte al registro de mensajes. El registro
+También esta agregando soporte al registro de mensajes. El registro
 se inicia con dos líneas justo después del TodoWizard, usando la
 librería estándar de registro de Python. Para escribir mensajes en el
-registro podemos usar:
+registro podrá usar:
 
 .. code-block:: python
 
@@ -101,7 +99,7 @@ registro podemos usar:
     _logger.warning('A WARNING message') 
     _logger.error('An ERROR message') 
 
-Veremos más ejemplos de su uso en este capítulo.
+Vea más ejemplos de su uso en este capítulo.
 
 Formularios de asistente
 ------------------------
@@ -149,16 +147,16 @@ Este es el contenido del archivo ``todo_wizard/todo_wizard_view.xml``:
         </data>
     </openerp> 
 
-La acción de ventana que vemos en el XML agrega una opción al botón
+La acción de ventana que ve en el XML agrega una opción al botón
 "Más" del formulario de tareas por hacer, usando el atributo
 ``src_model``. ``target=new`` hace que se abra como una ventana de
 dialogo.
 
-También debe haber notado el "attrs" en el botón "Mass Update" usado
+También debe haber notado el atributo ``attrs`` en el botón "Mass Update" usado
 para hacer al botón invisible hasta que sea seleccionada otra fecha
 límite u otro responsable.
 
-Así es como lucirá nuestro asistente:
+Así es como lucirá su asistente:
 
 .. figure:: images/251_1.jpg
   :align: center
@@ -169,7 +167,7 @@ Así es como lucirá nuestro asistente:
 Lógica de negocio del asistente
 -------------------------------
 
-Luego necesitamos implementar las acciones ejecutadas al hacer clic en
+Luego necesita implementar las acciones ejecutadas al hacer clic en
 el botón "Mass Update". El método que es llamado por el botón es
 ``do_mass_update`` y debe ser definido en el archivo
 ``todo_wizard/todo_wizard_model.py``, como se muestra en el siguiente
@@ -190,31 +188,31 @@ código.
                     return True 
 
 Nuestro código puede manejar solo una instancia del asistente al mismo
-tiempo. Puede que hayamos usado ``@api.one``, pero no es recomendable
-hacerlo en los asistentes. En algunos casos queremos que el asistente
+tiempo. Puede que haya usado ``@api.one``, pero no es recomendable
+hacerlo en los asistentes. En algunos casos querrá que el asistente
 devuelva una acción de ventana, que le diga al cliente que hacer luego.
 Esto no es posible hacerlo con ``@api.one``, ya que esto devolverá una
 lista de acciones en vez de una sola.
 
-Debido a esto, preferimos usar ``@api.multi`` y luego usamos
-``ensure_one()`` para verificar que "self" representa un único registro.
-Debe tenerse en cuenta que "self" es un registro que representa los
+Debido a esto, prefiere usar ``@api.multi`` y luego use
+``ensure_one()`` para verificar que ``self`` representa un único registro.
+Debe tenerse en cuenta que ``self`` es un registro que representa los
 datos en el formulario del asistente. El método comienza validando si se
 ha dado una nueva fecha límite o un nuevo responsable, de lo contrario
 arroja un error. Luego, se hace una demostración de la escritura de un
-mensaje en el registro del servidor. Si pasa la validación, escribimos
-los nuevos valores dados a las tareas seleccionadas. Estamos usando el
+mensaje en el registro del servidor. Si pasa la validación, escriba
+los nuevos valores dados a las tareas seleccionadas. Esta usando el
 método de escritura en un conjunto de registros, como los ``task_id`` a
 muchos campos para ejecutar una actualización masiva.
 
 Esto es más eficiente que escribir repetidamente en cada registro dentro
-de un bucle. Ahora trabajaremos en la lógica detrás de los dos botones
+de un bucle. Ahora trabajara en la lógica detrás de los dos botones
 en la parte superior. "Count" y "Get All".
 
 Elevar excepciones
 ------------------
 
-Cuando algo no esta bien, queremos interrumpir el programa con algún
+Cuando algo no esta bien, querrá interrumpir el programa con algún
 mensaje de error. Esto se realiza elevando una excepción. Odoo
 proporciona algunas clases de excepción adicionales a aquellas
 disponibles en Python. Estos son ejemplos de las más usadas:
@@ -228,7 +226,7 @@ disponibles en Python. Estos son ejemplos de las más usadas:
 
 El mensaje de advertencia también interrumpe la ejecución pero puede
 parecer menos severo que un ValidationError. Aunque no es la mejor
-interfaz, nos aprovechamos de esto para mostrar un mensaje en el botón
+interfaz, les aprovechará de esto para mostrar un mensaje en el botón
 "Count":
 
 .. code-block:: python
@@ -244,10 +242,9 @@ Recarga automática de los cambios en el código
 
 Cuando esta trabajando en el código Python, es necesario reiniciar el
 servidor cada vez que el código cambia. Para hacer le la vida más fácil
-a las personas que desarrollan esta disponible la opción
-``--auto-reload``. Esta realiza un monitoreo del código fuente y lo
-recarga automáticamente si es detectado algún cambio. Aquí se muestra un
-ejemplo de su uso:
+a las personas que desarrollan esta disponible la opción ``--auto-reload``.
+Esta realiza un monitoreo del código fuente y lo recarga automáticamente si
+es detectado algún cambio. Aquí se muestra un ejemplo de su uso:
 
 .. code-block:: console
 
@@ -273,29 +270,29 @@ Usando pip, posiblemente en un entorno virtual (virtualenv), ejecutando el sigui
 Acciones en el dialogo del asistente
 ------------------------------------
 
-Ahora supongamos que queremos tener un botón que selecciona
-automáticamente las todas las tareas por hacer para ahorrar le la tarea
-al usuario y la usuario de tener que escoger una a una. Este es el
-objetivo de tener un botón "Get All" en el formulario. El código detrás
-de este botón tomará un conjunto de registros de tareas activas y los
-asignará a las tareas en el campo muchos a muchos.
+Ahora suponga que querrá tener un botón que selecciona automáticamente
+las todas las tareas por hacer para ahorrar le la tarea al usuario de
+tener que escoger una a una. Este es el objetivo de tener un botón "Get All"
+en el formulario. El código detrás de este botón tomará un conjunto de
+registros de tareas activas y los asignará a las tareas en el campo
+muchos a muchos.
 
 Pero hay una trampa aquí. En las ventanas de dialogo, cuando un botón es
 presionado, la ventana de asistente es cerrada automáticamente. No se
-nos presento este problema con el botón "Count" porque este usa una
+les presento este problema con el botón "Count" porque este usa una
 excepción para mostrar el mensaje; así que la acción falla y la ventana
 no se cierra.
 
-Afortunadamente podemos trabajar este comportamiento para que retorne
-una acción al cliente que re abra el mismo asistente. Los métodos del
+Afortunadamente podrá trabajar este comportamiento para que retorne
+una acción al cliente que abra de nuevo el mismo asistente. Los métodos del
 modelo pueden retornar una acción para que el cliente web la ejecute, de
 la forma de un diccionario que describa la acción de ventana que será
 ejecutada. Este diccionario usa los mismos atributos que se usan para
 definir las acciones de ventana en el XML del módulo.
 
-Usaremos una función de ayuda para el diccionario de la acción de
-ventana para re-abrir la ventana del asistente, así podrá ser re-usada
-en varios botones, como se muestra a continuación:
+Usara una función de ayuda para el diccionario de la acción de
+ventana para abrirse de nuevo la ventana del asistente, así podrá ser usada
+de nuevo en varios botones, como se muestra a continuación:
 
 .. code-block:: python
 
@@ -313,10 +310,10 @@ en varios botones, como se muestra a continuación:
 
 No es importante si la acción de ventana es cualquier otra cosa, como
 saltas a un formulario y registro específico, o abrir otro formulario de
-asistente para pedir al usuario o la usuaria el ingreso de más datos.
+asistente para pedir al usuario el ingreso de más datos.
 
 Ahora que el botón "Get All" puede realizar su trabajo y mantener al
-usuario o la usuaria trabajando en el mismo asistente:
+usuario trabajando en el mismo asistente:
 
 .. code-block:: python
 
@@ -327,13 +324,15 @@ usuario o la usuaria trabajando en el mismo asistente:
         self.task_ids   = all_tasks       # reopen wizard form on same wizard record 
         return self.do_reopen_form() 
 
-Aquí podemos ver como obtener una referencia a un modelo diferente, el
-cual en este caso es
-``todo.task``, para ejecutar acciones en el. Los valores del formulario del asistente son almacenados en un modelo transitorio y pueden ser escritos y leídos como en los modelos regulares. También podemos ver que el método fija el valor de``\task\_ids\``
-con la lista de todas las tareas activas.
+Aquí podrá ver como obtener una referencia a un modelo diferente, el
+cual en este caso es ``todo.task``, para ejecutar acciones en el. Los
+valores del formulario del asistente son almacenados en un modelo
+transitorio y pueden ser escritos y leídos como en los modelos regulares.
+También podrá ver que el método fija el valor de``task_ids`` con la
+lista de todas las tareas activas.
 
-Note que como no hay garantía que "self" sea un único registro, lo
-validamos usando ``self.ensure_one()``. No debemos usar el decorador
+Note que como no hay garantía que ``self`` sea un único registro, lo
+valida usando ``self.ensure_one()``. No debe usar el decorador
 ``@api.one`` porque envuelve el valor retornado en una lista. Debido a
 que el cliente web espera recibir un diccionario y no una lista, no
 funcionaría como es requerido.
@@ -341,7 +340,7 @@ funcionaría como es requerido.
 Trabajar en el servidor
 -----------------------
 
-Usualmente nuestro código del servidor se ejecuta dentro de un método
+Usualmente su código del servidor se ejecuta dentro de un método
 del modelo, como es el caso de ``do_mass_update()`` en el código
 precedente. En este contexto, "self" representa el conjunto de registro
 desde los cuales se actúa.
@@ -357,9 +356,9 @@ ejecución; esto incluye la información de la sesión actual, como el
 usuario actual y el contexto de sesión, y también acceso a todos los
 otros modelos disponibles en el servidor.
 
-Para explorar mejor la programación del lado del servidor, podemos usar
-la consola interactiva del servidor, donde tenemos un entorno similar al
-que encontramos dentro de un método del modelo.
+Para explorar mejor la programación del lado del servidor, podrá usar
+la consola interactiva del servidor, donde tiene un entorno similar al
+que encontró dentro de un método del modelo.
 
 Esta es una nueva característica de la versión 9. Ha sido portada como
 un módulo para la versión 8, y puede ser descargada en
@@ -396,10 +395,10 @@ continuación:
     >>> self.env 
     <openerp.api.Environment object at 0xb3f4f52c>  
 
-En la sesión anterior, hicimos una breve inspección de nuestro entorno.
-"self" representa al conjunto de registro ``res.users`` el cual solo
+En la sesión anterior, se hizo una breve inspección de su entorno.
+``self`` representa al conjunto de registro ``res.users`` el cual solo
 contiene el registro con el ID 1 y el nombre Administrator. También
-podemos confirmar el nombre del modelo del conjunto de registros con
+podrá confirmar el nombre del modelo del conjunto de registros con
 ``self._name``, y confirmar que ``self.env`` es una referencia para el
 entorno.
 
@@ -426,8 +425,8 @@ como se muestra a continuación:
     >>> print self.name Administrator
     >>> for rec in self: print rec.name Administrator  
 
-En este ejemplo, realizamos un ciclo a través de los registros en el
-conjunto "self" e imprimimos el contenido del campo name. Este contiene
+En este ejemplo, se realiza un ciclo a través de los registros en el
+conjunto ``self`` e imprime el contenido del campo ``name``. Este contiene
 solo un registro, por lo tanto solo se muestra un nombre. Como puede
 ver, "self" es un "singleton" y se comporta como un registro, pero al
 mismo tiempo es iterable como un conjunto de registros.
@@ -435,12 +434,12 @@ mismo tiempo es iterable como un conjunto de registros.
 Usar campos de relación
 -----------------------
 
-Como ya hemos visto, los modelos pueden tener campos relacionales:
+Como ya ha visto, los modelos pueden tener campos relacionales:
 muchos a uno, uno a muchos, y muchos a muchos. Estos tipos de campos
 tienen conjuntos de registros como valores.
 
 En en caso de muchos a uno, el valor puede ser un "singleton" o un
-conjunto de registros vacío. En ambos casos, podemos acceder a sus
+conjunto de registros vacío. En ambos casos, podrá acceder a sus
 valores directamente. Como ejemplo, las siguientes instrucciones son
 correctas y seguras:
 
@@ -465,13 +464,13 @@ como se muestra a continuación:
 Consultar los modelos
 ---------------------
 
-Con "self" solo podemos acceder a al conjunto de registros del método.
-Pero la referencia a ``self.env`` nos permite acceder a cualquier otro
+Con ``self`` solo podrá acceder a al conjunto de registros del método.
+Pero la referencia a ``self.env`` le permite acceder a cualquier otro
 modelo.
 
 Por ejemplo, ``self.env['res.partner']`` devuelve una referencia al
 modelo Partners (la cual es un conjunto de registros vacío). Por lo
-tanto podemos usar ``search()`` y ``browse()`` para generar el conjunto
+tanto podrá usar ``search()`` y ``browse()`` para generar el conjunto
 de registros.
 
 El método ``search()`` toma una expresión de dominio y devuelve un
@@ -481,20 +480,22 @@ el modelo tiene el campo especial "active", de forma predeterminada solo
 los registros que tengan ``active=True`` serán tomados en cuenta. Otros
 argumentos opcionales están disponibles:
 
--  order: Es una cadena de caracteres usada en la clausula ORDER BY en
-   la consulta a la base de datos. Usualmente es una lista de los
+-  ``order``: Es una cadena de caracteres usada en la clausula ``ORDER BY``
+   en la consulta a la base de datos. Usualmente es una lista de los
    nombres de campos separada por coma.
--  limit: Fija el número máximo de registros que serán devueltos.
--  offset: Ignora los primeros "n" resultados; puede usarse con "limit"
+
+-  ``limit``: Fija el número máximo de registros que serán devueltos.
+
+-  ``offset``: Ignora los primeros "n" resultados; puede usarse con ``limit``
    para realizar la búsqueda de un bloque de registros a la vez.
 
-A veces solo necesitamos saber el número de registros que cumplen con
-ciertas condiciones. Para esto podemos usar ``search_count()``, la cual
+A veces solo necesita saber el número de registros que cumplen con
+ciertas condiciones. Para esto podrá usar ``search_count()``, la cual
 devuelve el conteo de los registros en vez del conjunto de registros.
 
 El método ``browse()`` toma una lista de Ids o un único ID y devuelve un
 conjunto con esos registros. Esto puede ser conveniente para los casos
-en que ya sepamos los Ids de los registros que queremos.
+en que ya sepa los Ids de los registros que desea.
 
 Algunos ejemplos de su uso se muestran a continuación:
 
@@ -507,7 +508,7 @@ Escribir en los registros
 -------------------------
 
 Los conjuntos de registros implementan el patrón de registro activo.
-Esto significa que podemos asignas les valores, y esos valores se harán
+Esto significa que podrá asignas les valores, y esos valores se harán
 permanentes en la base de datos. Esta es una forma intuitiva y
 conveniente de manipulación de datos, como se muestra a continuación:
 
@@ -594,7 +595,7 @@ la base de datos, como se muestra a continuación:
        En una sesión de la terminal, la manipulación de los datos no se
        hará efectiva hasta no usar ``self.env.cr.commit()``.
 
-Con el método del cursor ``execute()``, podemos ejecutar SQL
+Con el método del cursor ``execute()``, podrá ejecutar SQL
 directamente en la base de datos. Este toma una cadena de texto con la
 sentencia SQL que se ejecutará y un segundo argumento opcional con una
 tupla o lista de valores para ser usados como parámetros en el SQL.
@@ -653,9 +654,8 @@ proveen algunas funciones. Por ejemplo:
 
 Dado que las fechas y horas son tratadas y almacenadas por el servidor
 en formato UTC nativo, el cual no toma en cuenta la zona horaria y
-probablemente es diferente a la zona horaria del usuario o usuaria, a
-continuación se muestran algunas otras funciones que pueden ayudar con
-esto:
+probablemente es diferente a la zona horaria del usuario, a continuación
+se muestran algunas otras funciones que pueden ayudar con esto:
 
 -  ``fields.Date.today()``: Este devuelve una cadena con la fecha actual
    en el formato esperado por el servidor y usando UTC como referencia.
@@ -699,12 +699,12 @@ registros a los valores de los campos relacionales. Se debería usar el
 ID correspondiente o la lista de Ids.
 
 Por ejemplo, en ves de ``self.write({'user_id': self.env.user})``,
-deberíamos usar ``self.write({'user_id':    self.env.user.id})``.
+debería usar ``self.write({'user_id':    self.env.user.id})``.
 
 Manipular los conjuntos de registros
 ------------------------------------
 
-Seguramente queremos agregar, eliminar o reemplazar los elementos en
+Seguramente querrá agregar, eliminar o reemplazar los elementos en
 estos campos relacionados, y esto lleva a la pregunta: ¿como se pueden
 manipular los conjuntos de registros?
 
@@ -733,7 +733,7 @@ En general, cuando se manipulan conjuntos de registro, debe asumir que
 el orden del registro no es preservado. Aun así, la agregación y en
 "slicing" son conocidos por mantener el orden del registro.
 
-Podemos usar estas operaciones de conjuntos para cambiar la lista,
+Podrá usar estas operaciones de conjuntos para cambiar la lista,
 eliminando o agregando elementos. Puede observar esto en el siguiente
 ejemplo:
 
@@ -765,7 +765,7 @@ Otras operaciones de conjunto de registros
 
 Los conjuntos de registro soportan operaciones adicionales.
 
-Podemos verificar si un registro esta o no incluido en un conjunto,
+Podrá verificar si un registro esta o no incluido en un conjunto,
 haciendo lo siguiente: record in recordset, record not in recordset.
 También estas disponibles estas operaciones:
 
@@ -805,13 +805,16 @@ conjunto de registro carga su entorno de ejecución en ``self.env`` con
 estos atributos:
 
 -  ``env.cr``: Es el cursor de base de datos usado actualmente.
+
 -  ``env.uid``: Este es el ID para el usuario de la sesión.
+
 -  ``env.user``: Es el registro para el usuario de la sesión.
+
 -  ``env.context``: Es un diccionario inmutable con un contexto de
    sesión.
 
 El entorno es inmutable, por lo tanto no puede ser modificado. Pero
-podemos crear entornos modificables y luego usarlos para ejecutar
+podrá crear entornos modificables y luego usarlos para ejecutar
 acciones.
 
 Para esto pueden usarse los siguientes métodos:
@@ -836,7 +839,7 @@ registro, como se muestra a continuación.
 
 **Métodos del modelo para la interacción con el cliente**
 
-Hemos visto los métodos del modelo más importantes usados para generar
+Ha visto los métodos del modelo más importantes usados para generar
 los conjuntos de registros y como escribir en ellos. Pero existen otros
 métodos disponibles para acciones más específicas, se muestran a
 continuación:
@@ -909,8 +912,7 @@ representar la interfaz y ejecutar la interacción básica:
 
 -  ``fields_view_get()``: Es usado por el cliente web para devolver la
    estructura de la vista de la UI. Puede darse el ID de la vista como
-   un argumento o el tipo de vista que queremos usando
-   ``view_type='form'``.
+   un argumento o el tipo de vista que querrá usando ``view_type='form'``.
 
    Vea el siguiente ejemplo:
 
@@ -921,17 +923,17 @@ representar la interfaz y ejecutar la interacción básica:
 Sobre escribir los métodos predeterminados
 ------------------------------------------
 
-Hemos aprendido sobre los métodos estándares que provee la API. Pero lo
-que podemos hacer con ellos no termina allí! También podemos ampliarlos
-para agregar comportamientos personalizados a nuestros modelos.
+Ha aprendido sobre los métodos estándares que provee la API. Pero lo
+que podrá hacer con ellos no termina allí! También podrá ampliarlos
+para agregar comportamientos personalizados a sus modelos.
 
 El caso más común es ampliar los métodos ``create()`` y ``write()``.
 Puede usarse para agregar la lógica desencadenada en cualquier momento
-que se ejecuten estas acciones. Colocando nuestro lógica en la sección
-apropiada de los métodos personalizados, podemos hacer que el se ejecute
+que se ejecuten estas acciones. Colocando su lógica en la sección
+apropiada de los métodos personalizados, podrá hacer que el se ejecute
 antes o después que las operaciones principales.
 
-Usando el modelo TodoTask como ejemplo, podemos crear un ``create()``
+Usando el modelo ``TodoTask`` como ejemplo, podrá crear un ``create()``
 personalizado, el cual puede ser de la siguiente forma:
 
 .. code-block:: python
@@ -958,29 +960,29 @@ Un método ``write()`` personalizado seguiría esta estructura:
 
 Estos son ejemplos comunes de ampliación, pero cualquier método estándar
 disponibles para un modelo puede ser heredado en un forma similar para
-agregar lo a nuestra lógica personalizada.
+agregar lo a su lógica personalizada.
 
 Estas técnicas abren muchas posibilidades, pero recuerde que otras
 herramientas que se ajustan mejor a tareas específicas también esta
 disponibles, y deben darse le prioridad:
 
--  Para tener un valor de campo calculado basado en otro, debemos usar
+-  Para tener un valor de campo calculado basado en otro, debe usar
    campos calculados. Un ejemplo de esto es calcular un total cuando los
    valores de las líneas cambian.
 
 -  Para tener valores predeterminados de campos calculados
-   dinámicamente, podemos usar un campo predeterminado enlazado a una
+   dinámicamente, podrá usar un campo predeterminado enlazado a una
    función en vez de a un valor escalar.
 
--  Para fijar valores en otros campos cuando un campos cambia, podemos
-   usar funciones on-change. Un ejemplo de esto es cuando escogemos un
+-  Para fijar valores en otros campos cuando un campos cambia, podrá
+   usar funciones ``on-change``. Un ejemplo de esto es cuando escoge un
    cliente para fijar el tipo de moneda en el documento para el socio
    correspondiente, el cual puede luego ser cambiado manualmente por el
-   usuario o la usuaria. Tenga en cuenta que on-change solo funciona
+   usuario. Tenga en cuenta que ``on-change`` solo funciona
    desde las interacciones de ventana y no directamente en las llamadas
    de escritura.
 
--  Para las validaciones, podríamos funciones de restricción decoradas
+-  Para las validaciones, podrá funciones de restricción decoradas
    con ``@api.constraints(fdl1,fdl2,...)``. Estas son como campos
    calculados pero se espera que arrojen errores cuando las condiciones
    no son cumplidas en vez de valores calculados.
@@ -988,23 +990,23 @@ disponibles, y deben darse le prioridad:
 Decoradores de métodos del Modelo
 ---------------------------------
 
-Durante nuestra jornada, los métodos que hemos encontrado usan los
+Durante su jornada, los métodos que ha encontrado usan los
 decoradores de la API como ``@api.one``. Estos son importantes para que
-el servidor sepa como manejar los métodos. Ya hemos dado alguna
-explicación de los decoradores usados; ahora recapitulemos sobre
+el servidor sepa como manejar los métodos. Ya ha dado alguna
+explicación de los decoradores usados; ahora recapitule sobre
 aquellos que están disponibles y de como deben usarse:
 
 -  ``@api.one``: Este alimenta a la función con un registro a la vez. El
-   decorador realiza la iteración del conjunto de registros por nosotros
-   y se garantiza que self sea un singleton. Este es el que debemos usar
-   si nuestra lógica solo requiere trabajar con cada registro. También
+   decorador realiza la iteración del conjunto de registros por usted
+   y se garantiza que ``self`` sea un *singleton*. Este es el que debe usar
+   si su lógica solo requiere trabajar con cada registro. También
    agrega el valor retornado de la función en una lista en cada
    registro, la cual puede tener efectos secundarios no intencionados.
 
--  ``@api.multi``: Este controla un conjunto de registros. Debemos
-   usarlo cuando nuestra lógica pueda depender del conjunto completo de
+-  ``@api.multi``: Este controla un conjunto de registros. Debe
+   usarlo cuando su lógica pueda depender del conjunto completo de
    registros y la visualización de registros aislados no es suficiente o
-   cuando necesitamos que el valor de retorno no sea una lista como un
+   cuando necesita que el valor de retorno no sea una lista como un
    diccionario con una acción de ventana. Este es el que más se usa en
    la práctica ya que ``@api.one`` tiene algunos costos y efectos de
    empaquetado de listas en los valores del resultado.
@@ -1032,10 +1034,9 @@ explicados en el Capítulo 5, se muestran a continuación:
 
 En particular, los métodos on-change pueden enviar mensajes de
 advertencia a la interfaz. Por ejemplo, lo siguiente podría advertir al
-usuario o usuaria que la cantidad ingresada del producto no esta
-disponible, sin impedir al usuario o usuaria continuar. Esto es
-realizado a través de un método "return" con un diccionario que describa
-el siguiente mensaje:
+usuario que la cantidad ingresada del producto no esta disponible, sin
+impedir al usuario continuar. Esto es realizado a través de un método
+``return`` con un diccionario que describa el siguiente mensaje:
 
 .. code-block:: python
 
@@ -1049,9 +1050,9 @@ el siguiente mensaje:
 Depuración
 ----------
 
-Sabemos que una buena parte del trabajo de desarrollo es la depuración del
-código. Para hacer esto frecuentemente hacemos uso del editor de código que
-puede fijar pontos de quiebre y ejecutar nuestro programa paso a paso. Hacer
+Sabe que una buena parte del trabajo de desarrollo es la depuración del
+código. Para hacer esto frecuentemente hace uso del editor de código que
+puede fijar pontos de quiebre y ejecutar su programa paso a paso. Hacer
 esto con Odoo es posible pero tiene sus dificultades.
 
 Si esta usando Microsoft Windows como su estación de trabajo, configurar un
@@ -1061,12 +1062,12 @@ cliente para actuar, lo hace diferente a la depuración de programas del lado
 del cliente.
 
 Mientras que esto puede ser realizado con Odoo, puede decirse que no es la
-forma más pragmática de resolver el asunto. Haremos una introducción sobre
+forma más pragmática de resolver el asunto. Hará una introducción sobre
 algunas estrategias básicas para la depuración, las cuales pueden ser tan
 efectivas como algunos IDEs sofisticados, con un poco de práctica.
 
-La herramienta integrada para la depuración de Python, pdb, puede hacer un
-trabajo decente de depuración. Podemos fijar un punto de quiebre insertando
+La herramienta integrada para la depuración de Python, ``pdb``, puede hacer un
+trabajo decente de depuración. Podrá fijar un punto de quiebre insertando
 la siguiente línea en el lugar deseado:
 
 .. code-block:: python
@@ -1096,7 +1097,7 @@ Estos son los comandos disponibles más importantes:
 
 El servidor Odoo también soporta la opción ``--debug``. Si se usa, el servidor
 entrara en un modo *post mortem* cuando encuentre una excepción, en la línea
-donde se encuentre el error. Es una consola pdb y nos permite inspeccionar el
+donde se encuentre el error. Es una consola ``pdb`` y les permite inspeccionar el
 estado del programa en el momento en que es encontrado el error.
 
 Existen alternativas al depurador de Python. Puede provee los mismos comandos
@@ -1126,7 +1127,7 @@ Otra opción es el depurador Iron Python, ipdb, el cual puede ser instalado:
 
     $ pip install ipdb
 
-A veces solo necesitamos inspeccionar los valores de algunas
+A veces solo necesita inspeccionar los valores de algunas
 variables o verificar si algunos bloques de código son ejecutados. Una
 sentencia "print" de Python puede perfectamente hacer el trabajo sin
 parar el flujo de ejecución. Como estamos ejecutando el servidor en una
@@ -1135,8 +1136,8 @@ será guardado en los registros del servidor si esta siendo escrito en un
 archivo.
 
 Otra opción a tener en cuenta es fijar los mensajes de registros de los
-niveles de depuración en puntos sensibles de nuestro código si sentimos
-que podemos necesitar investigar algunos problemas en la instancia de
+niveles de depuración en puntos sensibles de su código si siente
+que podrá necesitar investigar algunos problemas en la instancia de
 despliegue. Solo se requiere elevar el nivel de registro del servidor a
 DEBUG y luego inspeccionar los archivos de registro.
 
@@ -1148,10 +1149,10 @@ vistas. Aquí fue un poco más allá para aprender como implementar la
 lógica de negocio y usar conjuntos de registros para manipular los datos
 del modelo.
 
-También vio como la lógica de negocio interactúa con la interfaz y
-aprendió a crear ayudantes que dialoguen con el usuario y la usuaria y
-sirvan como una plataforma para iniciar procesos avanzados.
+También vio como la lógica de negocio interactúa con la interfaz y aprendió
+a crear ayudantes que dialoguen con el usuario y sirvan como una plataforma
+para iniciar procesos avanzados.
 
-En el próximo capítulo, nos enfocaremos nuevamente en la interfaz, y
-aprenderá como crear vistas kanban avanzadas y a diseñar sus propios
+En el próximo capítulo, se enfocara nuevamente en la interfaz, y
+aprenderá como crear vistas ``kanban`` avanzadas y a diseñar sus propios
 reportes de negocio.

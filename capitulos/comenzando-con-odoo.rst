@@ -27,12 +27,12 @@ el código fuente, es necesario instalar las librerías Python de las
 cuales depende. Luego el código fuente de Odoo debe descargarse desde
 GitHub y ejecutado desde el código fuente. Aunque es posible descargar
 un zip o tarball, es mejor obtener el código fuente usando GitHub, así
-además tendremos Odoo instalado en nuestro equipo.
+además tendría Odoo instalado en su equipo.
 
 Configurar un equipo como servidor Odoo
 ---------------------------------------
 
-Preferimos usar sistemas Debian/Ubuntu para el servidor Odoo, aunque
+Se recomienda usar sistemas Debian/Ubuntu para el servidor Odoo, aunque
 puede trabajar desde el sistema operativo de su preferencia, sea
 Windows, Macintosh, o Linux.
 
@@ -45,10 +45,10 @@ Debian/Ubuntu.
 
 También son las plataformas más usadas por las personas que desarrollan
 aplicaciones, y donde se dan a conocer más implementaciones. Por esta
-razón, inevitablemente, se espera que las desarrolladoras y los
-desarrolladores de Odoo se sientan a gusto con esta plataforma. Incluso
-quienes tiene una historial de trabajo con Windows, es importante que
-tengan algún conocimiento sobre estas plataformas.
+razón, inevitablemente, se espera que los desarrolladores de Odoo se
+sientan a gusto con esta plataforma. Incluso quienes tiene una historial
+de trabajo con Windows, es importante que tengan algún conocimiento sobre
+estas plataformas.
 
 En este capítulo, se aprenderá a configurar y trabajar con Odoo sobre un
 sistema Debian, usando únicamente la línea de comandos. Para quienes
@@ -67,7 +67,7 @@ Disposiciones para un equipo Debian
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Como se explicó antes, será necesario un equipo con Debian para alojar
-nuestro servidor Odoo versión 8.0. Si estos son sus primeros pasos con
+su servidor Odoo versión 8.0. Si estos son sus primeros pasos con
 Linux, le gustará saber que Ubuntu es una distribución Linux basada en
 Debian, por lo tanto son muy similares.
 
@@ -86,10 +86,10 @@ Para los sistemas operativos Windows y Macintosh, es posible tener
 Python, PostgreSQL, y todas las dependencias instaladas, y luego
 ejecutar Odoo desde el código fuente de forma nativa.
 
-Sin embargo, esto puede ser un gran reto, por lo que nuestra
+Sin embargo, esto puede ser un gran reto, por lo que su
 recomendación es usar una máquina virtual ejecutando Debian o Ubuntu
 Server. Puede usar su software de virtualización preferido para hacer
-funcionar Debian en una máquina virtual. Si necesita alguna ayuda, aqui
+funcionar Debian en una máquina virtual. Si necesita alguna ayuda, aquí
 hay algunos consejos: en lo que se refiere a software de vistualización,
 tiene muchas opciones, como Microsoft Hyper-V (disponible para algunas
 versiones de Windows), Oracle VirtualBox, o VMWare Player (o VMWare
@@ -98,13 +98,13 @@ usar, y puede descargarse gratuitamente en
 https://my.vmware.com/web/vmware/downloads
 
 Con relación a la imagen Linux a usar, Ubuntu Server es más amigable
-para las usuarias y usuarios para instalar que Debian. Si esta
-comenzando con Linux, es recomendable que use una distribución lista
-para usar. TurnKey Linux provee imágenes facil de usar, preinstaladas en
-distintos formatos, incluyendo ISO. El formato ISO funcionara con
-cualquier software de vistualización de su preferencia, o incluso en
-cualquier equipo actual. Una buena opción sería una imagen LAPP, que
-puede hallarse en http://www.turnkeylinux.org/lapp.
+para los usuarios para instalar que Debian. Si esta comenzando con Linux,
+es recomendable que use una distribución lista para usar. TurnKey Linux
+provee imágenes fácil de usar, instaladas previamente en distintos formatos,
+incluyendo ISO. El formato ISO funcionara con cualquier software de
+virtualización de su preferencia, o incluso en cualquier equipo actual.
+Una buena opción sería una imagen LAPP, que puede hallarse en la siguiente
+dirección http://www.turnkeylinux.org/lapp
 
 Una vez instalado el sistema e iniciado, debería ser capaz de ingresar
 en la línea de comando.
@@ -154,7 +154,7 @@ Puede cambiar odoo por cualquier nombre que desee. La opción ``-m`` crea
 el directorio home. El ``-g sudo`` agrega al nuevo usuario a la lista de
 usuarios sudo, por lo tanto podrá ejecutar comandos como root, y
 ``-s /bin/bash`` configura la línea de comando predeterminada a bash, la
-cual es mas amigable de usar que la fijada por omisión estándar ``sh``.
+cual es más amigable de usar que la fijada por omisión estándar ``sh``.
 
 Ahora puede acceder con el nuevo usuario y configurar Odoo.
 
@@ -165,9 +165,9 @@ Los paquetes de Odoo listos para instalar pueden ser encontrados en
 `nightly.odoo.com <http://nightly.odoo.com>`__, disponibles para Windows
 (.exe), Debian (.deb), CentOS (.rpm), y código fuente (.tar.gz).
 
-Como desarrolladoras y desarrolladores, preferimos hacer la instalación
-directamente desde el repositorio GitHub. Esto nos permitirá tener más
-control sobre las sucesivas versiones y actualizaciones.
+Como desarrolladores, se prefiriere hacer la instalación directamente desde
+el repositorio GitHub. Esto les permitirá tener más control sobre las sucesivas
+versiones y actualizaciones.
 
 Para mantener el orden de las cosas, se trabaja en el directorio
 ``/odoo-dev`` que se encuentra en su directorio ``/home``. A lo largo
@@ -245,7 +245,7 @@ Para iniciar una instancia del servidor Odoo, simplemente ejecute
     $ ~/odoo-dev/odoo/odoo.py
 
 De forma predeterminada, las instancias de Odoo escuchan a través del
-puerto 8069, si apuntamos en nuestro navegador a
+puerto 8069, si abre en su navegador la siguiente dirección
 ``http://<server-address>:8069`` se llegará a la instancia de Odoo.
 Cuando se accede por primera vez, se mostrará un asistente para crear
 una nueva base de datos, como se muestra en la siguiente imagen:
@@ -322,7 +322,7 @@ volver a la línea de comando, presione *Ctrl* + *C*. En consola,
 presiona la tecla de flecha Arriba para mostrar el comando anterior
 ejecutado, esta es una forma rápida de iniciar Odoo con las mismas
 opciones. Notará que *Ctrl* + *C* seguido de la flecha Arriba y *Enter*
-es una combinación frecuentemente usada para re-iniciar el servidor Odoo
+es una combinación frecuentemente usada para reiniciar el servidor Odoo
 durante el desarrollo.
 
 Gestionar la base de datos
@@ -465,7 +465,7 @@ predeterminado 8069 desde donde la instancia del servidor escucha las
 peticiones. Esto puede ser usado para ejecutar más de una instancia al
 mismo tiempo, en el mismo servidor.
 
-Intentemos esto. Abra dos ventanas de la terminal. En la primera
+Intente esto. Abra dos ventanas de la terminal. En la primera
 ejecute:
 
 .. code:: shell
@@ -558,10 +558,10 @@ servidor Debian/Ubuntu, ejecutando el siguiente comando:
 
 El paquete ``samba`` instala el servicio para compartir archivos y el
 paquete ``samba-common-bin`` es necesario para la herramienta
-``smbpasswd``. De forma predeterminada las usuarias y usuarios
-autorizados para acceder a los archivos compartidos necesitan ser
-registrados. Es necesario registrar el usuario odoo y asignarle una
-contraseña para su acceso a los archivos compartidos, ejecutando el siguiente comando:
+``smbpasswd``. De forma predeterminada los usuarios autorizados para
+acceder a los archivos compartidos necesitan ser registrados. Es necesario
+registrar el usuario ``odoo`` y asignarle una contraseña para su acceso a
+los archivos compartidos, ejecutando el siguiente comando:
 
 .. code:: shell
 
@@ -599,10 +599,10 @@ Habilitar las herramientas técnicas
 -----------------------------------
 
 Odoo incluye algunas herramientas que son muy útiles para las personas
-que desarrollan, y haremos uso de estas a lo largo del libro. Estas son
+que desarrollan, y usted hará uso de estas a lo largo del libro. Estas son
 las Características Técnicas y el Modo de Desarrollo.
 
-Estas están deshabilitadas de forma predeterminada, así que aprenderemos
+Estas están deshabilitadas de forma predeterminada, así que aprenderá
 como habilitarlas.
 
 .. figure:: images/70_1.jpg
@@ -631,7 +631,7 @@ acceso a lo interno del servidor Odoo.
 La opción del menú **Técnico** permite inspeccionar y editar todas las
 configuraciones de Odoo almacenadas en la base de datos, desde la
 interfaz de usuario, a la seguridad y otros parámetros del sistema.
-Aprenderá mas sobre esto a lo largo del libro.
+Aprenderá más sobre esto a lo largo del libro.
 
 Activar el modo de Desarrollo
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -640,7 +640,7 @@ El modo de Desarrollo habilita una caja de selección cerca de la parte
 superior de la ventana Odoo, haciendo accesible algunas opciones de
 configuración avanzadas en toda la aplicación. También deshabilita la
 modificación del código JavaScript y CSS usado por el cliente web,
-haciendo mas fácil la depuración del comportamiento del lado del
+haciendo más fácil la depuración del comportamiento del lado del
 cliente.
 
 Para habilitarlo, abra el menú desplegable en la esquina superior
@@ -730,7 +730,7 @@ complemento incluyendo el nuevo directorio de módulos:
 
 Si se observa con cuidado el registro del servidor notará una línea
 reportando la ruta de los complementos en uso: **INFO ? Openerp: addons
-paths:** (...). Confirmando que la instancia contiene nuestro directorio
+paths:** (...). Confirmando que la instancia contiene su directorio
 ``department``.
 
 .. figure:: images/76_1.jpg
@@ -776,7 +776,7 @@ para trabajar, y sentirse a gusto con el manejo de bases de datos e
 instancias.
 
 Con esto claro, es momento de ir directo a la acción. En el próximo
-capítulo se creará el primer modulo Odoo y entenderá los elementos
+capítulo se creará el primer módulo Odoo y entenderá los elementos
 principales involucrados.
 
-¡Comencemos!
+¡Comience!

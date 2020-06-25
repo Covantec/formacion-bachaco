@@ -15,7 +15,7 @@ existentes.
 
 Estas modificaciones puede suceder en todos los niveles: modelos,
 vistas, y lógica de negocio. En lugar de modificar directamente un
-módulo existente, creamos un módulo nuevo para agregar las
+módulo existente, creara un módulo nuevo para agregar las
 modificaciones previstas.
 
 Aquí, aprenderá como escribir sus propios módulos de extensión,
@@ -26,15 +26,15 @@ de mensajería y redes sociales de Odoo a sus propios módulos.
 Agregar la capacidad de compartir con otros a la aplicación To-Do
 -----------------------------------------------------------------
 
-Nuestra aplicación To-Do actualmente permite a los usuarios y las
-usuarias gestionar de forma privada sus tareas por hacer. ¿No sería
-grandioso llevar nuestra aplicación a otro nivel agregando
-características colaborativas y de redes sociales? Seriamos capaces de
-compartir las tareas y discutirlas con otras personas.
+La aplicación To-Do actualmente permite a los usuarios y gestionar
+de forma privada sus tareas por hacer. ¿No sería grandioso llevar su
+aplicación a otro nivel agregando características colaborativas y de
+redes sociales? Sera capaz de compartir las tareas y discutirlas con
+otras personas.
 
-Haremos esto con un módulo nuevo para ampliar la funcionalidad de la
+Hará esto con un módulo nuevo para ampliar la funcionalidad de la
 aplicación To-Do creada anteriormente y agregar estas características
-nuevas. Esto es lo que esperamos lograr al final de este capítulo:
+nuevas. Esto es lo que esperara lograr al final de este capítulo:
 
 .. figure:: images/122_1.jpg
   :align: center
@@ -55,14 +55,14 @@ y los seguidores.
 
 Comenzaremos creando la estructura básica para el módulo junto al módulo
 ``todo_app``. Siguiendo el ejemplo de instalación del Capítulo 1,
-nuestros módulos estarán alojados en ``~/odoo-dev/custom-addons/``:
+sus módulos estarán alojados en ``~/odoo-dev/custom-addons/``:
 
 .. code:: bash
 
     $ mkdir ~/odoo-dev/custom-addons/todo_user
     $ touch ~/odoo-dev/custom-addons/todo_user/__init__.py
 
-Ahora creamos el archivo ``__openerp__.py``, con el siguiente código:
+Ahora cree el archivo ``__openerp__.py``, con el siguiente código:
 
 .. code:: Python
 
@@ -73,17 +73,17 @@ Ahora creamos el archivo ``__openerp__.py``, con el siguiente código:
         'depends': ['todo_app'],
     }
 
-No hemos hecho esto, pero incluir las claves "summary" y "category"
+No ha hecho esto, pero incluir las claves "summary" y "category"
 puede ser importante cuando se publican módulos en la tienda de
 aplicaciones en línea de Odoo.
 
-Ahora, podemos instalarlo. Debe ser suficiente con solo actualizar el
+Ahora, podrá instalarlo. Debe ser suficiente con solo actualizar el
 **Lista de módulos** desde el menú **Configuración**, encuentre el
 módulo nuevo en la lista de **Módulos locales** y haga clic en el botón
 Instalar. Para instrucciones más detalladas sobre como encontrar e
 instalar un módulo puede volver al Capítulo 1.
 
-Ahora, comencemos a agregar las nuevas características.
+Ahora, comience a agregar las nuevas características.
 
 Ampliando el modelo de tareas por hacer
 =======================================
@@ -92,31 +92,31 @@ Los modelos nuevos son definidos a través de las clases Python.
 Ampliarlos también es hecho a través de las clases Python, pero usando
 un mecanismo específico de Odoo.
 
-Para aplicar un modelo usamos una clase Python con un atributo
+Para aplicar un modelo use una clase Python con un atributo
 ``__inherit``. Este identifica el modelo que será ampliado. La clase
 nueva hereda todas las características del modelo padre, y solo
-necesitamos declarar las modificaciones que queremos introducir.
+necesite declarar las modificaciones que querrá introducir.
 
-De hecho, los modelos de Odoo existen fuera de nuestro módulo
-particular, en un registro central. Podemos referirnos a este registro
+De hecho, los modelos de Odoo existen fuera de su módulo
+particular, en un registro central. Podrá referirse a este registro
 como la piscina, y puede ser accedido desde los métodos del modelo
 usando ``self.env[<model name>]``. Por ejemplo, para referirnos al
 modelo ``res.partner`` escribiremos ``self.env['res.partner']``.
 
-Para modificar un modelo de Odoo obtenemos una referencia a la clase de
-registro y luego ejecutamos los cambios en ella. Esto significa que esas
+Para modificar un modelo de Odoo obtiene una referencia a la clase de
+registro y luego ejecuta los cambios en ella. Esto significa que esas
 modificaciones también estarán disponibles en cualquier otro lado donde
 el modelo sea usado.
 
 En la secuencia de carga del módulo, durante un reinicio del servidor,
 las modificaciones solo serán visibles en los modelos cargados después.
-Así que, la secuencia de carga es importante y debemos asegurarnos que
+Así que, la secuencia de carga es importante y debe asegurarse que
 las dependencias del módulo están fijadas correctamente.
 
 Agregar campos a un modelo
 --------------------------
 
-Ampliaremos el modelo ``todo.task`` para agregar un par de campos: el
+Ampliara el modelo ``todo.task`` para agregar un par de campos: el
 usuario responsable de la tarea, y la fecha de vencimiento.
 
 Cree un archivo ``todo_task.py`` nuevo y declare una clase que extienda
@@ -141,10 +141,10 @@ Las siguientes dos líneas son declaraciones de campos comunes. El
 ``user_id`` representa un usuario desde el modelo Users, ``res.users``.
 Es un campo de ``Many2one`` equivalente a una clave foránea en el argot
 de base de datos. El ``date_deadline`` es un simple campo de fecha. En
-el *Capítulo 5*, explicaremos con mas detalle los tipos de campos
+el *Capítulo 5*, se explica con más detalle los tipos de campos
 disponibles en Odoo.
 
-Aun nos falta agregar al archivo ``__init__.py`` la declaración "import"
+Aun le falta agregar al archivo ``__init__.py`` la declaración ``import``
 para incluirlo en el módulo:
 
 ::
@@ -152,7 +152,7 @@ para incluirlo en el módulo:
     from . import todo_task
 
 Para tener los campos nuevos agregados a la tabla de la base de datos
-soportada por el modelo, necesitamos ejecutar una actualización al
+soportada por el modelo, necesita ejecutar una actualización al
 módulo. Si todo sale como es esperado, debería poder ver los campos
 nuevos cuando revise el modelo ``todo.task``, en el menú **Técnico**,
 **Estructura de base de datos \| Modelos**.
@@ -166,14 +166,14 @@ existentes. Esto es hecho agregando un campo con el mismo nombre, y
 configurando los valores solo para los atributos que serán modificados.
 
 Por ejemplo, para agregar un comentario de ayuda a un campo ``name``,
-podríamos agregar esta línea en el archivo ``todo_task.py``:
+podrá agregar esta línea en el archivo ``todo_task.py``:
 
 .. code:: Python
 
     name = fields.Char(help="What needs to be done?")
 
-Si actualizamos el módulo, vamos a un formulario de tareas por hacer, y
-posicionamos el ratón sobre el campo **Descripción**, aparecerá el
+Si actualiza el módulo, va a un formulario de tareas por hacer, y
+posicione el ratón sobre el campo **Descripción**, aparecerá el
 mensaje de texto escrito en el código anterior.
 
 Modificar los métodos del modelo
@@ -190,13 +190,13 @@ heredada, usando la palabra clave de Python ``super()`` para llamar al
 método padre.
 
 Es mejor evitar cambiar la función distintiva del método (esto es,
-mantener los mismos argumentos) para asegurarnos que las llamadas a este
+mantener los mismos argumentos) para asegurarse que las llamadas a este
 sigan funcionando adecuadamente. En caso que necesite agregar parámetros
 adicionales, hágalos opcionales (con un valor predeterminado).
 
-La acción original de ``Clear All Done`` ya no es apropiada para nuestro
+La acción original de ``Clear All Done`` ya no es apropiada para su
 módulos de tareas compartidas, ya que borra todas las tareas sin
-importar a quien le pertenecen. Necesitamos modificarla para que borre
+importar a quien le pertenecen. Necesita modificarla para que borre
 solo las tareas del usuario actual.
 
 Para esto, se sobrescribirá el método original con una nueva versión que
@@ -222,26 +222,26 @@ lista de condiciones, donde cada condición es una tupla.
 Estas condiciones son unidas implícitamente con un operador ``AND``
 (``&`` en la sintaxis de dominio). Para agregar una operación ``OR`` se
 usa una "tubería" (``|``) en el lugar de la tupla, y afectara las
-siguientes dos condiciones. Ahondaremos más sobre este tema en el
+siguientes dos condiciones. Ahondara más sobre este tema en el
 *Capítulo 6*.
 
-El dominio usado aquí filtra todas las tareas
-finalizadas(\ ``'is_done', '=', True``) que también tengan al usuario
-actual como responsable (``'user_id','=',self.env.uid``) o no tengan
-fijado un usuario (``'user_id', '=', False``).
+El dominio usado aquí filtra todas las tareas con su etapa finalizadas
+(``'is_done', '=', True``) que también tengan al usuario actual como
+responsable (``'user_id','=',self.env.uid``) o no tengan fijado un
+usuario (``'user_id', '=', False``).
 
-Lo que acabamos de hacer fue sobrescribir completamente el método padre,
+Lo que acaba de hacer fue sobrescribir completamente el método padre,
 reemplazándolo con una implementación nueva.
 
-Pero esto no es lo que usualmente querremos hacer. En vez de esto,
-ampliaremos la lógica actual y agregaremos operaciones adicionales. De
-lo contrario podemos dañar operaciones existentes. La lógica existente
+Pero esto no es lo que usualmente querrá hacer. En vez de esto,
+ampliara la lógica actual y agregara operaciones adicionales. De
+lo contrario podrá dañar operaciones existentes. La lógica existente
 es insertada dentro de un método sobrescrito usando el comando
 ``super()`` de Python para llamar a la versión padre del método.
 
-Veamos un ejemplo de esto: podemos escribir una versión mejor de
+Vea un ejemplo de esto: podrá escribir una versión mejor de
 ``do_toggle_done()`` que solo ejecute la acción sobre las Tareas
-asignadas a nuestro usuario:
+asignadas a su usuario:
 
 .. code:: Python
 
@@ -253,14 +253,14 @@ asignadas a nuestro usuario:
             return super(TodoTask, self).do_toggle_done()
 
 Estas son las técnicas básicas para sobrescribir y ampliar la lógica de
-negocio definida en las clases del modelo. Veremos ahora como extender
-las vistas de la interfaz con las usuarias y usuarios.
+negocio definida en las clases del modelo. Vera ahora como extender
+las vistas de la interfaz con los usuarios.
 
 Ampliar las vistas
 ==================
 
 Vistas de formulario, listas y búsqueda son definidas usando las
-estructuras de arco de XML. Para ampliar las vistas necesitamos una
+estructuras de arco de XML. Para ampliar las vistas necesita una
 manera de modificar este XML. Esto significa localizar los elementos XML
 y luego introducir modificaciones en esos puntos. Las vistas heredadas
 permiten esto.
@@ -297,7 +297,7 @@ punto de extensión es localizado, puede ser modificado o puede tener
 elementos XML agregados cerca de él.
 
 Como un ejemplo práctico, para agregar el campo ``date_deadline`` antes
-del campo ``is_done``, debemos escribir en ``arch``:
+del campo ``is_done``, debe escribir en ``arch``:
 
 .. code:: XML
 
@@ -306,8 +306,8 @@ del campo ``is_done``, debemos escribir en ``arch``:
     </xpath>
 
 Afortunadamente Odoo proporciona una notación simplificada para eso, así
-que la mayoría de las veces podemos omitir la sintaxis XPath. En vez del
-elemento "xpath" anterior podemos usar el tipo de elementos que queramos
+que la mayoría de las veces podrá omitir la sintaxis *XPath*. En vez del
+elemento ``xpath`` anterior podrá usar el tipo de elementos que querrá
 localizar y su atributo distintivo.
 
 Lo anterior también puede ser escrito como:
@@ -323,7 +323,7 @@ frecuentemente, por lo tanto la etiqueta ``<field>`` es usada
 frecuentemente como el localizador. Pero cualquier otra etiqueta puede
 ser usada: ``<sheet>``, ``<group>``, ``<div>``, entre otras. El atributo
 ``name`` es generalmente la mejor opción para hacer coincidir elementos,
-pero a veces, podemos necesitar usar ``string`` (el texto mostrado en un
+pero a veces, podrá necesitar usar ``string`` (el texto mostrado en un
 "label") o la clase CSS del elemento.
 
 El atributo de posición usado con el elemento localizador es opcional, y
@@ -339,14 +339,13 @@ puede tener los siguientes valores:
 
 - ``attributes``: Este modifica los atributos XML del elemento de coincidencia (más detalles luego de esta lista).
 
-La posición del atributo nos permite modificar los atributos del
+La posición del atributo le permite modificar los atributos del
 elemento de coincidencia. Esto es hecho usando los elementos
 ``<attribute name="attr-name">`` con los valores del atributo nuevo.
 
-En el formulario de Tareas, tenemos el campo **Active**, pero tenerlo
-visible no es muy útil. Quizás podamos esconderlo de la usuaria y el
-usuario. Esto puede ser realizado configurando su atributo
-``invisible``:
+En el formulario de Tareas, tendrá el campo **Active**, pero tenerlo
+visible no es muy útil. Quizás podrá esconderlo al usuario. Esto puede
+ser realizado configurando su atributo ``invisible``:
 
 .. code:: XML
 
@@ -359,7 +358,7 @@ buena alternativa para usar el localizador de reemplazo para eliminar
 nodos. Debería evitarse la eliminación, ya que puede dañar las
 extensiones de modelos que pueden depender del nodo eliminado.
 
-Finalmente, podemos poner todo junto, agregar los campos nuevos, y
+Finalmente, podrá poner todo junto, agregar los campos nuevos, y
 obtener la siguiente vista heredada completa para ampliar el formulario
 de tareas por hacer:
 
@@ -382,7 +381,7 @@ de tareas por hacer:
         </field>
     </record>
 
-Esto debe ser agregado al archivo ``todo_view.xml`` en nuestro módulo,
+Esto debe ser agregado al archivo ``todo_view.xml`` en su módulo,
 dentro de las etiquetas ``<openerp>`` y ``<data>``, como fue mostrado en
 el capítulo anterior.
 
@@ -391,22 +390,22 @@ el capítulo anterior.
     debido a que esto crea dependencias más complicadas, debe ser
     evitado.
 
-No podemos olvidar agregar el atributo datos al archivo descriptor
+No podrá olvidar agregar el atributo datos al archivo descriptor
 ``__openerp__.py``:
 
 .. code:: Python
 
     'data': ['todo_view.xml'],
 
-Ampliando mas vistas de árbol y búsqueda
+Ampliando más vistas de árbol y búsqueda
 ----------------------------------------
 
 Las extensiones de las vistas de árbol y búsqueda son también definidas
 usando la estructura XML ``arch``, y pueden ser ampliadas de la misma
-manera que las vistas de formulario. Seguidamente mostramos un ejemplo
+manera que las vistas de formulario. Seguidamente se muestra un ejemplo
 de la ampliación de vistas de lista y búsqueda.
 
-Para la vista de lista, queremos agregar el campo usuario:
+Para la vista de lista, querrá agregar el campo usuario:
 
 .. code:: XML
 
@@ -421,7 +420,7 @@ Para la vista de lista, queremos agregar el campo usuario:
         </field>
     </record>
 
-Para la vista de búsqueda, agregaremos una búsqueda por usuario, y
+Para la vista de búsqueda, agregara una búsqueda por usuario, y
 filtros predefinidos para las tareas propias del usuario y tareas no
 asignadas a alguien.
 
@@ -441,35 +440,35 @@ asignadas a alguien.
     </record>
 
 No se preocupe demasiado por la sintaxis específica de las vistas.
-Describiremos esto con más detalle en el *Capítulo 6*.
+Se describirá esto con más detalle en el *Capítulo 6*.
 
 Más sobre el uso de la herencia para ampliar los modelos
 ========================================================
 
-Hemos visto lo básico en lo que se refiere a la ampliación de modelos
+Ha visto lo básico en lo que se refiere a la ampliación de modelos
 "in place", lo cual es la forma más frecuente de uso de la herencia.
 Pero la herencia usando el atributo ``_inherit`` tiene mayores
 capacidades, como la mezcla de clases.
 
-También tenemos disponible el método de herencia delegada, usando el
+También tiene disponible el método de herencia delegada, usando el
 atributo ``_inherits``. Esto permite a un modelo contener otros modelos
 de forma transparente a la vista, mientras por detrás de escena cada
 modelo gestiona sus propios datos.
 
-Exploremos esas posibilidades en más detalle.
+Explore esas posibilidades en más detalle.
 
 Copiar características usando herencia por prototipo
 ----------------------------------------------------
 
-El método que usamos anteriormente para ampliar el modelo solo usa el
-atributo ``_inherit``. Definimos una clase que hereda el modelo
-``todo.task``, y le agregamos algunas características. La clase
+El método que use anteriormente para ampliar el modelo solo usa el
+atributo ``_inherit``. Defina una clase que hereda el modelo
+``todo.task``, y le agrega algunas características. La clase
 ``_name`` no fue fijada explícitamente; implícitamente fue también
 ``todo.task``.
 
-Pero usando el atributo ``_name`` nos permitió crear una mezcla de
-clases (mixin), incorporándolo al modelo que queremos ampliar. Aquí
-mostramos un ejemplo:
+Pero usando el atributo ``_name`` le permitió crear una mezcla de
+clases (mixin), incorporándolo al modelo que querrá ampliar. Aquí
+se muestre un ejemplo:
 
 .. code:: Python
 
@@ -497,15 +496,15 @@ ellos en la base de datos. Actúan como plantillas, describen campos y la
 lógica para ser reusadas en modelos regulares.
 
 Los campos que definen solo serán creados en aquellos modelos regulares
-que hereden de ellos. En un momento discutiremos en detalle como usar
+que hereden de ellos. En un momento se discutirá en detalle como usar
 eso para agregar ``mail.thread`` y sus características de redes sociales
-a nuestro módulo. En la práctica cuando se usan las mezclas rara vez
-heredamos de modelos regulares, porque esto puede causar duplicación de
+a su módulo. En la práctica cuando se usan las mezclas rara vez
+hereda de modelos regulares, porque esto puede causar duplicación de
 las mismas estructuras de datos.
 
 Odoo proporciona un mecanismo de herencia delegada, el cual impide la
 duplicación de estructuras de datos, por lo que es usualmente usada
-cuando se hereda de modelos regulares. Veamos esto con mayor detalle.
+cuando se hereda de modelos regulares. Vea esto con mayor detalle.
 
 Integrar Modelos usando herencia delegada
 -----------------------------------------
@@ -559,30 +558,30 @@ El módulo de red social (nombre técnico ``mail``) proporciona la pizarra
 de mensajes que se encuentra en la parte inferior de muchos formularios,
 también llamado Charla Abierta (Open Chatter), los seguidores se
 presentan junto a la lógica relativa a mensajes y notificaciones. Esto
-es algo que vamos a querer agregar con frecuencia a nuestros modelos,
-así que aprendamos como hacerlo.
+es algo que va a querer agregar con frecuencia a sus modelos,
+así que aprenda como hacerlo.
 
 Las características de mensajería de red social son proporcionadas por
 el modelo ``mail.thread`` del modelo ``mail``. Para agregarlo a un
-módulo personalizado necesitamos:
+módulo personalizado necesita:
  
 1. Que el módulo dependa de ``mail``.
 2. Que la clase herede de ``mail.thread``. 
 3. Tener agregados a la vista de formulario los widgets ``Followers`` (seguidores) y ``Threads`` (hilos). 
 4. Opcionalmente, configurar las reglas de registro para seguidores.
 
-Sigamos esta lista de verificación:
+Siga esta lista de verificación:
 
-En relación a *#1*, debido a que nuestro módulo ampliado depende de
-``todo_app``, el cual a su vez depende de mail, la dependencia de mail
+En relación a *#1*, debido a que su módulo ampliado depende de
+``todo_app``, el cual a su vez depende de ``mail``, la dependencia de ``mail``
 esta implícita, por lo tanto no se requiere ninguna acción.
 
 En relación a *#2*, la herencia a ``mail.thread`` es hecha usando el
-atributo ``_inherit``. Pero nuestra clase ampliada de tareas por hacer
+atributo ``_inherit``. Pero su clase ampliada de tareas por hacer
 ya está usando el atributo ``_inherit``.
 
 Afortunadamente, también puede aceptar una lista de modelos desde los
-cuales heredar, así que podemos usar esto para hacer que incluya la
+cuales heredar, así que podrá usar esto para hacer que incluya la
 herencia a ``mail.thread``:
 
 .. code:: Python
@@ -594,16 +593,16 @@ El modelo ``mail.thread`` es un modelo abstracto. Los modelos abstractos
 son como los modelos regulares excepto que no tienen una representación
 en la base de datos; no se crean tablas para ellos. Los modelos
 abstractos no están destinados a ser usados directamente. Pero se espera
-que sean usados en la mezcla de clases, como acabamos de hacer.
+que sean usados en la mezcla de clases, como acaba de hacer.
 
-Podemos pensar en los modelos abstractos como plantillas con
+Podrá pensar en los modelos abstractos como plantillas con
 características listas para usar. Para crear una clase abstracta solo
-necesitamos usar modelos abstractos. AbstractModel en vez de
+necesita usar modelos abstractos. AbstractModel en vez de
 ``models.Model``.
 
-Para la número *#3*, queremos agregar el widget de red social en la
-parte inferior del formulario. Podemos reusar la vista heredada que
-recién creamos, ``view_form_todo_task_inherited``, y agregar esto dentro
+Para la número *#3*, querrá agregar el widget de red social en la
+parte inferior del formulario. Podrá reusar la vista heredada que
+recién creada, ``view_form_todo_task_inherited``, y agregar esto dentro
 de ``arch``:
 
 .. code:: XML
@@ -615,17 +614,17 @@ de ``arch``:
         </div>
     </sheet>
 
-Los dos campos que hemos agregado aquí no han sido declarados
+Los dos campos que ha agregado aquí no han sido declarados
 explícitamente, pero son provistos por el modelo ``mail.thread``.
 
 El paso final es fijar las reglas de los registros de seguidores, esto
-solo es necesario si nuestro modelo tiene implementadas reglas de
+solo es necesario si su modelo tiene implementadas reglas de
 registro que limitan el acceso a otros usuarios. En este caso,
-necesitamos asegurarnos que los seguidores para cada registro tengan al
+necesita asegurarse que los seguidores para cada registro tengan al
 menos acceso de lectura.
 
-Tenemos reglas de registro en nuestro modelo de tareas por hacer así que
-necesitamos abordar esto, y es lo que haremos en la siguiente sección.
+Tendrá reglas de registro en su modelo de tareas por hacer así que
+necesita abordar esto, y es lo que hará en la siguiente sección.
 
 Modificar datos
 ---------------
@@ -641,15 +640,15 @@ otra forma, es actualizada / escrita.
 
 Debido a que los registros en otros módulos pueden ser accedidos usando
 un identificador ``<model>.<identifier>``, es perfectamente legal para
-nuestro módulo sobrescribir algo que fue escrito antes por otro módulo.
+su módulo sobrescribir algo que fue escrito antes por otro módulo.
 
 .. note::
     Note que el punto esta reservado para separar el nombre del módulo
     del identificador del objeto, así que no debe ser usado en
     identificadores. Para esto use la barra baja (``_``).
 
-Como ejemplo, cambiemos la opción de menú creada por el módulo
-``todo_app`` en "My To Do". Para esto agregamos lo siguiente al archivo
+Como ejemplo, cambie la opción de menú creada por el módulo
+``todo_app`` en "My To Do". Para esto agregar lo siguiente al archivo
 ``todo_user/todo_view.xml``:
 
 .. code:: XML
@@ -671,7 +670,7 @@ Ampliando las reglas de registro
 La aplicación Tareas-por-Hacer incluye una regla de registro para
 asegurar que cada tarea sea solo visible para el usuario que la ha
 creado. Pero ahora, con la adición de las características sociales,
-necesitamos que los seguidores de la tarea también tengan acceso. El
+necesita que los seguidores de la tarea también tengan acceso. El
 modelo de red social no maneja esto por si solo.
 
 Ahora las tareas también pueden tener usuarios asignados a ellas, por lo
@@ -683,16 +682,16 @@ El plan será el mismo que para la opción de menú: sobrescribir
 ``domain_force`` a un valor nuevo.
 
 Desafortunadamente, esto no funcionará esta vez. Recuerde que el
-``<data no_update="1">`` que usamos anteriormente en el archivo XML de
+``<data no_update="1">`` que use anteriormente en el archivo XML de
 las reglas de seguridad: previene las operaciones posteriores de
 escritura.
 
 Debido a que las actualizaciones del registro no están permitidas,
-necesitamos una solución alterna. Este será borrar el registro y agregar
-un reemplazo para este en nuestro módulo.
+necesita una solución alterna. Este será borrar el registro y agregar
+un reemplazo para este en su módulo.
 
-Para mantener las cosas organizadas, crearemos un archivo
-``security/todo_access_rules.xml`` y agregaremos lo siguiente:
+Para mantener las cosas organizadas, creara un archivo
+``security/todo_access_rules.xml`` y agregara lo siguiente:
 
 .. code:: XML
 
@@ -713,13 +712,13 @@ Para mantener las cosas organizadas, crearemos un archivo
 
 Esto encuentra y elimina la regla de registro ``todo_task_user_rule``
 del módulo ``todo_app``, y crea una nueva regla de registro
-``todo_task_per_user``. El filtro de dominio que usamos ahora hace la
+``todo_task_per_user``. El filtro de dominio que usa ahora hace la
 tarea visible para el usuario responsable ``user_id``, para todo el
 mundo si el usuario responsable no ha sido definido (igual a False), y
 para todos los seguidores. La regla se ejecutará en un contexto donde el
 usuario este disponible y represente la sesión del usuario actual. Los
 seguidores son socios, no objetos User, así que en vez de ``user_id``,
-necesitamos usar ``user.partner_id.id``.
+necesita usar ``user.partner_id.id``.
 
 .. tip::
     Cuando se trabaja en campos de datos con ``<data noupdate="1">``
@@ -728,7 +727,7 @@ necesitamos usar ``user.partner_id.id``.
     ``<data noupdate="0">`` durante el desarrollo, y cámbielo solo
     cuando haya terminado con el módulo.
 
-Como de costumbre, no debemos olvidar agregar el archivo nuevo al
+Como de costumbre, no debe olvidar agregar el archivo nuevo al
 archivo descriptor ``__openerp__.py`` en el atributo "data":
 
 .. code:: Python
@@ -744,21 +743,21 @@ Resumen
 =======
 
 Ahora debe ser capaz de crear módulos nuevos para ampliar los módulos
-existentes. Vimos como ampliar el módulo To-Do creado en los capítulos
+existentes. Vio como ampliar el módulo To-Do creado en los capítulos
 anteriores.
 
 Se agregaron nuevas características en las diferentes capas que forman
-la aplicación. Ampliamos el modelo Odoo para agregar campos nuevos, y
-ampliamos los métodos con su lógica de negocio. Luego, modificamos las
+la aplicación. Amplio el modelo Odoo para agregar campos nuevos, y
+amplié los métodos con su lógica de negocio. Luego, modifique las
 vistas para hacer disponibles los campos nuevos. Finalmente, aprendió
-como ampliar un modelo heredando de otros modelos, y usamos esto para
-agregar características de red social a nuestra aplicación.
+como ampliar un modelo heredando de otros modelos, y use esto para
+agregar características de red social a su aplicación.
 
-Con estos tres capítulos, tenemos una vista general de las actividades
+Con estos tres capítulos, tiene una vista general de las actividades
 mas comunes dentro del desarrollo en Odoo, desde la instalación de Odoo
 y configuración a la creación de módulos y extensiones.
 
 Los siguientes capítulos se enfocarán en áreas específicas, la mayoría
-de las cuales hemos tocado en estos primeros capítulos. En el siguiente
-capítulo, abordaremos la serialización de datos y el uso de archivos XML
+de las cuales ha tocado en estos primeros capítulos. En el siguiente
+capítulo, abordara la serialización de datos y el uso de archivos XML
 y CSV con más detalle.

@@ -7,15 +7,15 @@ Capítulo 5 - Modelos
 Modelos – Estructura de los Datos de la Aplicación
 ==================================================
 
-En los capítulos anteriores, vimos un resumen de extremo a extremo sobre
+En los capítulos anteriores, vio un resumen de extremo a extremo sobre
 la creación de módulos nuevos para Odoo. En el Capítulo 2, se construyo
-una aplicación totalmente nueva, y en el Capítulo 3, exploramos la
-herencia y como usarla para crear un módulo de extensión para nuestra
-aplicación. En el Capítulo 4, discutimos como agregar datos iniciales y
-de demostración a nuestros módulos.
+una aplicación totalmente nueva, y en el Capítulo 3, exploro la
+herencia y como usarla para crear un módulo de extensión para su
+aplicación. En el Capítulo 4, se discute como agregar datos iniciales y
+de demostración a sus módulos.
 
-En estos resúmenes, tocamos todas las capas que componen el desarrollo
-de aplicaciones "backend" para Odoo. Ahora, en los siguientes capítulos,
+En estos resúmenes, se toco todas las capas que componen el desarrollo
+de aplicaciones *"backend"* para Odoo. Ahora, en los siguientes capítulos,
 es hora de explicar con más detalle todas estas capas que conforman una
 aplicación: modelos, vistas, y lógica de negocio.
 
@@ -25,10 +25,10 @@ soportan una aplicación, y como representar las relaciones entre ellas.
 Organizar las características de las aplicaciones en módulos
 ------------------------------------------------------------
 
-Como hicimos anteriormente, usaremos un ejemplo para ayudar a explicar
+Como hizo anteriormente, usara un ejemplo para ayudar a explicar
 los conceptos. Una de las mejores cosas de Odoo es tener la capacidad de
 tomar una aplicación o módulo existente y agregar, sobre este, las
-características que necesite. Así que continuaremos mejorando nuestros
+características que necesite. Así que continuara mejorando sus
 módulos to-do, y pronto formaran una aplicación completa!
 
 Es una buena práctica dividir las aplicaciones Odoo en varios módulos
@@ -39,31 +39,31 @@ más fácil.
 El problema de tener que instalar todos esos módulos individuales puede
 ser resuelto proporcionando un módulo de la aplicación que empaquete
 todas esas características, a través de sus dependencias. Para ilustrar
-este enfoque implementaremos las características adicionales usando
+este enfoque implementara las características adicionales usando
 módulos to-do nuevos.
 
-Introducción al módulo todo\_ui
+Introducción al módulo todo_ui
 -------------------------------
 
-En el capítulo anterior, primero creamos una aplicación para tareas por
-hacer personales, y luego la ampliamos para que las tareas por hacer
+En el capítulo anterior, primero creo una aplicación para tareas por
+hacer personales, y luego la aplico para que las tareas por hacer
 pudieran ser compartidas con otras personas.
 
-Ahora queremos llevar a nuestra aplicación a otro nivel agregándole una
-pizarra kanban y otras mejoras en la interfaz. La pizarra kanban nos
+Ahora querrá llevar a su aplicación a otro nivel agregándole una
+pizarra ``kanban`` y otras mejoras en la interfaz. La pizarra ``kanban`` nos
 permitirá organizar las tareas en columnas, de acuerdo a sus estados,
 como En Espera, Lista, Iniciada o Culminada.
 
-Comenzaremos agregando la estructura de datos para permitir esa visión.
-Necesitamos agregar los estados y sería bueno si añadimos soporte para
+Comenzara agregando la estructura de datos para permitir esa visión.
+Necesitara agregar los estados y sería bueno si añade soporte para
 las etiquetas, permitiendo que las tareas estén organizadas por
 categoría.
 
-La primera cosa que tenemos que comprender es como nuestra data estará
-estructurada para que podamos diseñar los Modelos que la soportan. Ya
-tenemos la entidad central: las tareas por hacer. Cada tarea estará en
+La primera cosa que tiene que comprender es como su data estará
+estructurada para que pueda diseñar los Modelos que la soportan. Ya
+tiene la entidad central: las tareas por hacer. Cada tarea estará en
 un estado, y las tareas pueden tener una o más etiquetas. Esto significa
-que necesitaremos agregar dos modelos adicionales, y tendrán estas
+que necesitara agregar dos modelos adicionales, y tendrán estas
 relaciones:
 
 -  Cada tarea tiene un estado, y puede haber muchas tareas en un estado.
@@ -76,12 +76,12 @@ parte, las relaciones inversas son: los estados tiene una relación uno a
 muchos con las tareas y las etiquetas tienen una relación muchos a
 muchos con las tareas.
 
-Comenzaremos creando el módulo nuevo ``todo_ui`` y agregaremos los
+Comenzara creando el módulo nuevo ``todo_ui`` y agregara los
 estados y los modelos de etiquetas.
 
-Hemos estado usado el directorio ``~/odoo-dev/custom-addons/`` para
-alojar nuestros módulos. Para crear el módulo nuevo junto a los
-existentes, podemos usar estos comandos en la terminal:
+Ha estado usado el directorio ``~/odoo-dev/custom-addons/`` para
+alojar sus módulos. Para crear el módulo nuevo junto a los
+existentes, podrá usar estos comandos en la terminal:
 
 .. code-block:: console
 
@@ -93,7 +93,7 @@ existentes, podemos usar estos comandos en la terminal:
     $ echo "import todo_model" > __init__.py
 
 
-Luego, debemos editar el archivo manifiesto ``__openerp__.py`` con este
+Luego, debe editar el archivo manifiesto ``__openerp__.py`` con este
 contenido:
 
 .. code-block:: python
@@ -105,25 +105,25 @@ contenido:
        'depends': ['todo_app']  
     }
 
-Note que dependemos de ``todo_app`` y no de ``todo_user``. En general,
+Note que depende de ``todo_app`` y no de ``todo_user``. En general,
 es buena idea mantener los módulos tan independientes como sea posible.
 Cuando un módulo aguas arriba es modificado, puede impactar todos los
 demás módulos que directa o indirectamente dependen de el. Es mejor si
-podemos mantener al mínimo el número de dependencias, e igualmente
+puede mantener al mínimo el número de dependencias, e igualmente
 evitar concentrar un gran número de dependencias, como:
 ``todo_ui → todo_user → todo_app`` en este caso.
 
-Ahora podemos instalar el módulo en nuestra base de datos de trabajo y
+Ahora podrá instalar el módulo en su base de datos de trabajo y
 comenzar con los modelos.
 
 Crear modelos
 =============
 
-Para que las tareas por hacer tengan una pizarra kanban, necesitamos
+Para que las tareas por hacer tengan una pizarra ``kanban``, necesita
 estados. Los estados son columnas de la pizarra, y cada tarea se
 ajustará a una de esas columnas.
 
-Agreguemos el siguiente código al archivo ``todo_ui/todo_model.py``:
+Agregue el siguiente código al archivo ``todo_ui/todo_model.py``:
 
 .. code-block:: python
 
@@ -142,15 +142,14 @@ Agreguemos el siguiente código al archivo ``todo_ui/todo_model.py``:
         name = fields.Char('Name', 40, translate=True)
         sequence = fields.Integer('Sequence') 
 
-Aquí, creamos los dos Modelos nuevos a los cuales haremos referencia en
+Aquí, crea los dos modelos nuevos, a los cuales, hará referencia en
 las tareas por hacer.
 
-Enfocándonos en los estados de las tareas, tenemos una clase Python,
+Enfocándose en los estados de las tareas, tiene una clase Python,
 Stage, basada en la clase ``models.Model``, que define un modelo nuevo,
-``todo.task.stage``. También definimos dos campos, "name" y "sequence".
-Podemos ver algunos atributos del modelo, (con el grión bajo, ``_``,
-como prefijo) esto es nuevo para nosotros. Demos le una mirada más
-profunda.
+``todo.task.stage``. También defina dos campos, ``name`` y ``sequence``.
+Podrá ver algunos atributos del modelo, (con el guión bajo, ``_``,
+como prefijo) esto es nuevo para nosotros. Dele una mirada más profunda.
 
 Atributos del modelo
 --------------------
@@ -159,31 +158,34 @@ Las clases del modelo pueden tener atributos adicionales usados para
 controlar alguno de sus comportamientos:
 
 -  ``_name``: Este es el identificador interno para el modelo que
-   estamos creando.
+   esta creando.
+
 -  ``_order``: Este fija el orden que será usado cuando se navega por
    los registros del modelo. Es una cadena de texto que es usada como
-   una clausula SQL "order by", así que puede ser cualquier cosa
+   una clausula SQL ``order by``, así que puede ser cualquier cosa
    permitida.
+
 -  ``_rec_name``: Este indica el campo a usar como descripción del
    registro cuando se hace referencia a él desde campos relacionados,
    como una relación muchos a uno. De forma predeterminada usa el campo
    ``name``, el cual esta frecuentemente presente en los modelos. Pero
-   este atributo nos permite usar cualquier otro campo para este
+   este atributo le permite usar cualquier otro campo para este
    propósito.
+
 -  ``_table``: Este es el nombre de la tabla de la base de datos que
    soporta el modelo. Usualmente, se deja para que sea calculado
    automáticamente, y es el nombre del modelo con el carácter de piso
    bajo (``_``) que reemplaza a los puntos. Pero puede ser configurado
    para indicar un nombre de tabla específico.
 
-Para completar, también podemos tener atributos ``inherit`` e
-``_inherits``, como explicamos en el Capítulo 3.
+Para completar, también podrá tener atributos ``inherit`` e
+``_inherits``, como se explicara en el Capítulo 3.
 
 Modelos y clases Python
 -----------------------
 
 Los modelos de Odoo son representados por las clases Python. En el
-código precedente, tenemos una clase Python llamada Stage, basada en la
+código precedente, tiene una clase Python llamada Stage, basada en la
 clase ``models.Model``, usada para definir el modelo nuevo
 ``todo.task.stage``.
 
@@ -201,14 +203,14 @@ es usar una lista de palabras en minúscula unidas con puntos, como
 ``todo.task.stage``. Otros ejemplos pueden verse en los módulos raíz de
 Odoo ``project.project``, ``project.task`` o ``project.task.type``.
 
-Debemos usar la forma singular: ``todo.task`` en vez de ``todo.tasks``.
+Debe usar la forma singular: ``todo.task`` en vez de ``todo.tasks``.
 Por cuestiones históricas se pueden encontrar módulos raíz, que no sigan
 dicha convención, como ``res.users``, pero no es la norma.
 
 Los nombres de modelo deben ser únicos. Debido a esto, la primera
 palabra deberá corresponder a la aplicación principal con la cual esta
-relacionada el módulo. En nuestro ejemplo, es "todo". De los módulos
-raíz tenemos, por ejemplo, project, crm, o sale.
+relacionada el módulo. En su ejemplo, es "todo". De los módulos
+raíz tiene, por ejemplo, ``project``, ``crm``, o ``sale``.
 
 Por otra parte, las clases Python, son locales para el archivo Python en
 la cual son declaradas. El identificador usado en ellas es solo
@@ -216,16 +218,16 @@ significativo para el código en ese archivo.
 
 Debido a esto, no se requiere que los identificadores de clase tengan
 como prefijo a la aplicación principal a la cual están relacionados. Por
-ejemplo, no hay problema en llamar simplemente Stage a nuestra clase
+ejemplo, no hay problema en llamar simplemente Stage a su clase
 para el modelo ``todo.task.stage``. No hay riesgo de colisión con otras
 posibles clases con el mismo nombre en otros módulos.
 
 Se pueden usar dos convenciones diferentes para los identificadores de
-clase: **snake\_case** o **CamelCase**. Históricamente, el código Odoo
-ha usado el snake\_case, y es aún muy frecuente encontrar clases que
+clase: **snake_case** o **CamelCase**. Históricamente, el código Odoo
+ha usado el snake_case, y es aún muy frecuente encontrar clases que
 usan esa convención. Pero la tendencia actual en usar CamelCase, debido
 a que es el estándar definido para Python por la convenciones de
-codificación PEP8. Puede haber notado que estamos usando esta última
+codificación PEP8. Puede haber notado que esta usando esta última
 forma.
 
 Modelos transitorios y abstractos
@@ -242,9 +244,9 @@ Abstractos.
 
 Los **modelos transitorios** están basados en la clase
 ``models.TransientModel`` y son usados para interacción tipo asistente
-con el usuario y la usuaria. Sus datos son aún almacenados en la base de
-datos, pero se espera que sea temporal. Un proceso de reciclaje limpia
-periódicamente los datos viejos de esas tablas.
+con el usuario. Sus datos son aún almacenados en la base de datos, pero
+se espera que sea temporal. Un proceso de reciclaje limpia periódicamente
+los datos viejos de esas tablas.
 
 Los **modelos abstractos** están basados en la clase
 ``models.AbstractModel`` y no tienen almacén vinculado a ellos. Actúan
@@ -275,11 +277,11 @@ puede observar en el campo **En los módulos**, en la parte superior
 derecha, las definiciones de ``todo.task`` vienen de los módulos
 ``todo_app`` y ``todo_user``.
 
-En el área inferior, tenemos disponibles algunas etiquetas informativas:
+En el área inferior, tiene disponibles algunas etiquetas informativas:
 una referencia rápida de los Campos del modelo, los Derechos de Acceso
 concedidos, y también lista las Vistas disponibles para este modelo.
 
-Podemos encontrar el Identificador Externo del modelo, activando el
+Podrá encontrar el Identificador Externo del modelo, activando el
 **Menú de Desarrollo** y accediendo a la opción **Ver metadatos**. Estos
 son generados automáticamente pero bastante predecibles: para el modelo
 ``todo.task``, el Identificador Externo es ``model_todo_task``.
@@ -294,13 +296,13 @@ Crear campos
 ============
 
 Después de crear un modelo nuevo, el siguiente paso es agregar los
-campos. Vamos a explorar diferentes tipos de campos disponibles en Odoo.
+campos. Va a explorar diferentes tipos de campos disponibles en Odoo.
 
 Tipos básicos de campos
 -----------------------
 
-Ahora tenemos un modelo Stage y vamos a ampliarlo para agregar algunos
-campos adicionales. Debemos editar el archivo ``todo_ui/todo_model.py``,
+Ahora tiene un modelo Stage y va a ampliarlo para agregar algunos
+campos adicionales. Debe editar el archivo ``todo_ui/todo_model.py``,
 removiendo algunos atributos innecesarios incluidos antes con propósitos
 descriptivos:
 
@@ -328,7 +330,7 @@ descriptivos:
         fold  = fields.Boolean('Folded?')
         image = fields.Binary('Image')
 
-Aquí tenemos un ejemplo de tipos de campos no relacionales disponibles
+Aquí tiene un ejemplo de tipos de campos no relacionales disponibles
 en Odoo, con los argumentos básicos esperados por cada función. Para la
 mayoría, el primer argumento es el título del campo, que corresponde al
 atributo palabra clave de cadena. Es un argumento opcional, pero se
@@ -336,7 +338,7 @@ recomienda colocarlo. De lo contrario, sera generado automáticamente un
 título por el nombre del campo.
 
 Existe una convención para los campos de fecha que usa ``date`` como
-prefijo para el nombre. Por ejemplo, deberíamos usar ``date_effective``
+prefijo para el nombre. Por ejemplo, debería usar ``date_effective``
 en vez de ``effective_date``. Esto también puede aplicarse a otros
 campos, como "amount\_", "price\_" o "qty\_".
 
@@ -441,7 +443,7 @@ Esta información esta disponible desde el cliente web, usando el **menú
 de Desarrollo** y seleccionando la opción **Ver metadatos**.
 
 Hay algunos efectos integrados que esperan nombres de campo específicos.
-Debemos evitar usarlos para otros propósitos que aquellos para los que
+Debe evitar usarlos para otros propósitos que aquellos para los que
 fueron creados. Algunos de ellos incluso están reservados y no pueden
 ser usados para ningún otro propósito:
 
@@ -465,16 +467,16 @@ ser usados para ningún otro propósito:
    estados específicos del registro.
 -  ``parent_id``, ``parent_left``, y ``parent_right``; tienen
    significado especial para las relaciones jerárquicas padre/hijo. En
-   un momento las discutiremos con mayor detalle.
+   un momento se discutirá con mayor detalle.
 
-Hasta ahora hemos discutido los valores escalares de los campos. Pero
+Hasta ahora ha discutido los valores escalares de los campos. Pero
 una buena parte de una estructura de datos de la aplicación es sobre la
-descripción de relaciones entre entidades. Veamos algo sobre esto ahora.
+descripción de relaciones entre entidades. Vea algo sobre esto ahora.
 
 Relaciones entre modelos
 ========================
 
-Viendo nuestro diseño del módulo, tenemos estas relaciones:
+Viendo su diseño del módulo, tiene estas relaciones:
 
 -  Cada tarea tiene un estado – esta es una relación muchos a uno,
    también conocida como una clave foránea. La relación inversa es de
@@ -486,7 +488,7 @@ Viendo nuestro diseño del módulo, tenemos estas relaciones:
    muchos a muchos, debido a que cada etiqueta puede también tener
    muchas tareas.
 
-Agreguemos los campos de relación correspondientes al archivo
+Agregue los campos de relación correspondientes al archivo
 ``todo_ui/todo_model.py``:
 
 .. code-block:: python
@@ -503,13 +505,13 @@ campos ``_id`` o ``_ids``, para las relaciones de uno y muchos,
 respectivamente.
 
 Como ejercicio puede intentar agregar en los modelos relacionados, las
-relaciones inversas correspondientes: La relación inversa de Many2one es
-un campo One2many en los estados: cada estado puede tener muchas tareas.
-Deberíamos agregar este campo a la clase Stage. La relación inversa de
-Many2many es también un campo Many2many en las etiquetas: cada etiqueta
+relaciones inversas correspondientes: La relación inversa de ``Many2one`` es
+un campo ``One2many`` en los estados: cada estado puede tener muchas tareas.
+Debería agregar este campo a la clase Stage. La relación inversa de
+``Many2many`` es también un campo ``Many2many`` en las etiquetas: cada etiqueta
 puede ser usada en muchas tareas.
 
-Veamos con mayor detalle las definiciones de los campos relacionales.
+Vea con mayor detalle las definiciones de los campos relacionales.
 
 Relaciones muchos a uno
 -----------------------
@@ -567,7 +569,7 @@ definición del campo:
                                 'tag_id', # campo para "otro" registro
                                  string='Tasks')
 
-Note que los argumentos adicionales son opcionales. Podemos simplemente
+Note que los argumentos adicionales son opcionales. Podrá simplemente
 fijar el nombre para la tabla de relación y dejar que los nombres de los
 campos usen la configuración predeterminada.
 
@@ -586,18 +588,18 @@ clave:
 Como los campos muchos a uno, los campos muchos a muchos también
 soportan los atributos de palabra clave de dominio y contexto.
 
-En algunas raras ocasiones tendremos que usar estas formas largas para
+En algunas raras ocasiones tendrá que usar estas formas largas para
 sobre escribir las configuraciones automáticas predeterminadas, en
 particular, cuando los modelos relacionados tengan nombres largos o
-cuando necesitemos una segunda relación muchos a muchos entre los mismos
+cuando necesite una segunda relación muchos a muchos entre los mismos
 modelos.
 
 .. tip::
      Los nombres de las tablas PostgreSQL tienen 63 caracteres como
      límite, y esto puede ser un problema si la tabla de relación generada
      automáticamente excede ese limite. Este es uno de los casos cuando
-     tendremos que configurar manualmente el nombre de la tabla de
-     relación usando el atributo "relation".\*
+     tendrá que configurar manualmente el nombre de la tabla de
+     relación usando el atributo ``relation``.
 
 Lo inverso a la relación Many2many es también un campo Many2many. Si
 también agregamos un campo Many2many a las etiquetas, Odoo infiere que
@@ -620,12 +622,12 @@ Relaciones inversas de uno a muchos
 
 La inversa de Many2many puede ser agregada al otro extremo de la
 relación. Esto no tiene un impacto real en la estructura de la base de
-datos, pero nos permite navegar fácilmente desde "un" lado a "muchos"
+datos, pero le permite navegar fácilmente desde "un" lado a "muchos"
 lados de los registros. Un caso típico es la relación entre un
 encabezado de un documento y sus líneas.
 
-En nuestro ejemplo, con una relación inversa One2many en estados,
-fácilmente podemos listar todas las tareas que se encuentran en un
+En su ejemplo, con una relación inversa ``One2many`` en estados,
+fácilmente podrá listar todas las tareas que se encuentran en un
 estado. Para agregar esta relación inversa a los estados, agregue el
 código mostrado a continuación:
 
@@ -661,7 +663,7 @@ jerárquicas: navegación más rápida a través de árboles hermanos, y
 búsquedas más simples con el operador ``child_of`` en las expresiones de
 dominio.
 
-Para habilitar esas características debemos configurar el atributo
+Para habilitar esas características debe configurar el atributo
 ``_parent_store`` y agregar los campos de ayuda: ``parent_left`` y
 ``parent_right``. Tenga en cuenta que estas operaciones adicionales
 traen como consecuencia penalizaciones en materia de almacenamiento y
@@ -669,7 +671,7 @@ ejecución, así que es mejor usarlo cuando se espere ejecutar más
 lecturas que escrituras, como es el caso de un árbol de categorías.
 
 Revisando el modelo de etiquetas definido en el archivo
-``todo_ui/todo_model.py``, ahora editaremos para que luzca así:
+``todo_ui/todo_model.py``, ahora edite para que luzca así:
 
 .. code-block:: python
 
@@ -682,7 +684,7 @@ Revisando el modelo de etiquetas definido en el archivo
         parent_left   = fields.Integer('Parent Left', index=True)
         parent_right  = fields.Integer('Parent  Right', index=True) 
 
-Aquí tenemos un modelo básico, con un campos ``parent_id`` que
+Aquí tiene un modelo básico, con un campos ``parent_id`` que
 referencia al registro padre, y el atributo adicional ``_parent_store``
 para agregar soporte a búsquedas jerárquicas.
 
@@ -700,12 +702,12 @@ registro:
 Hacer referencia a campos usando relaciones dinámicas
 -----------------------------------------------------
 
-Hasta ahora, los campos de relación que hemos visto puede solamente
-hacer referencia a un modelo. El tipo de campo Reference no tiene esta
+Hasta ahora, los campos de relación que ha visto puede solamente
+hacer referencia a un modelo. El tipo de campo ``Reference`` no tiene esta
 limitación y admite relaciones dinámicas: el mismo campo es capaz de
 hacer referencia a más de un modelo.
 
-Podemos usarlo para agregar un campo, "Refers to", a Tareas por Hacer
+Podrá usarlo para agregar un campo, "Refers to", a Tareas por Hacer
 que pueda hacer referencia a un User o un Partner:
 
 .. code-block:: python
@@ -714,9 +716,9 @@ que pueda hacer referencia a un User o un Partner:
         refers_to = fields.Reference([('res.user', 'User'),('res.partner', 'Partner')], 'Refers to') 
 
 Puede observar que la definición del campo es similar al campo
-Selection, pero aquí la lista de selección contiene los modelos que
-pueden ser usados. En la interfaz, el usuario o la usuaria seleccionará
-un modelo de la lista, y luego elegirá un registro de ese modelo.
+``Selection``, pero aquí la lista de selección contiene los modelos que
+pueden ser usados. En la interfaz, el usuario seleccionará un modelo de
+la lista, y luego elegirá un registro de ese modelo.
 
 Esto puede ser llevado a otro nivel de flexibilidad: existe una tabla de
 configuración de Modelos Referenciables para configurar los modelos que
@@ -726,7 +728,7 @@ Cuando se crea un campo como este podemos ajustarlo para que use
 cualquier modelo registrado allí, con la ayuda de la función
 ``referencable_models()`` en el módulo
 ``openerp.addons.res.res_request``. En la versión 8 de Odoo, todavía se
-usa la versión antigua de la API, así que necesitamos empaquetarlo para
+usa la versión antigua de la API, así que necesitara empaquetarlo para
 usarlo con la API nueva:
 
 .. code-block:: python
@@ -755,14 +757,14 @@ calcularlo.
 
 En la mayoría de los casos los campos calculados involucran alguna
 lógica de negocio, por lo tanto este tema se desarrollara con más
-profundidad en el Capítulo 7. Igual podemos explicarlo aquí, pero
+profundidad en el Capítulo 7. Igual podrá explicarlo aquí, pero
 manteniendo la lógica de negocio lo más simple posible.
 
-Trabajamos en un ejemplo: los estados tienen un campo "fold".
-Agregaremos a las tareas un campo calculado con la marca "Folded?" para
+Trabaje en un ejemplo: los estados tienen un campo "fold".
+Agregue a las tareas un campo calculado con la marca "Folded?" para
 el estado correspondiente.
 
-Debemos editar el modelo TodoTask en el archivo
+Debe editar el modelo ``TodoTask`` en el archivo
 ``todo_ui/todo_model.py`` para agregar lo siguiente:
 
 .. code-block:: python
@@ -788,7 +790,7 @@ sobre cada registro.
 
 El ``@api.depends`` es necesario si el calculo usa otros campos: le dice
 al servidor cuando re-calcular valores almacenados o en cache. Este
-acepta uno o mas nombres de campo como argumento y la notación de puntos
+acepta uno o más nombres de campo como argumento y la notación de puntos
 puede ser usada para seguir las relaciones de campo.
 
 Se espera que la función de calculo asigne un valor al campo o campos a
@@ -798,7 +800,7 @@ objeto de registro, nuestro calculo es simplemente para obtener el campo
 asignando ese valor (escribiéndolo) en el campo calculado,
 ``self.stage_fold``.
 
-No trabajaremos aún en las vistas para este módulo, pero puede hacer una
+No trabajara aún en las vistas para este módulo, pero puede hacer una
 edición rápida al formulario de tareas para confirmar si el campo
 calculado esta funcionando como es esperado: usando el menú de
 **Desarrollo** escoja la opción **Editar Vista** y agregue el campo
@@ -808,14 +810,14 @@ por una vista limpia del módulo en la próxima actualización.
 Buscar y escribir en campos calculados
 --------------------------------------
 
-El campo calculado que acabamos de crear puede ser leído, pero no se
+El campo calculado que acabo de crear puede ser leído, pero no se
 puede realizar una búsqueda ni escribir en el. Esto puede ser habilitado
 proporcionando funciones especiales para esto. A lo largo de la función
-de calculo también podemos colocar una función de búsqueda, que
+de calculo también podrá colocar una función de búsqueda, que
 implemente la lógica de búsqueda, y la función inversa, que implemente
 la lógica de escritura.
 
-Para hacer esto, nuestra declaración de campo calculado se convertirá en
+Para hacer esto, su declaración de campo calculado se convertirá en
 esto:
 
 .. code-block:: python
@@ -858,7 +860,7 @@ campo regular, entonces no es necesaria una función de búsqueda.
 Campos relacionados
 ===================
 
-Los campos calculados que implementamos en la sección anterior son un
+Los campos calculados que implemento en la sección anterior son un
 caso especial que puede ser gestionado automáticamente por Odoo. El
 mismo efecto puede ser logrado usando campos Relacionados. Estos hacen
 disponibles, de forma directa en un módulo, los campos que pertenecen a
@@ -866,18 +868,18 @@ un modelo relacionado, que son accesibles usando la notación de puntos.
 Esto posibilita su uso en los casos en que la notación de puntos no
 pueda usarse, como los formularos de UI.
 
-Para crear un campo relacionado, declaramos un campo del tipo necesario,
-como en los campos calculados regulares, y en vez de calcularlo, usamos
-el atributo "related" indicando la cadena de notación por puntos para
+Para crear un campo relacionado, declare un campo del tipo necesario,
+como en los campos calculados regulares, y en vez de calcularlo, use
+el atributo ``related`` indicando la cadena de notación por puntos para
 alcanzar el campo deseado.
 
 Las tareas por hacer están organizadas en estados personalizables y a su
-vez esto forma un mapa en los estados básicos. Los pondremos disponibles
-en las tareas, y usaremos esto para la lógica del lado del cliente en la
+vez esto forma un mapa en los estados básicos. Los pondrá disponibles
+en las tareas, y usara esto para la lógica del lado del cliente en la
 próximo capítulo.
 
-Agregaremos un campo calculado en el modelo tarea, similar a como
-hicimos a "stage\_fold", pero ahora usando un campo "Related":
+Agregara un campo calculado en el modelo tarea, similar a como
+hizo a "stage_fold", pero ahora usando un campo ``related``:
 
 .. code-block:: python
 
@@ -886,7 +888,7 @@ hicimos a "stage\_fold", pero ahora usando un campo "Related":
 
 Detrás del escenario, los campos "Related" son solo campos calculados
 que convenientemente implementan las funciones de búsqueda e inversa.
-Esto significa que podemos realizar búsquedas y escribir en ellos sin
+Esto significa que podrá realizar búsquedas y escribir en ellos sin
 tener que agregar código adicional.
 
 Restricciones del Modelo
@@ -902,7 +904,7 @@ el nombre del identificador de la restricción, el SQL para la
 restricción, y el mensaje de error que se usara.
 
 Un caso común es agregar restricciones únicas a los modelos. Suponga que
-no queremos permitir que el mismo usuario tenga dos tareas activas con
+no querrá permitir que el mismo usuario tenga dos tareas activas con
 el mismo título:
 
 .. code-block:: python
@@ -913,8 +915,8 @@ el mismo título:
              'UNIQUE (name, user_id, active)',
              'Task title must be unique!')] 
 
-Debido a que estamos usando el campo ``user_id`` agregado por el módulo
-``todo_user``, esta dependencia debe ser agregada a la clave "depends"
+Debido a que esta usando el campo ``user_id`` agregado por el módulo
+``todo_user``, esta dependencia debe ser agregada a la clave ``depends``
 del archivo manifiesto ``__openerp__.py``.
 
 Las restricciones Python pueden usar un pedazo arbitrario de código para
@@ -941,12 +943,12 @@ almacenados con menos de 5 caracteres.
 Resumen
 =======
 
-Vimos una explicación minuciosa de los modelos y los campos, usándolos
+Vio una explicación minuciosa de los modelos y los campos, usándolos
 para ampliar la aplicación de Tareas por Hacer con etiquetas y estados
 de las tareas. Aprendió como definir relaciones entre modelos,
-incluyendo relaciones jerárquicas padre/hijo. Finalmente, vimos ejemplos
+incluyendo relaciones jerárquicas padre/hijo. Finalmente, vi ejemplos
 sencillos de campos calculados y restricciones usando código Python.
 
-En el próximo capítulo, trabajaremos en la interfaz para las
+En el próximo capítulo, trabajara en la interfaz para las
 características "back-end" de ese modelo, haciéndolas disponibles para
 las vistas que se usan para interactuar con la aplicación.

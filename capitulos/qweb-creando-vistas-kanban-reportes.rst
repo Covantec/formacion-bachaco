@@ -7,10 +7,10 @@ Capítulo 8 - QweB
 QweB - Creando vistas Kanban y Reportes
 =======================================
 
-**QWeb** es un motor (engine) de plantillas por Odoo. Está basado en XML
-y es utilizado para generar fragmentos y páginas html. QWeb fue
-introducido por primera vez en la versión 7.0 para habilitar vistas
-Kanban más ricas, y con las versión 8.0, también se usa para la
+**QWeb** es un motor de plantillas (*engine template*) por Odoo. Está
+basado en XML y es utilizado para generar fragmentos y páginas HTML.
+QWeb fue introducido por primera vez en la versión 7.0 para habilitar
+vistas Kanban más ricas, y con las versión 8.0, también se usa para la
 generación de reportes y páginas web CMS (CMS: Sistemas de Gestión de
 Contenido).
 
@@ -24,9 +24,9 @@ Fabricación Ligera (lean) de Toyota, y se ha vuelto popular en la la
 industria del software con su adopción en las metodologías Ágiles.
 
 El **tablero Kanban** es una herramienta para visualizar la cola de
-trabajo. Los artículos (items) de trabajo están representados por
+trabajo. Los elementos de trabajo están representados por
 tarjetas que son organizadas en columnas representando las **etapas**
-(stages) del proceso de trabajo. Nuevos artículos de trabajo inician en
+(stages) del proceso de trabajo. Nuevos elementos de trabajo inician en
 la columna más a la izquierda y viaja a través del tablero hasta que
 alcanzan la columna más a la derecha, representando el trabajo
 completado.
@@ -37,9 +37,9 @@ Iniciándose con el tablero Kanban
 La simplicidad y el impacto visual del tablero Kanban los hace excelente
 para soportar procesos de negocio simples. Un ejemplo básico de un
 tablero Kanban puede tener tres columnas, como se muestra en la
-siguiente imagen: "ToDo", "Doing" y "Done" (Por hacer, haciendo y
-hecho), pero, por supuesto puede ser extendido a cualquier paso de un
-proceso específico que necesitemos:
+siguiente imagen: ToDo "Por hacer", Doing "Haciendo" y Done "Hecho", pero,
+por supuesto puede ser extendido a cualquier paso de un proceso específico
+que necesite:
 
 .. figure:: images/280_1.jpg
   :align: center
@@ -48,12 +48,12 @@ proceso específico que necesitemos:
   Gráfico 8.1 - tablero Kanban
 
 Las vistas Kanban una característica distintiva de Odoo, haciendo fácil
-implementar estos tableros. Aprendamos cómo usarlos.
+implementar estos tableros. Aprenda a cómo usarlos.
 
 Vistas Kanban
 -------------
 
-En las vistas de formulario, usamos mayormente elementos XML
+En las vistas de formulario, usa mayormente elementos XML
 específicos, tales como ``<field>`` y ``<group>``, y algunos elementos
 HTML, tales como ``<h1>`` o ``<div>``. Con las vistas Kanban, es un poco
 lo opuesto; ellas son plantillas basadas en HTML y soportan solo dos
@@ -68,7 +68,7 @@ también permite hacer diseños de vistas más complejas.
 Las vistas Kanban son tan flexibles que pueden haber muchas formas
 diferentes de diseñarlas, y puede ser difícil proveer una receta para
 seguir. Una buena regla general es encontrar un vista Kanban existente
-similar a lo que queremos alcanzar, y crear nuestro nuevo trabajo de
+similar a lo que querrá alcanzar, y crear su nuevo trabajo de
 vista Kanban basada en ella.
 
 Observando las vistas Kanban usadas en los módulos estándar, es posible
@@ -98,20 +98,20 @@ izquierda, tal como se muestra en la siguiente imagen:
 
   Gráfico 8.3 - Ejemplo de estilo de tarjeta Kanban
 
-Veremos el esqueleto y elementos típicos usados en ambos estilos de
+Vera el esqueleto y elementos típicos usados en ambos estilos de
 vistas tal que puedas sentirte cómodo adaptándolos a tus casos de usos
 particular.
 
 Diseña vistas Kanban
 --------------------
 
-La primera cosa es crear un nuevo módulo agregando nuestras vistas
+La primera cosa es crear un nuevo módulo agregando sus vistas
 Kanban a la lista de tareas por hacer. En un trabajo del mundo real, una
 situación de uso de un módulo para esto podría ser, probablemente,
 excesiva y ellas podrían ser perfectamente agregadas directamente en el
-módulo todo\_ui. Pero para una explicación más clara, usaremos un nuevo
-módulo y evitaremos demasiados, y posiblemente confusos, cambios en
-archivos ya creados. Lo nombraremos todo\_kanban y crearemos los
+módulo ``todo_ui``. Pero para una explicación más clara, usara un nuevo
+módulo y evitara demasiados, y posiblemente confusos, cambios en
+archivos ya creados. Lo nombrara ``todo_kanban`` y creara los
 archivos iniciales tal como sigue:
 
 .. code-block:: console
@@ -133,13 +133,10 @@ como sigue:
       'data': ['todo_view.xml']
     }
 
-Next, create the XML file where our shiny new Kanban views will go and
-set Kanban as the default view on the to-do task
-
-Lo que sigue es crear el archivo XML donde nuestras nuevas y brillantes
-vistas Kanban irán y establecer Kanban como la vista por defecto en la
-acción (action) de ventana de las tareas por hacer (to-do tasks), tal
-como se muestre a continuación:
+A continuación, cree el archivo XML donde irán sus nuevas y brillantes
+vistas Kanban y configurar Kanban como la vista por defecto en la
+acción "action" de ventana de la aplicación *tareas por hacer*, tal como
+se muestra a continuación:
 
 .. code-block:: XML
 
@@ -158,15 +155,15 @@ como se muestre a continuación:
              </record></data>
     </openerp>
 
-Ahora tenemos ubicado el esqueleto básico para nuestro módulo. Las
-plantillas usada en las vistas kanban y los reportes son extendidos
+Ahora tiene ubicado el esqueleto básico para su módulo. Las
+plantillas usada en las vistas ``kanban`` y los reportes son extendidos
 usando las técnicas regulares usadas para otras vistas, por ejemplos
 usando expresiones XPATH. Para más detalles, ve al `Capítulo
 3 <capitulo_iii_herencia.md>`__, Herencia – Extendiendo Aplicaciones
 Existentes.
 
-Antes de iniciar con las vistas kanban, necesitamos agregar un para de
-campos en el modelo tareas por hacer. (to-do tasks model)
+Antes de iniciar con las vistas kanban, necesita agregar un para de
+campos en el modelo de la aplicación *tareas por hacer*.
 
 Prioridad y estado Kanban
 -------------------------
@@ -258,8 +255,8 @@ El elemento superior también soporta algunos atributos interesantes:
 -  class: Añade una clase CSS al elemento raíz en la vista kanban
    renderizada.
 
-Ahora demos una mirada más de cerca a las plantillas Qweb usadas en
-las vistas kanban.
+Ahora de una mirada más de cerca a las plantillas Qweb usadas en
+las vistas ``kanban``.
 
 La vista kanban viñeta
 
@@ -393,10 +390,10 @@ la siguiente:
         </div>
     </t>
 
-Hasta ahora hemos visto vistas kanban estáticas, usando una combinación
-de HTML y etiquetas especiales (field, button, a). Pero podemos tener
+Hasta ahora ha visto vistas ``kanban`` estáticas, usando una combinación
+de HTML y etiquetas especiales (``field``, ``button``, ``a``). Pero podrá tener
 resultados mucho más interesantes usando contenido HTML generado
-dinámicamente. Veamos como podemos hacer eso usando Qweb.
+dinámicamente. Vea como podrá hacer eso usando Qweb.
 
 Agregando contenido dinámico Qweb
 ---------------------------------
@@ -423,8 +420,8 @@ Esto no significa que sea exacto técnicamente. Es solo un mapa mental
 que puede ser útil para entender como funcionan las cosas en las vistas
 kanban.
 
-A continuación exploraremos las distintas directiva Qweb disponibles,
-usando ejemplos que mejorarán nuestra tarjeta kanban de la tarea to-do.
+A continuación explorara las distintas directiva Qweb disponibles,
+usando ejemplos que mejorarán su tarjeta ``kanban`` de la tarea to-do.
 
 Renderizado Condicional con t-if
 --------------------------------

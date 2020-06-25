@@ -11,10 +11,10 @@ En este capítulo, aprenderá como preparar su servidor Odoo para usarlo
 en un entorno de producción.
 
 Existen varias estrategias y herramientas posibles que pueden usarse
-para el despliegue y gestión de un servidor de producción Odoo. Le
-guiaremos a través de una de estas formas de hacerlo.
+para el despliegue y gestión de un servidor de producción Odoo. Se le
+guiara a través de una de estas formas de hacerlo.
 
-Esta es la lista de verificación para la configuración que seguiremos:
+Esta es la lista de verificación para la configuración que seguirá:
 
 -  Instalar Odoo desde la fuente.
 -  Crear archivo de configuración de Odoo.
@@ -22,7 +22,7 @@ Esta es la lista de verificación para la configuración que seguiremos:
 -  Configuración del servicio del sistema Odoo
 -  Configuración de un proxy inverso (reverse proxy) con soporte SSL
 
-Comencemos.
+Comience.
 
 Instalar Odoo
 =============
@@ -34,7 +34,7 @@ es bastante directo, y puede encontrar todo lo que necesita en
 http://nightly.odoo.com.
 
 Aunque esta es una forma fácil y conveniente de instalar Odoo, aquí
-preferimos ejecutar una versión controlada desde el código fuente,
+se prefiere ejecutar una versión controlada desde el código fuente,
 debido a que proporciona mejor control sobre lo que se esta desplegando.
 
 Instalación desde el código fuente
@@ -44,8 +44,8 @@ Tarde o temprano, su servidor necesitará actualizaciones y parches. Una
 versión controlada por repositorio puede ser de gran ayuda cuando estos
 momentos lleguen.
 
-Usamos git para obtener el código desde un repositorio, como hicimos
-para instalar nuestro entorno de desarrollo. Por ejemplo:
+Use ``git`` para obtener el código desde un repositorio, como hizo
+para instalar su entorno de desarrollo. Por ejemplo:
 
 .. code-block:: console
 
@@ -61,15 +61,15 @@ en disco usado y hace que el proceso de clonación sea más rápido.
 Puede valer la pena tener una configuración un poco más sofisticada, con
 un entorno de prueba junto al entorno de producción.
 
-Con esto, podríamos traernos la última versión de código fuente y
+Con esto, podrá traernos la última versión de código fuente y
 probarlo en el entorno de prueba, sin perturbar el entorno de
-producción. Cuando la nueva versión este lista, podemos desplegarla
+producción. Cuando la nueva versión este lista, puede desplegarla
 desde el entorno de pruebas a producción.
 
-Consideremos que el repositorio en ``~/odoo-dev/odoo`` será nuestro
+Considerara que el repositorio en ``~/odoo-dev/odoo`` será su
 entorno de pruebas. Fue clonado desde GitHub, por lo tanto un
 ``git pull`` dentro de este traerá y mezclara los últimos cambios. Pero
-el mismo es un repositorio, y podemos clonarlo desde nuestro entorno de
+el mismo es un repositorio, y podrá clonarlo desde su entorno de
 producción, como se muestra en el siguiente ejemplo:
 
 .. code-block:: console
@@ -86,14 +86,14 @@ local y usar enlaces duros al repositorio padre para ahorrar espacio en
 disco, por lo tanto la opción ``--depth`` no es necesaria.
 
 Cuando sea necesario resolver un problema en el entorno de producción,
-podemos verificar en el entorno de prueba la versión del código de
+podrá verificar en el entorno de prueba la versión del código de
 producción, y depurar para diagnosticar y resolver el problema sin tocar
 el código de producción. Luego, el parche de la solución puede ser
 entregado al historial Git de prueba, y desplegado al repositorio de
 producción usando un comando ``git pull``.
 
 *Nota* *Git sera una herramienta invaluables para gestionar las
-versiones de los despliegues de Odoo. Solo hemos visto la superficie de
+versiones de los despliegues de Odoo. Solo ha visto la superficie de
 lo que puede hacerse para gestionar las versiones de código. Si aun no
 conoce Git, vale la pena aprender más sobre este. Un buen sitio para
 comenzar es http://git-scm.com/doc.*
@@ -103,7 +103,7 @@ Crear el archivo de configuración
 
 Al agregar la opción ``--save`` cuando se inicia un servidor Odoo
 almacena la configuración usada en el archivo ``~/.openerp_serverrc``.
-Podemos usar este archivo como punto de partida para nuestra
+Podrá usar este archivo como punto de partida para su
 configuración del servidor, la cual será almacenada en ``/etc/odoo``,
 como se muestra a continuación:
 
@@ -113,13 +113,13 @@ como se muestra a continuación:
     $ sudo chown $(whoami) /etc/odoo 
     $ cp ~/.openerp_serverrc /etc/odoo/openerp-server.conf  
 
-Este tendrá los parámetros de configuración para ser usados en nuestra
+Este tendrá los parámetros de configuración para ser usados en su
 instancia del servidor. Los siguientes son los parámetros para que el
 servidor trabaje correctamente:
 
 -  addons\_path: Es una lista separada por coma de las rutas de
    directorios donde se buscarán los módulos, usando los directorios de
-   izquierda a derecha. Esto significa que los directorios mas a la
+   izquierda a derecha. Esto significa que los directorios más a la
    izquierda tienen mayor prioridad.
 
 -  xmlrpc\_port: Es el número de puerto en el cual escuchara el
@@ -175,7 +175,7 @@ número de procesos. Es necesario afinar la mejor configuración para cada
 caso, debido a que depende de la carga del servidor y que otros
 servicios son ejecutados en el servidor (como PostgreSQL).
 
-Podemos verificar el efecto de las configuraciones ejecutando el
+Podrá verificar el efecto de las configuraciones ejecutando el
 servidor con la opción ``-c`` o ``--config`` como se muestra a
 continuación:
 
@@ -186,11 +186,11 @@ continuación:
 Configurar como un servicio del sistema
 =======================================
 
-Ahora, queremos configurar Odoo como un servicio del sistema y que sea
+Ahora, quiere configurar Odoo como un servicio del sistema y que sea
 ejecutado automáticamente cuando el sistema sea iniciado.
 
 El código fuente de Odoo incluye un script de inicio, usado para las
-distribuciones Debian. Podemos usarlo como nuestro script de inicio con
+distribuciones Debian. Podrá usarlo como su script de inicio con
 algunas modificaciones menores, como se muestra a continuación:
 
 .. code-block:: console
@@ -228,21 +228,21 @@ ubicación actual de Odoo, como se muestra a continuación:
     $ sudo ln -s ~/odoo-prd/odoo/odoo.py /usr/bin/openerp-server 
     $ sudo chown $(whoami) /usr/bin/openerp-server  
 
-Luego debemos crear el directorio LOGFILE como sigue:
+Luego debe crear el directorio ``LOGFILE`` como sigue:
 
 .. code-block:: console
 
     $ sudo mkdir /var/log/odoo
     $ sudo chown $(whoami) /etc/odoo  
 
-Ahora deberíamos poder iniciar y parar el servicio de Odoo:
+Ahora debería poder iniciar y parar el servicio de Odoo:
 
 .. code-block:: console
 
     $ sudo /etc/init.d/odoo start 
     Starting odoo: ok  
 
-Deberíamos ser capaces de obtener una respuesta del servidor sin ningún
+Debería ser capaces de obtener una respuesta del servidor sin ningún
 error en la archivo de registro, como se muestra a continuación:
 
 .. code-block:: console
@@ -268,7 +268,7 @@ La parada del servicio se hace de forma similar:
     gestionar los servicios, si lo prefiere puede usar
     ``sudo service odoo start`` y ``sudo service odoo stop``.
 
-Ahora solo necesitamos que el servicio se ejecute automáticamente cuando
+Ahora solo necesita que el servicio se ejecute automáticamente cuando
 se inicia el sistema:
 
 .. code-block:: console
@@ -299,19 +299,21 @@ Y del lado del desempeño, puede proveer mejoras significativas:
 
 -  Contenido estático cache, por lo tanto reduce la carga en los
    servidores Odoo.
+
 -  Comprime el contenido para acelerar el tiempo de carga.
+
 -  Balancea la carga distribuyendo la entre varios servidores.
 
 Apache es una opción popular que se usa como proxy inverso. Nginx es una
-alternativa reciente con buenos argumentos técnicos. Aquí usaremos nginx
-como proxy inverso y mostraremos como puede usarse para ejecutar las
+alternativa reciente con buenos argumentos técnicos. Aquí usara nginx
+como proxy inverso y mostrará como puede usarse para ejecutar las
 funciones mencionadas anteriormente.
 
 Configurar nginx como proxy inverso
 -----------------------------------
 
-Primero, debemos instalar nginx. Queremos que escuche en los puertos
-HTTP predeterminados, así que debemos asegurarnos que no estén siendo
+Primero, debe instalar nginx. Querrá que escuche en los puertos
+HTTP predeterminados, así que debe asegurarnos que no estén siendo
 usados por otro servicio. Ejecutar el siguiente comando debe arrojar un
 error, como se muestra a continuación:
 
@@ -328,7 +330,7 @@ Apache existente, deberá hacer lo siguiente:
 
     $ sudo /etc/init.d/apache2 stop  
 
-Ahora podemos instalar nginx, lo cual es realizado de la forma esperada:
+Ahora podrá instalar nginx, lo cual es realizado de la forma esperada:
 
 .. code-block:: console
 
@@ -341,7 +343,7 @@ servidor en la navegador o usando ``curl http://localhost``
 Los archivos de configuración de nginx siguen el mismo enfoque que los
 de Apache: son almacenados en ``/etc/nginx/available-sites/`` y se
 activan agregando un enlace simbólico en ``/etc/nginx/enabled-sites/``.
-Deberíamos deshabilitar la configuración predeterminada que provee la
+Debería deshabilitar la configuración predeterminada que provee la
 instalación de nginx, como se muestra a continuación:
 
 .. code-block:: console
@@ -350,16 +352,16 @@ instalación de nginx, como se muestra a continuación:
     $ sudo touch /etc/nginx/sites-available/odoo 
     $ sudo ln -s /etc/nginx/sites-available/odoo /etc/nginx/sites-enabled/odoo  
 
-Usando un editor, como nano o vi, editamos nuestros archivo de
+Usando un editor, como ``nano`` o ``vi``, edite sus archivo de
 configuración nginx como sigue:
 
 .. code-block:: console
 
     $ sudo nano /etc/nginx/sites-available/odoo 
 
-Primero agregamos los "upstreams", los servidores traseros hacia los
-cuales nginx redireccionará el tráfico, en nuestro caso el servidor
-Odoo, el cual escucha en el puerto 8069, como se muestra a continuación:
+Primero agregue los ``upstreams``, los servidores traseros hacia los
+cuales nginx redireccionará el tráfico, en su caso el servidor
+Odoo, el cual escucha en el puerto ``8069``, como se muestra a continuación:
 
 ::
 
@@ -384,14 +386,14 @@ configuración esta bien escrito. Además, un problema común es que el
 HTTP este tomado de forma predeterminada por otro servicio, como Apache
 o la página web predeterminada de nginx. Realice una doble revisión de
 las instrucciones dadas anteriormente para asegurarse que este no sea el
-caso, luego reinicio nginx. Luego de esto, podremos hacer que nginx
+caso, luego reinicio nginx. Luego de esto, podrá hacer que nginx
 cargue la nueva configuración:
 
 .. code-block:: console
 
     $ sudo /etc/init.d/nginx reload
 
-Ahora podemos verificar que nginx este redirigiendo el tráfico al
+Ahora podrá verificar que nginx este redirigiendo el tráfico al
 servidor de Odoo, como se muestra a continuación:
 
 .. code-block:: console
@@ -402,7 +404,7 @@ servidor de Odoo, como se muestra a continuación:
 Reforzar el HTTPS
 =================
 
-Ahora, deberíamos instalar un certificado para poder usar SSL. Para
+Ahora, debería instalar un certificado para poder usar *SSL*. Para
 crear un certificado auto-firmado, siga los pasos a continuación:
 
 Crear y acceder al directorio ssl, ejecutando el siguiente comando:
@@ -444,11 +446,11 @@ www-data, usado para ejecutar el servidor web.
     reconocida. Esto es particularmente importante si se esta ejecutando un
     sitio web comercial o de e-commerce.
 
-Ahora que tenemos un certificado SSL, podemos configurar nginx para
+Ahora que tiene un certificado SSL, podrá configurar nginx para
 usarlo.
 
-Para reforzar HTTPS, redireccionaremos todo el tráfico HTTP. Reemplace
-la directiva "server" que definimos anteriormente con lo siguiente:
+Para reforzar HTTPS, redireccionara todo el tráfico HTTP. Reemplace
+la directiva ``server`` que defina anteriormente con lo siguiente:
 
 ::
 
@@ -458,8 +460,8 @@ la directiva "server" que definimos anteriormente con lo siguiente:
         rewrite ^/.*$ https://$host$request_uri? permanent; 
     } 
 
-Si recargamos la configuración de nginx y accedemos al servidor con el
-navegador web, veremos que la dirección ``http://`` se convierte en
+Si recargue la configuración de nginx y acceda al servidor con el
+navegador web, vera que la dirección ``http://`` se convierte en
 ``https://``.
 
 Pero no devolverá ningún contenido antes que configuremos el servicio
@@ -487,15 +489,15 @@ HTTPS apropiadamente, agregando la siguiente configuración a "server":
     }
 
 Esto escuchara al puerto HTTPS y usará los archivos del certificado
-``/etc/nginx/ssl/`` para cifrar el tráfico. También agregamos alguna
+``/etc/nginx/ssl/`` para cifrar el tráfico. También agregue alguna
 información al encabezado de solicitud para hacer que el servicio de
 Odoo sepa que esta pasando a través de un proxy. Por razones de
 seguridad, es importante para Odoo asegurarse que el parámetro
-``proxy_mode`` este fijado a True. Al final, la directiva "location"
-define que todas las solicitudes sean pasadas al upstream
+``proxy_mode`` este fijado a True. Al final, la directiva ``location``
+define que todas las solicitudes sean pasadas al ``upstream``
 "backend-oddo".
 
-Recargue la configuración, y deberíamos poder tener nuestro servicio
+Recargue la configuración, y debería poder tener su servicio
 Odoo trabajando a través de HTTPS, como se muestra a continuación:
 
 .. code-block:: console
@@ -516,7 +518,7 @@ Optimización de Nginx
 
 Es hora para algunas mejoras en las configuraciones de nginx. Estas son
 recomendadas para habilitar el búfer de respuesta y compresión de datos
-que debería mejorar la velocidad del sitio web. También fijamos una
+que debería mejorar la velocidad del sitio web. También fije una
 localización específica para los registros.
 
 Las siguientes configuraciones deberían ser agregadas dentro de "server"
@@ -539,7 +541,7 @@ definiciones del proxy:
     gzip_types text/plain application/x-javascript text/xml text/css;
     gzip_vary on; 
 
-También podemos activar el caché de contenido para respuestas más
+También podrá activar el caché de contenido para respuestas más
 rápidas para los tipos de solicitudes mencionados en el código anterior
 y para impedir su carga en el servidor Odoo. Después de la sección
 ``location /``, agregue una segunda sección "location":
@@ -566,16 +568,16 @@ instantánea, y cuando se usan trabajos multiproceso, esta es gestionada
 en un puerto separado, el cual de forma predeterminada es el puerto
 8072.
 
-Para nuestro proxy inverso, esto significa que las solicitudes
+Para su proxy inverso, esto significa que las solicitudes
 "longpolling" deberían ser pasadas por este puerto. Para soportar esto,
-necesitamos agregar un nuevo "upstream" a nuestra configuración nginx,
+necesita agregar un nuevo ``upstream`` a su configuración nginx,
 como se muestra en el siguiente código:
 
 ::
 
     upstream backend-odoo-im { server 127.0.0.1:8072; } 
 
-Luego, deberíamos agregar otra "location" al "server" que gestiona las
+Luego, debería agregar otra ``location`` al ``server`` que gestiona las
 solicitudes HTTPS, como se muestra a continuación:
 
 ::
@@ -593,11 +595,11 @@ momento en que necesite instalar actualizaciones. Lo cual involucra dos
 pasos: primero, obtener las nuevas versiones del código fuente (servidor
 o módulos), y segundo, instalar las.
 
-Si ha seguido el enfoque descrito en la sección \* Instalación desde el
-código fuente \*, podemos buscar y probar las nuevas versiones dentro
+Si ha seguido el enfoque descrito en la sección *Instalación desde el
+código fuente*, podrá buscar y probar las nuevas versiones dentro
 del repositorio de preparación. Es altamente recomendable hacer una
 copia de la base de datos de producción y probar la actualización en
-ella. Si ``v8dev`` es nuestra base de datos de producción, esto podría
+ella. Si ``v8dev`` es su base de datos de producción, esto podría
 ser realizado con los siguientes comandos:
 
 .. code-block:: console
@@ -613,7 +615,7 @@ de referencia Git, con el fin de poder regresar, revisando esta versión
 otra vez. Hacer un respaldo de la base de datos antes de realizar la
 actualización es también recomendable.
 
-Luego de esto, podemos hacer un "pull" de las nuevas versiones al
+Luego de esto, podrá hacer un ``git pull`` de las nuevas versiones al
 repositorio de producción usando Git y completando la actualización,
 como se muestra aquí:
 
@@ -632,9 +634,9 @@ ejecutar Odoo en un servidor de producción basado en Debian. Fueron
 vistas las configuraciones más importantes del archivo de configuración,
 y aprendió como aprovechar el modo multiproceso.
 
-También aprendió como usar nginx como un proxy inverso frente a nuestro
+También aprendió como usar nginx como un proxy inverso frente a su
 servidor Odoo, para mejorar la seguridad y la escalabilidad.
 
-Esperamos que esto cubra lo esencial de lo que es necesario para
+Ojala que esto cubra lo esencial de lo que es necesario para
 ejecutar un servidor Odoo y proveer un servicio estable y seguro a sus
-usuarios y usuarias.
+usuarios.

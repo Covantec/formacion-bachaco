@@ -4,10 +4,10 @@
 Capítulo 2 - Primera aplicación
 ===============================
 
-Construyendo tu primera aplicación con Odoo
+Construyendo su primera aplicación con Odoo
 ===========================================
 
-Desarrollar en Odoo la mayoría de las veces significa crear nuestros
+Desarrollar en Odoo la mayoría de las veces significa crear sus
 propios módulos. En este capítulo, se creará la primera aplicación con
 Odoo, y se aprenderán los pasos necesarios para habilitarlas e
 instalarlas en Odoo.
@@ -29,15 +29,15 @@ datos es gestionado automáticamente por Odoo, y el mecanismo responsable
 por esto es el **modelo objeto relacional, (ORM - object relational
 model)**.
 
-La capa vista describe la interfaz con el usuario o la usuaria. Las
-vistas son definidas usando XML, las cuales son usadas por el marco de
-trabajo (framework) del cliente web para generar vistas HTML de datos.
+La capa vista describe la interfaz con el usuario. Las vistas son definidas
+usando XML, las cuales son usadas por el marco de trabajo (framework) del
+cliente web para generar vistas HTML de datos.
 
 Las vistas del cliente web ejecutan acciones de datos persistentes a
 través de la interacción con el servidor ORM. Estas pueden ser
 operaciones básicas como escribir o eliminar, pero pueden también
 invocar métodos definidos en los objetos Python del ORM, ejecutando
-lógica de negocio más compleja. A esto es a lo que nos referimos cuando
+lógica de negocio más compleja. A esto es a lo que se refiere cuando
 se habla de la capa modelo.
 
 .. note::
@@ -72,33 +72,33 @@ características. Por esto son resaltadas en el menú Apps de Odoo.
 Modificar un módulo existente
 -----------------------------
 
-En el ejemplo que sigue a continuación, crearemos un módulo nuevo con
+En el ejemplo que sigue a continuación, creara un módulo nuevo con
 tan pocas dependencias como sea posible.
 
 Sin embargo, este no es el caso típico. Lo más frecuente serán
 situaciones donde las modificaciones y extensiones son necesarias en un
 módulo existente para ajustarlo a casos de uso específicos.
 
-La regla de oro dice que no debemos cambiar módulos existentes
+La regla de oro dice que no debe cambiar módulos existentes
 modificándolos directamente. Esto es considerado una mala práctica.
 Especialmente cierto para los módulos oficiales proporcionados por Odoo.
 Hacer esto no permitirá una clara separación entre el módulo original y
-nuestras modificaciones, y hace difícil la actualización.
+sus modificaciones, y hace difícil la actualización.
 
-Por el contrario, debemos crear módulos nuevos que sean aplicados encima
-de los módulos que queremos modificar, e implementar esos cambios. Esta
+Por el contrario, debe crear módulos nuevos que sean aplicados encima
+de los módulos que requiere modificar, e implementar esos cambios. Esta
 es una de las principales fortalezas de Odoo: provee mecanismos de
 "herencia" que permiten a los módulos personalizados extender los
 módulos existentes, bien sean oficiales o de la comunidad. La herencia
 el posible en todos los niveles, modelo de datos, lógica de negocio, e
-interfaz con el usuario o usuaria.
+interfaz con el usuario.
 
-Ahora, crearemos un módulo nuevo completo, sin extender ningún módulo
-existente, para enfocarnos en las diferentes partes y pasos involucrados
-en la creación de un módulo. Solo daremos una breve mirada a cada parte,
+Ahora, creara un módulo nuevo completo, sin extender ningún módulo
+existente, para enfocarse en las diferentes partes y pasos involucrados
+en la creación de un módulo. Solo se dará una breve mirada a cada parte,
 ya que cada una será estudiada en detalle en los siguientes capítulos.
-Una vez estemos a gusto con la creación de un módulo nuevo, podremos
-sumergirnos dentro de los mecanismos de herencia, los cuales serán
+Una vez este a gusto con la creación de un módulo nuevo, podrá
+sumergirse dentro de los mecanismos de herencia, los cuales serán
 estudiados en el siguiente capítulo.
 
 Crear un módulo nuevo
@@ -107,20 +107,20 @@ Crear un módulo nuevo
 Nuestro módulo será una aplicación muy simple para gestionar las tareas
 por hacer. Estas tareas tendrán un único campo de texto, para la
 descripción, y una casilla de verificación para marcarlas como
-culminadas. También tendremos un botón para limpiar la lista de tareas
+culminadas. También tendrá un botón para limpiar la lista de tareas
 de todas aquellas finalizadas.
 
-Estas especificaciones son muy simples, pero a medida que avancemos en
-el libro iremos agregando gradualmente nuevas características, para
+Estas especificaciones son muy simples, pero a medida que avance en
+el libro ira agregando gradualmente nuevas características, para
 hacer la aplicación más interesante.
 
-Basta de charla, comencemos a escribir código y crear nuestro nuevo
+Basta de charla, comience a escribir código y crear su nuevo
 módulo.
 
 Siguiendo las instrucciones del *Capítulo 1, Comenzando con Odoo*,
-debemos tener el servidor Odoo en ``/odoo-dev/odoo/``. Para mantener las
-cosas ordenadas, crearemos un directorio junto a este para guardar
-nuestros propios módulos:
+debe tener el servidor Odoo en ``/odoo-dev/odoo/``. Para mantener las
+cosas ordenadas, creare un directorio junto a este para guardar
+sus propios módulos:
 
 .. code:: shell
 
@@ -132,7 +132,7 @@ OpenERP, y en el futuro se espera se convierta en ``__odoo__.py``. Es
 necesario que pueda ser importado desde Python, por lo que debe tener un
 archivo ``__init__.py``.
 
-El nombre del directorio del módulo será su nombre técnico. Usaremos
+El nombre del directorio del módulo será su nombre técnico. Usara
 ``todo_app`` para el nombre. El nombre técnico debe ser un identificador
 Python valido: debe comenzar con una letra y puede contener letras,
 números y el carácter especial guión bajo. Los siguientes comandos crean
@@ -144,11 +144,11 @@ este:
     $ mkdir ~/odoo-dev/custom-addons/todo_app
     $ touch ~/odoo-dev/custom-addons/todo_app/__init__.py
 
-Luego necesitamos crear el archivo descriptor. Debe contener únicamente
+Luego necesita crear el archivo descriptor. Debe contener únicamente
 un diccionario Python y puede contener alrededor de una docena de
 atributos, de los cuales solo el atributo ``name`` es obligatorio. Son
 recomendados los atributos ``description``, para una descripción más
-larga, y ``author``. Ahora agregamos un archivo ``__openerp__.py`` junto
+larga, y ``author``. Ahora agregue un archivo ``__openerp__.py`` junto
 al archivo ``__init__.py`` con el siguiente contenido:
 
 .. code:: Python
@@ -171,11 +171,11 @@ aquí, de otra forma el módulo podría fallar al instalar una base de
 datos vacía (debido a dependencias insatisfechas) o tener errores en la
 carga, si otros módulos necesarios son cargados después.
 
-Para nuestra aplicación, queremos que dependa del módulo **mail** debido
+Para su aplicación, querrá que dependa del módulo ``mail`` debido
 a que este agrega el menú **Mensajería** en la parte superior de la
-ventana, y queremos incluir nuestro nuevo menú de opciones allí.
+ventana, y querrá incluir su nuevo menú de opciones allí.
 
-Para precisar, escogimos pocas claves del descriptor, pero en el mundo
+Para precisar, escoja pocas claves del descriptor, pero en el mundo
 real es recomendable usar claves adicionales, ya que estas son
 relevantes para la app-store de Odoo:
 
@@ -199,21 +199,21 @@ deshabilitar el módulo. - ``auto_install``, si esta fijada en ``True``
 este módulo es automáticamente instalado si todas las dependencias han
 sido instaladas. Esto es usado en módulos asociados.
 
-Desde Odoo 8.0, en vez de la clave ``description`` podemos usar un
+Desde Odoo 8.0, en vez de la clave ``description`` podrá usar un
 archivo ``README.rst`` o ``README.md`` en el directorio raíz del módulo.
 
 Agregar el módulo a la ruta de complementos
 -------------------------------------------
 
-Ahora que tenemos un módulo nuevo, incluso si es muy simple, queremos
-que esté disponible en Odoo. Para esto, debemos asegurarnos que el
+Ahora que tiene un módulo nuevo, incluso si es muy simple, querrá
+que esté disponible en Odoo. Para esto, debe asegurarse que el
 directorio que contiene el módulo sea parte de la ruta de complementos
-addons. Y luego tenemos que actualizar la lista de módulos de Odoo.
+addons. Y luego tiene que actualizar la lista de módulos de Odoo.
 
 Ambas operaciones han sido explicadas en detalle en el capítulo
-anterior, pero a continuación presentamos un resumen de lo necesario.
+anterior, pero a continuación se presenta un resumen de lo necesario.
 
-Nos posicionamos dentro del directorio de trabajo e iniciamos el
+Posiciónese dentro del directorio de trabajo e inicia el
 servidor con la configuración de la ruta de complementos o addons:
 
 .. code:: shell
@@ -227,7 +227,7 @@ iniciado: simplemente ejecute ./odoo.py y serán ejecutadas las últimas
 opciones guardadas.
 
 Mira detenidamente en el registro del servidor. Debería haber una línea
-**INFO ? openerp: addons paths:** (...), y debería incluir nuestro
+**INFO ? openerp: addons paths:** (...), y debería incluir su
 directorio ``custom-addons``.
 
 Recuerde incluir cualquier otro directorio que pueda estar usando. Por
@@ -238,24 +238,24 @@ el repositorio department, puede querer incluirlo y usar la opción:
 
     --addons-path="custom-addons,department,odoo/addons"
 
-Ahora hagamos que Odoo sepa de los módulos nuevos que hemos incluido.
+Ahora haga que Odoo sepa de los módulos nuevos que ha incluido.
 
 Para esto, En la sección **Módulos** del menú **Configuración**,
 seleccione la opción **Actualizar lista de módulos**. Esto actualizará
 la lista de módulos agregando cualquier módulo incluido desde la última
-actualización de la lista. Recuerde que necesitamos habilitar las
+actualización de la lista. Recuerde que necesita habilitar las
 Características Técnicas para que esta opción sea visible. Esto se logra
 seleccionando la caja de verificación de **Características técnicas**
-para nuestra cuenta de usuario.
+para su cuenta de usuario.
 
 Instalar el módulo nuevo
 ------------------------
 
-La opción **Módulos locales** nos muestra la lista de módulos
+La opción **Módulos locales** le muestra la lista de módulos
 disponibles. De forma predeterminada solo muestra los módulos de
-**Aplicaciones en línea**. Debido a que creamos un módulo de aplicación
+**Aplicaciones en línea**. Debido a que crea un módulo de aplicación
 no es necesario remover este filtro. Escriba "todo" en la campo de
-búsqueda y debe ver nuestro módulo nuevo, listo para ser instalado.
+búsqueda y debe ver su módulo nuevo, listo para ser instalado.
 
 .. figure:: images/90_1.jpg
   :align: center
@@ -286,12 +286,12 @@ operaciones. Este es un punto común de confusión para las personas que
 se inician en el desarrollo con Odoo.
 
 Pero afortunadamente, existe una mejor forma. La forma más simple y
-rápida para hacer efectivos todos los cambios en nuestro módulo es
+rápida para hacer efectivos todos los cambios en su módulo es
 detener (*Ctrl* + *C*) y reiniciar el proceso del servidor que requiere
-que nuestros módulos sean actualizados en la base de datos de trabajo.
+que sus módulos sean actualizados en la base de datos de trabajo.
 
 Para hacer que el servidor inicie la actualización del módulo
-``todo_app`` en la base de datos v8dev, usaremos:
+``todo_app`` en la base de datos ``v8dev``, usara:
 
 .. code:: shell
 
@@ -299,10 +299,10 @@ Para hacer que el servidor inicie la actualización del módulo
 
 La opción ``-u`` (o ``--update`` en su forma larga) requiere la opción
 ``-d`` y acepta una lista separada por comas de módulos para actualizar.
-Por ejemplo, podemos usar: ``-u todo_app,mail``.
+Por ejemplo, podrá usar: ``-u todo_app,mail``.
 
 En el momento en que necesite actualizar un módulo en proceso de
-desarrollo a lo largo del libro, la manera mas segura de hacerlo es ir a
+desarrollo a lo largo del libro, la manera más segura de hacerlo es ir a
 una ventana de terminal donde se este ejecutando Odoo, detener el
 servidor, y reiniciarlo con el comando visto anteriormente. Usualmente
 será suficiente con presionar la tecla de flecha arriba, esto debería
@@ -316,8 +316,8 @@ en el menú Configuraciones.
 Crear un modelo de aplicación
 -----------------------------
 
-Ahora que Odoo sabe sobre la disponibilidad de nuestro módulo nuevo,
-comencemos a agregarle un modelo simple.
+Ahora que Odoo sabe sobre la disponibilidad de su módulo nuevo,
+comience a agregarle un modelo simple.
 
 Los modelos describen los objetos de negocio, como una oportunidad, una
 orden de venta, o un socio (cliente, proveedor, etc). Un modelo tiene
@@ -330,8 +330,8 @@ módulo es instalado o actualizado.
 
 Algunas personas consideran como buena práctica mantener los archivos
 Python para los modelos dentro de un subdirectorio. Por simplicidad no
-seguiremos esta sugerencia, así que vamos a crear un archivo
-``todo_model.py`` en el directorio raíz del módulo ``todo_app``.
+seguirá esta sugerencia, así que va a crear un archivo ``todo_model.py``
+en el directorio raíz del módulo ``todo_app``.
 
 Agregar el siguiente contenido:
 
@@ -348,12 +348,12 @@ Agregar el siguiente contenido:
 
 La primera línea es un marcador especial que le dice al interprete de
 Python que ese archivo es UTF-8, por lo que puede manejar y esperarse
-caracteres non-ASCII. No usaremos ninguno, pero es mas seguro usarlo.
+caracteres non-ASCII. No usara ninguno, pero es más seguro usarlo.
 
 La segunda línea hace que estén disponibles los modelos y los objetos
 campos del núcleo de Odoo.
 
-la tercera línea declara nuestro nuevo modelo. Es una clase derivada de
+la tercera línea declara su nuevo modelo. Es una clase derivada de
 ``models.Model``. La siguiente línea fija el atributo ``_name``
 definiendo el identificador que será usado por Odoo para referirse a
 este modelo. Note que el nombre real de la clase Python no es
@@ -370,23 +370,23 @@ señalar que ``name`` y ``active`` son nombres de campos especiales. De
 forma predeterminada Odoo usara el campo ``name`` como el título del
 registro cuando sea referenciado desde otros modelos. El campo
 ``active`` es usado para desactivar registros, y de forma predeterminada
-solo los registros activos son mostrados. Lo usaremos para quitar las
+solo los registros activos son mostrados. Lo usara para quitar las
 tareas finalizadas sin eliminarlas definitivamente de la base de datos.
 
-Todavía, este archivo, no es usado por el módulo. Debemos decirle a Odoo
-que lo cargue con el módulo en el archivo ``__init__.py``. Editemos el
+Todavía, este archivo, no es usado por el módulo. Debe decirle a Odoo
+que lo cargue con el módulo en el archivo ``__init__.py``. Edite el
 archivo para agregar la siguiente línea:
 
 .. code:: Python
 
     from . import todo_model
 
-Esto es todo. para que nuestros cambios tengan efecto el módulo debe ser
+Esto es todo. para que sus cambios tengan efecto el módulo debe ser
 actualizado. Encuentre la aplicación **To-Do** en **Módulos Locales** y
 haga clic en el botón **Actualizar**.
 
-Ahora podemos revisar el modelo recién creado en el menú **Técnico**.
-Vaya a **Estructura de la Base de Datos \| Modelos** y busque el modelo
+Ahora podrá revisar el modelo recién creado en el menú **Técnico**.
+Vaya a **Estructura de la Base de Datos > Modelos** y busque el modelo
 ``todo.task`` en la lista. Luego haga clic en este para ver su
 definición:
 
@@ -396,12 +396,12 @@ definición:
 
   Gráfico 2.2 - Vista de Estructura de la Base de Datos de módulo 'todo_app'
 
-Si no hubo ningún problema, esto nos confirmará que el modelo y nuestros
+Si no hubo ningún problema, esto le confirmará que el modelo y sus
 campos fueron creados. Si hizo algunos cambios y no son reflejados,
 intente reiniciar el servidor, como fue descrito anteriormente, para
 obligar que todo el código Python sea cargado nuevamente.
 
-También podemos ver algunos campos adicionales que no declaramos. Estos
+También podrá ver algunos campos adicionales que no declarara. Estos
 son cinco campos reservados que Odoo agrega automáticamente a cualquier
 modelo. Son los siguientes: - ``id``: Este es el identificador único
 para cada registro en un modelo en particular. - ``create_date`` y
@@ -413,16 +413,16 @@ lo modificó, respectivamente.
 Agregar entradas al menú
 ------------------------
 
-Ahora que tenemos un modelo en el cual almacenar nuestros datos, hagamos
-que este disponible en la interfaz con el usuario y la usuaria.
+Ahora que tiene un modelo en el cual almacenar sus datos, haga
+que este disponible en la interfaz con el usuario.
 
-Todo lo que necesitamos hacer es agregar una opción de menú para abrir
+Todo lo que necesita hacer es agregar una opción de menú para abrir
 el modelo de "To-do Task" para que pueda ser usado. Esto es realizado
 usando un archivo XML. Igual que en el caso de los modelos, algunas
 personas consideran como una buena practica mantener las definiciones de
 vistas en en un subdirectorio separado.
 
-Crearemos un archivo nuevo ``todo_view.xml`` en el directorio raíz del
+Creara un archivo nuevo ``todo_view.xml`` en el directorio raíz del
 módulo, y este tendrá la declaración de un ítem de menú y la acción
 ejecutada por este:
 
@@ -471,8 +471,8 @@ módulo. Agregue este atributo al diccionario del descriptor:
 
     'data' : ['todo_view.xml'],
 
-Ahora necesitamos actualizar nuevamente el módulo para que estos cambios
-tengan efecto. Vaya al menú Mensajería y debe poder ver nuestro nueva
+Ahora necesita actualizar nuevamente el módulo para que estos cambios
+tengan efecto. Vaya al menú Mensajería y debe poder ver su nueva
 opción disponible.
 
 .. figure:: images/98_1.jpg
@@ -482,14 +482,14 @@ opción disponible.
   Gráfico 2.3 - Agregar módulo 'todo_app' al menú de Odoo
 
 Si hace clic en ella se abrirá un formulario generado automáticamente
-para nuestro modelo, permitiendo agregar y modificar los registros.
+para su modelo, permitiendo agregar y modificar los registros.
 
 Las vistas deben ser definidas por los modelos para ser expuestas a los
-usuarios y las usuarias, aunque Odoo es lo suficientemente amable para
-hacerlo automáticamente si no queremos, entonces podemos trabajar con
-nuestro modelo, sin tener ningún formulario o vistas definidas aún.
+usuarios, aunque Odoo es lo suficientemente amable para hacerlo
+automáticamente si no querrá, entonces podrá trabajar con su modelo,
+sin tener ningún formulario o vistas definidas aún.
 
-Hasta ahora vamos bien. Mejoremos ahora nuestra interfaz gráfica.
+Hasta ahora va bien. Mejorara ahora su interfaz gráfica.
 Intente las mejoras graduales que son mostradas en las secciones
 siguientes, haciendo actualizaciones frecuentes del módulo, y no tenga
 miedo de experimentar.
@@ -505,25 +505,25 @@ miedo de experimentar.
 Crear vistas - formulario, árbol y búsqueda
 -------------------------------------------
 
-Como hemos visto, si ninguna vista es definida, Odoo automáticamente
+Como ha visto, si ninguna vista es definida, Odoo automáticamente
 generará vistas básicas para que puedas continuar. Pero seguramente le
 gustará definir sus propias vistas del módulo, así que eso es lo que
-haremos.
+hará.
 
 Odoo soporta varios tipos de vistas, pero las tres principales son:
 ``list`` (lista, también llamada árbol), ``form`` (formulario), y
-``search`` (búsqueda). Agregaremos un ejemplo de cada una a nuestro
+``search`` (búsqueda). Agregara un ejemplo de cada una a su
 módulo.
 
 Todas las vistas son almacenadas en la base de datos, en el modelo
-``ir.model.view``. Para agregar una vista en un módulo, declaramos un
+``ir.model.view``. Para agregar una vista en un módulo, declaro un
 elemento ``<record>`` describiendo la vista en un archivo XML que será
 cargado dentro de la base de datos cuando el modelo sea instalado.
 
 Creando una vista formulario
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Edite el XML que recién hemos creado para agregar el elemento
+Edite el XML que recién ha creado para agregar el elemento
 ``<record>`` después de la apertura de la etiqueta ``<data>``:
 
 .. code:: XML
@@ -547,13 +547,13 @@ tiene que ser único, pero debe permitir identificar fácilmente a que
 registro se refiere.
 
 El atributo más importante es ``arch``, que contiene la definición de la
-vista. Aquí decimos que es un formulario, y que contiene tres campos, y
-que decidimos hacer al campo ``active`` de solo lectura.
+vista. Aquí se dice que es un formulario, y que contiene tres campos, y
+que decidió hacer al campo ``active`` de solo lectura.
 
 Formatear como un documento de negocio
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Lo anterior proporciona una vista de formulario básica, pero podemos
+Lo anterior proporciona una vista de formulario básica, pero podrá
 hacer algunos cambios para mejorar su apariencia. Para los modelos de
 documentos Odoo tiene un estilo de presentación que asemeja una hoja de
 papel. El formulario contiene dos elementos: una ``<head>``, que
@@ -585,7 +585,7 @@ Estos pueden ser colocados en cualquier parte dentro de un formulario,
 pero para formularios con estilo de documentos, el sitio recomendado es
 en la sección ``<header>``.
 
-Para nuestra aplicación, agregaremos dos botones para ejecutar métodos
+Para su aplicación, agregara dos botones para ejecutar métodos
 del modelo ``todo.task``:
 
 .. code:: XML
@@ -609,8 +609,8 @@ crea una disposición de dos columnas dentro del grupo externo. Se
 recomienda que los elementos Group tengan un nombre para hacer más fácil
 su extensión en otros módulos.
 
-Usaremos esto para mejorar la organización de nuestro contenido.
-Cambiemos el contenido de ``<sheet>`` de nuestro formulario:
+Usara esto para mejorar la organización de su contenido.
+Cambio el contenido de ``<sheet>`` de su formulario:
 
 .. code:: XML
 
@@ -629,7 +629,7 @@ Cambiemos el contenido de ``<sheet>`` de nuestro formulario:
 La vista de formulario completa
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-En este momento, nuestro registro en ``todo_view.xml`` para la vista de
+En este momento, su registro en ``todo_view.xml`` para la vista de
 formulario de ``todo.task`` debería lucir así:
 
 .. code:: XML
@@ -665,7 +665,7 @@ nuevamente clic en la opción de menú que abre el formulario, o volviendo
 a cargar la página en el navegador (*F5* en la mayoría de los
 navegadores).
 
-Ahora, agreguemos la lógica de negocio para las acciones de los botones.
+Ahora, agregue la lógica de negocio para las acciones de los botones.
 
 Agregar vistas de lista y búsqueda
 ----------------------------------
@@ -675,7 +675,7 @@ Cuando un modelo se visualiza como una lista, se esta usando una vista
 por jerarquía, pero la mayoría de las veces son usadas para desplegar
 listas planas.
 
-Podemos agregar la siguiente definición de una vista de árbol a
+Puede agregar la siguiente definición de una vista de árbol a
 ``todo_view.xml``:
 
 .. code:: XML
@@ -691,15 +691,15 @@ Podemos agregar la siguiente definición de una vista de árbol a
         </field>
     </record>
 
-Hemos definido una lista con solo dos columnas, ``name`` y ``is_done``.
-También agregamos un toque extra: las líneas para las tareas finalizadas
+Ha definido una lista con solo dos columnas, ``name`` y ``is_done``.
+También agregue un toque extra: las líneas para las tareas finalizadas
 (``is_done==True``) son mostradas en color gris.
 
 En la parte superior derecha de la lista Odoo muestra una campo de
 búsqueda. Los campos de búsqueda predefinidos y los filtros disponibles
 pueden ser predeterminados por una vista ``<search>``.
 
-Como lo hicimos anteriormente, agregaremos esto a ``todo_view.xml``:
+Como lo hice anteriormente, agregara esto a ``todo_view.xml``:
 
 .. code:: XML
 
@@ -718,19 +718,19 @@ Como lo hicimos anteriormente, agregaremos esto a ``todo_view.xml``:
 Los elementos ``<field>`` definen campos que también son buscados cuando
 se escribe en el campo de búsqueda. Los elementos ``<filter>`` agregan
 condiciones predefinidas de filtro, usando la sintaxis de dominio que
-puede ser seleccionada por el usuario o la usuaria con un clic.
+puede ser seleccionada por el usuario con un clic.
 
 Agregar la lógica de negocio
 ----------------------------
 
-Ahora agregaremos lógica a nuestros botones. Edite el archivo Python
+Ahora agregara lógica a sus botones. Edite el archivo Python
 ``todo_model.py`` para agregar a la clase los métodos llamados por los
 botones.
 
-Usaremos la API nueva introducida en Odoo 8.0. Para compatibilidad con
+Usara la API nueva introducida en Odoo 8.0. Para compatibilidad con
 versiones anteriores, de forma predeterminada Odoo espera la API
 anterior, por lo tanto para crear métodos usando la API nueva se
-necesitan en ellos decoradores Python. Primero necesitamos una
+necesitan en ellos decoradores Python. Primero necesita una
 declaración ``import`` al principio del archivo:
 
 .. code:: Python
@@ -759,14 +759,14 @@ llamadas del cliente usando el protocolo XMLRPC no funcionará. Si no
 tenemos nada que devolver, la práctica común es simplemente devolver
 ``True``.
 
-Después de esto, si reiniciamos el servidor Odoo para cargar nuevamente
+Después de esto, si reinicie el servidor Odoo para cargar nuevamente
 el archivo Python, el botón **Toggle Done** debe funcionar.
 
-Para el botón **Clear All Done** queremos ir un poco más lejos. Este
+Para el botón **Clear All Done** querrá ir un poco más lejos. Este
 debe buscar todos los registros activos que estén finalizados, y
 desactivarlos. Se supone que los botones de formulario solo actúan sobre
 los registros seleccionados, pero para mantener las cosas simples
-haremos un poco de trampa, y también actuará sobre los demás botones:
+hará un poco de trampa, y también actuará sobre los demás botones:
 
 .. code:: Python
 
@@ -778,14 +778,14 @@ haremos un poco de trampa, y también actuará sobre los demás botones:
 En los métodos decorados con ``@api.multi`` el ``self`` representa un
 conjunto de registros. Puede contener un único registro, cuando se usa
 desde un formulario, o muchos registros, cuando se usa desde la vista de
-lista. Ignoraremos el conjunto de registros de ``self`` y construiremos
-nuestro propio conjunto ``done_recs`` que contiene todas la tareas
-marcadas como finalizadas. Luego fijamos la señal activa como ``False``,
+lista. Ignore el conjunto de registros de ``self`` y construirá
+su propio conjunto ``done_recs`` que contiene todas la tareas
+marcadas como finalizadas. Luego fija la señal activa como ``False``,
 en todas ellas.
 
 El ``search`` es un método de la API que devuelve los registros que
 cumplen con algunas condiciones. Estas condiciones son escritas en un
-dominio, esto es una lista de tríos. Exploraremos con mayor detalle los
+dominio, esto es una lista de tríos. Explorara con mayor detalle los
 dominios más adelante.
 
 El método ``write`` fija los valores de todos los elementos en el
@@ -795,22 +795,23 @@ un conjunto de registros para asignar el valor uno por uno.
 
 Note que ``@api.one`` no es lo más eficiente para estas acciones, ya que
 se ejecutará para cada uno de los registros seleccionados. La
-``@api.multi`` se asegura que nuestro código sea ejecutado una sola vez
+``@api.multi`` se asegura que su código sea ejecutado una sola vez
 incluso si hay más de un registro seleccionado. Esto puede pasar si una
 opción es agregada a la vista de lista.
 
 Configurando la seguridad en el control de acceso
 -------------------------------------------------
 
-Debe haber notado, desde que cargamos nuestro módulo, un mensaje de
-alerta en en registro del servidor: **The model todo.task has no access
-rules, consider adding one**.
+Debe haber notado, desde que cargo su módulo, un mensaje de
+alerta en el registro del servidor:
 
-El mensaje es muy claro: nuestro modelo nuevo no tiene reglas de acceso,
+    **The model todo.task has no access rules, consider adding one**.
+
+El mensaje es muy claro: su modelo nuevo no tiene reglas de acceso,
 por lo tanto puede ser usado por cualquiera, no solo por el
 administrador. Como súper usuario el ``admin`` ignora las reglas de
-acceso, por ello somos capaces de usar el formulario sin errores. Pero
-debemos arreglar esto antes que otros usuarios puedan usarlo.
+acceso, por ello es capaz de usar el formulario sin errores. Pero
+debe arreglar esto antes que otros usuarios puedan usarlo.
 
 Para tener una muestra de la información requerida para agregar reglas
 de acceso a un modelo, use el cliente web y diríjase a: **Configuración
@@ -822,12 +823,12 @@ de acceso a un modelo, use el cliente web y diríjase a: **Configuración
 
   Gráfico 2.4 - Lista controles de acceso de Odoo
 
-Aquí podemos ver la ACL para el modelo ``mail.mail``. Este indica, por
+Aquí podrá ver la ACL para el modelo ``mail.mail``. Este indica, por
 grupo, las acciones permitidas en los registros.
 
 Esta información debe ser provista por el modelo, usando un archivo de
 datos para cargar las líneas dentro del modelo ``ir.model.access``.
-Daremos acceso completo al modelo al grupo empleado. Empleado es el
+Dará acceso completo al modelo al grupo empleado. Empleado es el
 grupo básico de acceso, casi todos pertenecen a este grupo.
 
 Esto es realizado usualmente usando un archivo CSV llamado
@@ -838,9 +839,9 @@ por los modelos que los crean. El grupo empleado es creado por el módulo
 base y tiene el identificador ``base.group_user``. El nombre de la línea
 es solo informativo y es mejor si es único. Los módulos raíz usando una
 cadena separada por puntos con el nombre del modelo y el nombre del
-grupo. Siguiendo esta convención usaremos ``todo.task.user``.
+grupo. Siguiendo esta convención usara ``todo.task.user``.
 
-Ahora que tenemos todo lo que necesitamos saber, vamos a agregar el
+Ahora que tiene todo lo que necesita saber, va a agregar el
 archivo nuevo con el siguiente contenido:
 
 ::
@@ -848,7 +849,7 @@ archivo nuevo con el siguiente contenido:
     id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
     access_todo_task_group_user,todo.task.user,model_todo_task,base.group_user,1,1,1,1
 
-No debemos olvidar agregar la referencia a este archivo nuevo en el
+No debe olvidar agregar la referencia a este archivo nuevo en el
 atributo "data" del descriptor en ``__openerp__.py``, de la siguiente
 manera:
 
@@ -868,23 +869,23 @@ característica de "to-do tasks".
 Reglas de acceso de nivel de fila
 ---------------------------------
 
-Odoo es un sistema multi-usuario, y queremos que la aplicación **to-do
+Odoo es un sistema multi-usuario, y querrá que la aplicación **to-do
 task** sea privada para cada usuario. Afortunadamente, Odoo soporta
 reglas de acceso de nivel de fila. En el menú **Técnico** pueden
 encontrarse en la opción **Reglas de Registro**, junto a la **Lista de
 Control de Acceso**. Las reglas de registro son definidas en el modelo
-``ir.rule``. Como es costumbre, necesitamos un nombre distintivo.
-También necesitamos el modelo en el cual operan y el dominio para forzar
+``ir.rule``. Como es costumbre, necesita un nombre distintivo.
+También necesita el modelo en el cual operan y el dominio para forzar
 la restricción de acceso. El filtro de dominio usa la misma sintaxis de
 dominio mencionada anteriormente, y usado a lo largo de Odoo.
 
 Finalmente, las reglas pueden ser globales (el campo ``global`` es
 fijado a ``True``) o solo para grupos particulares de seguridad. En
-nuestro caso, puede ser una regla global, pero para ilustrar el caso más
-común, la haremos como una regla específica para un grupo, aplicada solo
+su caso, puede ser una regla global, pero para ilustrar el caso más
+común, la hará como una regla específica para un grupo, aplicada solo
 al grupo empleados.
 
-Debemos crear un archivo ``security/todo_access_rules.xml`` con el
+Debe crear un archivo ``security/todo_access_rules.xml`` con el
 siguiente contenido:
 
 .. code:: XML
@@ -905,7 +906,7 @@ siguiente contenido:
 
 Nota el atributo ``noupdate="1"``. Esto significa que estos datos no
 serán actualizados en las actualizaciones del módulo. Esto permitirá que
-sea personalizada mas adelante, debido a que las actualizaciones del
+sea personalizada más adelante, debido a que las actualizaciones del
 módulo no destruirán los cambios realizados. Pero ten en cuenta que esto
 será así mientras se esté desarrollando, por lo tanto es probable que
 quieras fijar ``noupdate="0"`` durante el desarrollo, hasta que estés
@@ -917,7 +918,7 @@ operar con ellos. En este caso la tupla ``(4,x)`` indica agregar ``x`` a
 los registros, y ``x`` es una referencia al grupo empleados,
 identificado por ``base.group_user``.
 
-Como se hizo anteriormente, debemos agregar el archivo a
+Como se hizo anteriormente, debe agregar el archivo a
 ``__openerp__.py`` antes que pueda ser cargado al módulo:
 
 .. code:: Python
@@ -932,8 +933,8 @@ Agregar un ícono al módulo
 --------------------------
 
 Nuestro módulo se ve genial. ¿Por qué no añadir un ícono para que se vea
-aún mejor?. Para esto solo debemos agregar al módulo el archivo
-``static/description/icon.png`` con el ícono que usaremos.
+aún mejor?. Para esto solo debe agregar al módulo el archivo
+``static/description/icon.png`` con el ícono que usara.
 
 Los siguientes comandos agregan un ícono copiado del módulo raíz
 ``Notes``:
@@ -944,13 +945,13 @@ Los siguientes comandos agregan un ícono copiado del módulo raíz
     $ cd ~/odoo-dev/custom-addons/todo_app/static/description
     $ cp ../odoo/addons/note/static/description/icon.png ./
 
-Ahora, si actualizamos la lista de módulos, nuestro módulo debe
+Ahora, si actualiza la lista de módulos, su módulo debe
 mostrarse con el ícono nuevo.
 
 Resumen
 =======
 
-Creamos un módulo nuevo desde cero, cubriendo los elementos más
+Cree un módulo nuevo desde cero, cubriendo los elementos más
 frecuentemente usados en un módulo: modelos, los tres tipos base de
 vistas (formulario, lista y búsqueda), la lógica de negocio en los
 métodos del modelo, y seguridad en el acceso.

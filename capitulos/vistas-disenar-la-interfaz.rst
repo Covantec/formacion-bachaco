@@ -10,23 +10,22 @@ Vistas – Diseñar la Interfaz
 Este capítulo le ayudara a construir la interfaz gráfica para sus
 aplicaciones. Hay varios tipos disponibles de vistas y widgets. Los
 conceptos de contexto y dominio también juegan un papel fundamental en
-la mejora de la experiencia del usuario y la usuaria, y aprenderá más
-sobre esto.
+la mejora de la experiencia del usuario, y aprenderá más sobre esto.
 
 El módulo ``todo_ui`` tiene lista la capa de modelo, y ahora necesita la
-capa de vista con la interfaz. Agregaremos elementos nuevos a la IU y
-modificaremos las vistas existentes que fueron agregadas en capítulos
+capa de vista con la interfaz. Agregara elementos nuevos a la Interfaz de
+Usuario y modificara las vistas existentes que fueron agregadas en capítulos
 anteriores.
 
 La mejor manera de modificar vistas existentes es usar la herencia, como
-se explico en el Capítulo 3. Sin embargo, para mejorar la claridad en la
-explicación, sobre escribiremos las vistas existentes, y las
-reemplazaremos por unas vistas completamente nuevas. Esto hará que los
+se explico en el *Capítulo 3*. Sin embargo, para mejorar la claridad en la
+explicación, sobre escribirá las vistas existentes, y las
+reemplazara por unas vistas completamente nuevas. Esto hará que los
 temas sean más fáciles de entender y seguir.
 
-Es necesario agregar un archivo XML nuevo al módulo, así que
-comenzaremos por editar el archivo manifiesto ``__openerp__.py``.
-Necesitamos usar algunos campos del módulo ``todo_user``, para que sea
+Es necesario agregar un archivo XML nuevo al módulo, así que comience por
+editar el archivo manifiesto ``__openerp__.py``.
+Necesita usar algunos campos del módulo ``todo_user``, para que sea
 configurado como una dependencia:
 
 .. code-block:: python
@@ -38,17 +37,17 @@ configurado como una dependencia:
       'data': ['todo_view.xml']
     } 
 
-Comencemos con las opciones de menú y las acciones de ventana.
+Comience con las opciones de menú y las acciones de ventana.
 
 Acciones de ventana
 -------------------
 
 Las acciones de ventana dan instrucciones a la interfaz del lado del
-cliente. Cuando un usuario o una usuaria hace clic en una opción de menú
-o en un botón para abrir un formulario, es la acción subyacente la que
-da instrucciones a la interfaz sobre lo que debe hacer.
+cliente. Cuando un usuario hace clic en una opción de menú o en un botón
+para abrir un formulario, es la acción subyacente la que da instrucciones
+a la interfaz sobre lo que debe hacer.
 
-Comenzaremos por crear la acción de ventana que será usada en las
+Comience por crear la acción de ventana que será usada en las
 opciones de menú, para abrir las vistas de las tareas por hacer y de los
 estados. Cree el archivo de datos ``todo_view.xml`` con el siguiente
 código:
@@ -91,7 +90,7 @@ relevantes.
 
 -  ``context``: Este fija información de contexto en las vistas de destino,
    la cual puede ser usada para establecer valores predeterminados en
-   campos o filtros activos, entre otras cosas. Veremos más detalles
+   campos o filtros activos, entre otras cosas. Verá más detalles
    sobre esto en este mismo capítulo.
 
 -  ``domain``: Es una expresión de dominio que establece un filtro para los
@@ -101,7 +100,7 @@ relevantes.
    80 es el número predefinido.
 
 La acción de ventana ya incluye los otros tipos de vista las cuales
-estaremos examinando en este capítulo: calendar, Gantt y gráfico. Una
+estará examinando en este capítulo: calendar, Gantt y gráfico. Una
 vez que estos cambios son instalados, los botones correspondientes serán
 mostrados en la esquina superior derecha, junto a los botones de lista y
 formulario. Note que esto no funcionará hasta crear las vistas
@@ -124,9 +123,9 @@ veremos que tiene como submenú Organizador. Con la ayuda de las
 herramientas de desarrollo podemos encontrar el ID del XML para esa
 opción de menú: la cual es ``mail.mail_my_stuff``.
 
-Reemplazaremos la opción de menú existente en Tareas por Hacer con un
-submenú que puede encontrarse navegando a través de Mensajería \|
-Organizador. En el ``todo_view.xml``, después de las acciones de
+Reemplazará la opción de menú existente en Tareas por Hacer con un
+submenú que puede encontrarse navegando a través de **Mensajería** >
+**Organizador**. En el ``todo_view.xml``, después de las acciones de
 ventana, agregue el siguiente código:
 
 .. code-block:: XML
@@ -148,16 +147,16 @@ El segundo elemento del menú re escribe la opción definida en el módulo
 principal.
 
 El tercer elemento del menú agrega una nueva opción para acceder a los
-estados. Necesitaremos un orden para agregar algunos datos que permitan
+estados. Necesitará un orden para agregar algunos datos que permitan
 usar los estados en las tareas por hacer.
 
 Contexto y dominio
 ~~~~~~~~~~~~~~~~~~
 
-Nos hemos referido varias veces al contexto y al dominio. También hemos
+Se ha referido varias veces al contexto y al dominio. También se ha
 visto que las acciones de ventana pueden fijar valores en estos, y que
 los campos relacionales pueden usarlos en sus atributos. Ambos conceptos
-son útiles para proveer interfaces mas sofisticadas. Veamos como.
+son útiles para proveer interfaces más sofisticadas. Vea como.
 
 Contexto de sesión
 ~~~~~~~~~~~~~~~~~~
@@ -176,7 +175,7 @@ actual. La información inicial de sesión puede verse así:
 
     {'lang': 'en_US',   'tz': 'Europe/Brussels', 'uid': 1} 
 
-Tenemos información del ID de usuario actual, y las preferencias de
+Tiene información del ID de usuario actual, y las preferencias de
 idioma y zona horaria para la sesión de usuario.
 
 Cuando se usa una acción en el cliente, como hacer clic en un botón, se
@@ -192,14 +191,14 @@ El contexto también puede usarse para proveed valores predeterminados en
 los campos o habilitar filtros en la vista de destino.
 
 Para fijar el valor predeterminado en el campo ``user_id``, que
-corresponda a la sesión actual de usuario, debemos usar:
+corresponda a la sesión actual de usuario, debe usar:
 
 .. code-block:: python
 
     {'default_user_id': uid} 
 
 Y si la vista de destino tiene un filtro llamado ``filter_my_task``,
-podemos habilitarlo usando:
+podrá habilitarlo usando:
 
 .. code-block:: python
 
@@ -223,7 +222,7 @@ Por ejemplo, para limitar solo a las Tareas del usuario actual:
 El valor "``uid``" usado aquí es provisto por el contexto de sesión. Cuando
 se usa en un campo relacional, limitara las opciones disponibles de
 selección para ese campo. El filtro de dominio puede también usar
-valores de otros campos en la vista. Con esto podemos tener diferentes
+valores de otros campos en la vista. Con esto podrá tener diferentes
 opciones disponibles dependiendo de lo seleccionado en otros campos. Por
 ejemplo, un campo de persona de contacto puede ser establecido para
 mostrar solo las personas de la compañía seleccionada previamente en
@@ -315,13 +314,13 @@ de la sesión actual o no esta fijado.
 Vistas de Formulario
 ====================
 
-Como hemos visto en capítulos anteriores, las vistas de formulario
+Como se ha visto en capítulos anteriores, las vistas de formulario
 cumplir con una diseño simple o un diseño de documento de negocio,
 similar a un documento en papel.
 
-Ahora veremos como diseñar vistas de negocio y usar los elementos y
+Ahora verá como diseñar vistas de negocio y usar los elementos y
 widgets disponibles. Esto es hecho usualmente heredando la vista base.
-Pero para hacer el código más simple, crearemos una vista completamente
+Pero para hacer el código más simple, creará una vista completamente
 nueva para las tareas por hacer que sobre escribirá la definida
 anteriormente.
 
@@ -329,26 +328,26 @@ De hecho, el mismo modelo puede tener diferentes vistas del mismo tipo.
 Cuando se abre un tipo de vista para un modelo a través de una acción,
 se selecciona aquella con la prioridad más baja. O como alternativa, la
 acción puede especificar exactamente el identificador de la vista que se
-usará. La acción que definimos al principio de este capítulo solo hace
+usará. La acción que definió al principio de este capítulo solo hace
 eso; el ``view_id`` le dice a la acción que use específicamente el
 formulario con el ID ``view_form_todo_task_ui``. Esta es la vista que
-crearemos a continuación.
+creará a continuación.
 
 Vistas de negocio
 -----------------
 
-En una aplicación de negocios podemos diferenciar los datos auxiliares
-de los datos principales del negocio. Por ejemplo, en nuestra aplicación
+En una aplicación de negocios podrá diferenciar los datos auxiliares
+de los datos principales del negocio. Por ejemplo, en su aplicación
 los datos principales son las tareas por hacer, y las etiquetas y los
 estados son tablas auxiliares.
 
 Estos modelos de negocio pueden usar diseños de vista de negocio
-mejorados para mejorar la experiencia del usuario y la usuaria. Si
-vuelve a ejecutar la vista del formulario de tarea agregada en el
-Capítulo 2, notará que ya sigue la estructura de vista de negocio.
+mejorados para mejorar la experiencia del usuario. Si vuelve a ejecutar
+la vista del formulario de tarea agregada en el Capítulo 2, notará que
+ya sigue la estructura de vista de negocio.
 
 La vista de formulario correspondiente debe ser agregada después de las
-acciones y los elementos del menú, que agregamos anteriormente, y su
+acciones y los elementos del menú, que agrego anteriormente, y su
 estructura genérica es esta:
 
 .. code-block:: XML
@@ -379,10 +378,10 @@ Las vistas de negocio se componen de tres área visuales:
    communication".
 
 La sección historia y comunicación, con los widgets de red social en la
-parte inferior, es agregada por la herencia de nuestro modelo de
+parte inferior, es agregada por la herencia de su modelo de
 ``mail.thread`` (del módulo ``mail``), y agrega los elementos del ejemplo
 XML mencionado anteriormente al final de la vista de formulario. También
-vimos esto en el Capítulo 3.
+vio esto en el *Capítulo 3*.
 
 La barra de estado del encabezado
 ---------------------------------
@@ -392,7 +391,7 @@ negocio y los botones de acción.
 
 Los botones de acción son botones regulares de formulario, y lo más
 común es que el siguiente paso sea resaltarlos, usando
-``class="oe_highlight"``. En ``todo_ui/todo_view.xml`` podemos ampliar
+``class="oe_highlight"``. En ``todo_ui/todo_view.xml`` podrá ampliar
 el encabezado vacío para agregar le una barra de estado:
 
 .. code-block:: XML
@@ -405,17 +404,17 @@ el encabezado vacío para agregar le una barra de estado:
 
 Los botones de acción disponible puede diferir dependiendo en que parte
 del proceso se encuentre el documento actual. Por ejemplo, un botón
-Marcar como Hecho no tiene sentido si ya estamos en el estado "Hecho".
+Marcar como Hecho no tiene sentido si ya está en el estado "Hecho".
 
 Esto se realiza usando el atributo ``states``, que lista los estados donde
 el botón debería estas visible, como esto: ``states="draft,open"``.
 
-Para mayor flexibilidad podemos usar el atributo ``attrs``, el cual forma
+Para mayor flexibilidad podrá usar el atributo ``attrs``, el cual forma
 condiciones donde el botón debería ser invisible:
 ``attrs="{'invisible' [('stage_state','in', ['done','cancel'])]``.
 
 Estas características de visibilidad también están disponibles para
-otros elementos de la vista, y no solo para los botones. Veremos esto en
+otros elementos de la vista, y no solo para los botones. Verá esto en
 detalle más adelante en este capítulo.
 
 El flujo de negocio
@@ -429,26 +428,25 @@ de Odoo.
 
 El "Stage" es un campo muchos a uno que se usa en un modelo donde los
 pasos del proceso están definidos. Debido a esto pueden ser fácilmente
-configurados por el usuario u la usuaria final para adecuarlo a sus
-procesos específicos de negocio, y son perfectos para el uso de pizarras
-``kanban``.
+configurados por el usuario final para adecuarlo a sus procesos específicos
+de negocio, y son perfectos para el uso de pizarras ``kanban``.
 
 El "State" es una lista de selección que muestra los pasos estables y
 principales de un proceso, como Nuevo, En Progreso, o Hecho. No pueden
-ser configurados por el usuario o usuaria final, pero son fáciles de
-usar en la lógica de negocio. Los "States" también tienen soporte
-especial para las vistas: el atributo ``state`` permite que un elemento
-este habilitado para ser seleccionado por el usuario o usuaria
-dependiendo en el estado en que se encuentre el registro.
+ser configurados por el usuario final, pero son fáciles de usar en la lógica
+de negocio. Los "States" también tienen soporte especial para las vistas:
+el atributo ``state`` permite que un elemento este habilitado para ser
+seleccionado por el usuario dependiendo en el estado en que se encuentre
+el registro.
 
 .. tip::
 
     Es posible obtener un beneficio de ambos mundos, a través del
-    uso de ``stages`` que son mapeados dentro de los "states". Esto fue lo que
-    hicimos en el capítulo anterior, haciendo disponible a "State" en los
-    documentos de tareas por hacer a través de un campo calculado.
+    uso de ``stages`` que son mapeados dentro de los "states". Esto fue
+    lo que hizo en el capítulo anterior, haciendo disponible a "State"
+    en los documentos de tareas por hacer a través de un campo calculado.
 
-Para agregar un flujo de "stage" en nuestro encabezado de formulario:
+Para agregar un flujo de "stage" en su encabezado de formulario:
 
 .. code-block:: XML
 
@@ -456,10 +454,10 @@ Para agregar un flujo de "stage" en nuestro encabezado de formulario:
     <field name="stage_id" widget="statusbar" clickable="True" options="{'fold_field': 'fold'}" /> 
 
 El atributo ``clickable`` permite hacer clic en el widget, para cambiar la
-etapa o el estado del documento. Es posible que no queramos esto si el
+etapa o el estado del documento. Es posible que no querrá esto si el
 progreso del proceso debe realizarse a través de botones de acción.
 
-En el atributo ``options`` podemos usar algunas configuraciones
+En el atributo ``options`` podrá usar algunas configuraciones
 específicas:
 
 -  ``fold_fields``, cuando de usa el atributo ``stages``, es el nombre del campo que
@@ -510,22 +508,22 @@ estar dentro de un elemento HTML ``div`` con la clase ``oe_title``:
         </h3>
     </div> 
 
-Aquí podemos ver el uso de elementos comunes de HTML como ``div``, ``span``,
+Aquí podrá ver el uso de elementos comunes de HTML como ``div``, ``span``,
 ``h1`` y ``h3``.
 
 Etiquetas y campos
 ------------------
 
 Las etiquetas de los campos no son mostradas fuera de las secciones
-``<group>``, pero podemos mostrarlas usando el elemento ``<label>``:
+``<group>``, pero podrá mostrarlas usando el elemento ``<label>``:
 
--  El atributo ``for`` identifica el campo desde el cual tomaremos el
+-  El atributo ``for`` identifica el campo desde el cual tomará el
    texto de la etiqueta.
 
 -  El atributo ``string`` sobre escribe el texto original de la etiqueta
    del campo.
 
--  Con el atributo ``class`` también podemos usar las clases CSS para
+-  Con el atributo ``class`` también podrá usar las clases CSS para
    controlar la presentación. Algunas clases útiles son:
 
 -  ``oe_edit_only`` para mostrar lo solo cuando el formulario este modo
@@ -548,11 +546,11 @@ Botones inteligentes
 
 El área superior izquierda puede tener una caja invisibles para colocar
 botones inteligentes. Estos funcionan como los botones regulares pero
-pueden incluir información estadística. Como ejemplo agregaremos un
+pueden incluir información estadística. Como ejemplo agregará un
 botón para mostrar el número total de tareas realizadas por el dueño de
 la tarea por hacer actual.
 
-Primero necesitamos agregar el campo calculado correspondiente a
+Primero necesita agregar el campo calculado correspondiente a
 ``todo_ui/todo_model.py``. Agregue lo siguiente a la clase ``TodoTask``:
 
 .. code-block:: python
@@ -561,7 +559,7 @@ Primero necesitamos agregar el campo calculado correspondiente a
         self.user_todo_count = self.search_count([('user_id', '=', self.user_id.id)])
         user_todo_count      = fields.Integer('User To-Do   Count', compute='compute_user_todo_count') 
 
-Ahora agregaremos la caja del botón con un botón dentro de ella. Agregue
+Ahora agregará la caja del botón con un botón dentro de ella. Agregue
 lo siguiente justo después del bloque ``div`` ``oe_title``:
 
 .. code-block:: XML
@@ -609,7 +607,7 @@ para mostrar estadísticas. Estos son campos regulares que usan el widget
 ``statinfo``.
 
 El campo debe ser un campo calculado, definido en el módulo subyacente.
-También podemos usar texto estático en vez de o junto a los campos de
+También podrá usar texto estático en vez de o junto a los campos de
 ``statinfo``, como : ``<div>User's To-dos</div>``
 
 Organizar el contenido en formulario
@@ -620,8 +618,8 @@ etiquetas ``<group>``. Un grupo es una cuadrícula con dos columnas. Un
 campo y su etiqueta ocupan dos columnas, por lo tanto al agregar campos
 dentro de un grupo, estos serán apilados verticalmente.
 
-Si anidamos dos elementos ``<group>`` dentro de un grupo superior,
-tendremos dos columnas de campos con etiquetas, una al lado de la otra.
+Si anido dos elementos ``<group>`` dentro de un grupo superior,
+tendrá dos columnas de campos con etiquetas, una al lado de la otra.
 
 .. code-block:: XML
 
@@ -655,8 +653,8 @@ múltiples secciones a través de pestañas llamadas páginas. Esto puede
 usarse para mantener algunos datos fuera de la vista hasta que sean
 necesarios u organizar un largo número de campos por tema.
 
-No necesitaremos esto en nuestro formulario de tareas por hacer, pero el
-siguiente es un ejemplo que podríamos agregar en el formularios de
+No necesitará esto en su formulario de tareas por hacer, pero el
+siguiente es un ejemplo que podría agregar en el formularios de
 etapas de la tarea:
 
 .. code-block:: XML
@@ -676,9 +674,9 @@ que la ampliación de estas por parte de otros módulo sea más fiable
 Elementos de la vista
 ---------------------
 
-Hemos visto como organizar el contenido dentro de un formulario, usando
-elementos como encabezado, grupo y cuaderno. Ahora, podemos ahondar en
-los elementos de campo y botón y que podemos hacer con ellos.
+Ha visto como organizar el contenido dentro de un formulario, usando
+elementos como encabezado, grupo y cuaderno. Ahora, podrá ahondar en
+los elementos de campo y botón y que podrá hacer con ellos.
 
 Botones
 -------
@@ -732,8 +730,7 @@ escritos en la vista. Los atributos generales son:
    dentro del campo.
 
 -  ``widget``: sobre escribe el widget predeterminado usado por el tipo de
-   campo. Exploraremos los widgets disponibles mas adelante en este
-   mismo capítulo.
+   campo. Explorará los widgets disponibles más adelante en este mismo capítulo.
 
 -  ``options``: contiene opciones adicionales para ser usadas por el widget.
 
@@ -765,19 +762,18 @@ Atributos específicos para los tipos de campos:
    mostrar los registros. De forma predeterminada es de árbol, pero
    también puede ser de formulario ``form``, ``kanban`` o gráfico.
 
-Para los atributos *Booleanos* en general, podemos usar ``True`` o ``1`` para
+Para los atributos *Booleanos* en general, podrá usar ``True`` o ``1`` para
 habilitarlo y ``False`` o ``0`` *(cero)* para deshabilitarlo. Por ejemplo,
 ``readonly="1"`` y ``realonly="True"`` son equivalentes.
 
 Campos relacionales
 -------------------
 
-En los campos relacionales, podemos tener controles adicionales
-referentes a los que el usuario o la usuaria puede hacer. De forma
-predeterminada el usuario y la usuaria pueden crear nuevos registros
-desde estos campos (también conocido como creación rápida) y abrir el
-formulario relacionado al registro. Esto puede ser deshabilitado usando
-el atributo del campo ``options``:
+En los campos relacionales, podrá tener controles adicionales referentes
+a los que el usuario puede hacer. De forma predeterminada el usuario pueden
+crear nuevos registros desde estos campos (también conocido como creación
+rápida) y abrir el formulario relacionado al registro. Esto puede ser
+deshabilitado usando el atributo del campo ``options``:
 
 .. code-block:: python
 
@@ -844,9 +840,8 @@ Algunos widget para los campos relacionales y de selección:
 Eventos on-change
 -----------------
 
-A veces necesitamos que el valor de un campo sea calculado
-automáticamente cuando cambia otro campo. El mecanismo para esto se
-llama ``on-change``.
+A veces necesita que el valor de un campo sea calculado automáticamente
+cuando cambia otro campo. El mecanismo para esto se llama ``on-change``.
 
 Desde la versión o, los eventos ``on-change`` están definidos en la capa
 del modelo, sin necesidad de ningún marcado especial en las vistas. Es
@@ -868,7 +863,7 @@ Los elementos visibles como un formulario también pueden ser cambiados
 dinámicamente, dependiendo, por ejemplo de los permisos de usuario o la
 etapa del proceso en la cual esta el documento.
 
-Estos dos atributos nos permiten controlar la visibilidad de los
+Estos dos atributos le permiten controlar la visibilidad de los
 elemento en la interfaz:
 
 -  ``groups``: hacen al elemento visible solo para los miembros de los
@@ -880,7 +875,7 @@ elemento en la interfaz:
    códigos de "State", y el modelo del documento debe tener un campo
    "state".
 
-Para mayor flexibilidad, podemos fijar la visibilidad de un elemento
+Para mayor flexibilidad, podrá fijar la visibilidad de un elemento
 usando expresiones evaluadas del lado del cliente. Esto puede hacerse
 usando el atributo ``attrs`` con un diccionario que mapea el atributo
 ``invisible`` al resultado de una expresión de dominio.
@@ -893,15 +888,15 @@ los estados menos ``draft``:
     <field name="refers_to" attrs="{'invisible': [('state','=','draft')]}"  /> 
 
 El atributo ``invisible`` esta disponible para cualquier elemento, no solo
-para los campos. Podemos usarlo en las páginas de un cuaderno o en
+para los campos. Podrá usarlo en las páginas de un cuaderno o en
 grupos, por ejemplo.
 
 El atributo ``attrs`` también puede fijar valores para otros dos atributos:
 ``readonly`` y ``required``, pero esto solo tiene sentido para los campos de
 datos, convirtiéndolos en campos que no pueden ser editados u
-obligatorios. Con esto podemos agregar alguna lógica de negocio haciendo
+obligatorios. Con esto podrá agregar alguna lógica de negocio haciendo
 a un campo obligatorio, dependiendo del valor de otro campo, o desde un
-cierto estado mas adelante.
+cierto estado más adelante.
 
 Vistas de lista
 ---------------
@@ -910,7 +905,7 @@ Comparadas con las vistas de formulario, las vistas de listas son mucho
 más simples. Una vista de lista puede contener campos y botones, y
 muchos de los atributos de los formularios también están disponibles.
 
-Aquí se muestra un ejemplo de una vista de lista para nuestra Tareas por
+Aquí se muestra un ejemplo de una vista de lista para su Tareas por
 Hacer:
 
 .. code-block:: XML
@@ -973,9 +968,9 @@ Aquí se muestra una vista de búsqueda para las tareas por hacer:
         </field>
     </record>
 
-Podemos ver dos campos que serán buscados: ``user_id`` y ``user_id``. En
-``user_id`` tenemos una regla de filtro que hace la "búsqueda si" tanto en la
-descripción como en el usuario responsable. Luego tenemos dos filtros
+Podrá ver dos campos que serán buscados: ``name`` y ``user_id``. En
+``user_id`` tendrá una regla de filtro que hace la "búsqueda si" tanto en la
+descripción como en el usuario responsable. Luego tendrá dos filtros
 predefinidos, filtrando las "tareas no culminadas" y "tareas
 culminadas". Estos filtros pueden ser activados de forma independiente,
 y serán unidos por un operador **"OR"** si ambos son habilitados. Los
@@ -992,7 +987,7 @@ Los elementos ``filed`` pueden usar los siguientes atributos:
 -  ``string``: proporciona el texto de la etiqueta que será usado, en vez
    del predeterminado.
 
--  ``operator``: nos permite usar un operador diferente en vez del
+-  ``operator``: le permite usar un operador diferente en vez del
    predeterminado - ``=`` para campos numéricos y ``ilike`` para otros
    tipos de campos.
 
@@ -1029,8 +1024,8 @@ Otros tipos de vista
 
 Los tipos de vista que se usan con mayor frecuencia son los formularios
 y las listas, discutidos hasta ahora. A parte de estas, existen otros
-tipos de vista, y daremos un vistazo a cada una de ellas. Las vistas
-``kanban`` no serán discutidas aquí, ya que las veremos en el Capítulo 8.
+tipos de vista, y dará un vistazo a cada una de ellas. Las vistas
+``kanban`` no serán discutidas aquí, ya que las verá en el Capítulo 8.
 
 Recuerde que los tipos de vista disponibles están definidos en el
 atributo ``view_mode`` de la acción de ventana correspondiente.
@@ -1078,7 +1073,7 @@ Vistas de Gantt
 
 Esta vista presenta los datos en un gráfico de Gantt, que es útil para
 la planificación. Las tareas por hacer solo tiene un campo de fecha para
-la fecha de límite, pero podemos usarla para tener una vista funcional
+la fecha de límite, pero podrá usarla para tener una vista funcional
 de un gráfico Gantt básico:
 
 .. code-block:: XML
@@ -1114,8 +1109,8 @@ Vistas de Gráfico
 Los tipos de vista de gráfico proporcionan un análisis de los datos, en
 forma de gráfico o una tabla pivote interactiva.
 
-Agregaremos una tabla pivote a las tareas por hacer. Primero,
-necesitamos agregar un campo. En la clase ``TodoTask``, del archivo
+Agregará una tabla pivote a las tareas por hacer. Primero, necesita 
+agregar un campo. En la clase ``TodoTask``, del archivo
 ``todo_ui/todo_model.py``, agregue este línea:
 
 .. code-block:: python
@@ -1123,7 +1118,7 @@ necesitamos agregar un campo. En la clase ``TodoTask``, del archivo
     effort_estimate = fields.Integer('Effort Estimate') 
 
 También debe ser agregado al formulario de tareas por hacer para que
-podamos fijar datos allí. Ahora, agreguemos la vista de gráfico con una
+podrá fijar datos allí. Ahora, agregue la vista de gráfico con una
 tabla pivote:
 
 .. code-block:: XML
@@ -1164,7 +1159,7 @@ Resumen
 =======
 
 Aprendió más sobre las vistas e Odoo que son usadas para la construcción
-de la interfaz. Comenzamos agregando opciones de menú y acciones de
+de la interfaz. Comenzó agregando opciones de menú y acciones de
 ventana usadas para abrir las vistas. Fueron explicados en detalle los
 conceptos de contexto y dominio.
 
@@ -1174,5 +1169,5 @@ general los otros tipos de vista disponibles: calendario, Gantt y
 gráfico. Las vistas Kanban será estudiadas mas adelante, cuando aprenda
 como usar Qweb.
 
-Ya hemos vistos los modelos y las vistas. En el próximo capítulo,
-aprenderá como implementar la lógica de negocio del lado del servidor.
+Ya ha vistos los modelos y las vistas. En el próximo capítulo, aprenderá
+como implementar la lógica de negocio del lado del servidor.
