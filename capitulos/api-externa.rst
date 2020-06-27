@@ -253,7 +253,7 @@ returns the ID of the record written or created, as shown here:
 
 .. code-block:: python
 
-        def set(self, text, id=None):
+    def set(self, text, id=None):
         if id:
             self.execute('write', [[id], {'name': text}])
         else:
