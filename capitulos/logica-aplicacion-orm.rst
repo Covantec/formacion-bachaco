@@ -1181,7 +1181,7 @@ vistas. Aquí fue un poco más allá para aprender como implementar la
 lógica de negocio y usar conjuntos de registros para manipular los datos
 del modelo.
 
-También vio como la lógica de negocio interactúa con la interfaz y aprendió
+También pudo ver como la lógica de negocio interactúa con la interfaz y aprendió
 a crear ayudantes que dialoguen con el usuario y sirvan como una plataforma
 para iniciar procesos avanzados.
 
