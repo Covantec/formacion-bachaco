@@ -9,3 +9,4 @@ Acerca de esta iniciativa
     :titlesonly:
 
     acerca/index
+    acerca/colaboradores
