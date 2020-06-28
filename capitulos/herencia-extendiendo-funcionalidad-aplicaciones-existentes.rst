@@ -1,8 +1,9 @@
 :banner: banners/cmdline.jpg
 
-=====================
-Capítulo 3 - Herencia
-=====================
+========
+Herencia
+========
+
 
 Herencia - Extendiendo la Funcionalidad de las Aplicaciones Existentes
 ======================================================================
@@ -23,6 +24,7 @@ confiriéndole facultades para aprovechar las aplicaciones base o
 comunitarias. Como ejemplo, aprenderá como agregar las características
 de mensajería y redes sociales de Odoo a sus propios módulos.
 
+
 Agregar la capacidad de compartir con otros a la aplicación To-Do
 -----------------------------------------------------------------
 
@@ -41,6 +43,7 @@ nuevas. Esto es lo que esperara lograr al final de este capítulo:
   :alt: Gráfico 3.1 - Nuevo módulo para la aplicación To-Do
 
   Gráfico 3.1 - Nuevo módulo para la aplicación To-Do
+
 
 Camino a seguir para las características colaborativas
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -93,6 +96,7 @@ instalar un módulo puede volver al :doc:`Capítulo 1 <comenzando-con-odoo>`.
 
 Ahora, comience a agregar las nuevas características.
 
+
 Ampliando el modelo de tareas por hacer
 =======================================
 
@@ -120,6 +124,7 @@ En la secuencia de carga del módulo, durante un reinicio del servidor,
 las modificaciones solo serán visibles en los modelos cargados después.
 Así que, la secuencia de carga es importante y debe asegurarse que
 las dependencias del módulo están fijadas correctamente.
+
 
 Agregar campos a un modelo
 --------------------------
@@ -165,6 +170,7 @@ módulo. Si todo sale como es esperado, debería poder ver los campos
 nuevos cuando revise el modelo ``todo.task``, en el menú **Técnico**,
 **Estructura de base de datos > Modelos**.
 
+
 Modificar los campos existentes
 -------------------------------
 
@@ -183,6 +189,7 @@ podrá agregar esta línea en el archivo ``todo_task.py``:
 Si actualiza el módulo, va a un formulario de tareas por hacer, y
 posicione el ratón sobre el campo **Descripción**, aparecerá el
 mensaje de texto escrito en el código anterior.
+
 
 Modificar los métodos del modelo
 --------------------------------
@@ -263,6 +270,7 @@ asignadas a su usuario:
 Estas son las técnicas básicas para sobrescribir y ampliar la lógica de
 negocio definida en las clases del modelo. Vera ahora como extender
 las vistas de la interfaz con los usuarios.
+
 
 Ampliar las vistas
 ==================
@@ -405,6 +413,7 @@ No podrá olvidar agregar el atributo datos al archivo descriptor
 
     'data': ['todo_view.xml'],
 
+
 Ampliando más vistas de árbol y búsqueda
 ----------------------------------------
 
@@ -452,6 +461,7 @@ asignadas a alguien.
 No se preocupe demasiado por la sintaxis específica de las vistas.
 Se describirá esto con más detalle en el :doc:`Capítulo 6 <vistas-disenar-la-interfaz>`.
 
+
 Más sobre el uso de la herencia para ampliar los modelos
 ========================================================
 
@@ -466,6 +476,7 @@ de forma transparente a la vista, mientras por detrás de escena cada
 modelo gestiona sus propios datos.
 
 Explore esas posibilidades en más detalle.
+
 
 Copiar características usando herencia por prototipo
 ----------------------------------------------------
@@ -516,6 +527,7 @@ Odoo proporciona un mecanismo de herencia delegada, el cual impide la
 duplicación de estructuras de datos, por lo que es usualmente usada
 cuando se hereda de modelos regulares. Vea esto con mayor detalle.
 
+
 Integrar Modelos usando herencia delegada
 -----------------------------------------
 
@@ -560,6 +572,7 @@ modelos que vinculen con él!
 .. note::
     Note que con la herencia delegada, los campos con heredados, pero
     los métodos no.
+
 
 Usar la herencia para agregar características redes sociales
 ------------------------------------------------------------
@@ -640,6 +653,7 @@ menos acceso de lectura.
 Tendrá reglas de registro en su modelo de tareas por hacer así que
 necesita abordar esto, y es lo que hará en la siguiente sección.
 
+
 Modificar datos
 ---------------
 
@@ -677,6 +691,7 @@ Como ejemplo, cambie la opción de menú creada por el módulo
             {'search_default_filter_my_tasks': True}
         </field>
     </record>
+
 
 Ampliando las reglas de registro
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -753,12 +768,13 @@ arrojará un mensaje de advertencia, porque el registro que será
 eliminado no existe más. Esto no es un error y la actualización se
 realizará con éxito, así que no es necesario preocuparse por esto.
 
+
 Resumen
 =======
 
-Ahora debe ser capaz de crear módulos nuevos para ampliar los módulos
-existentes. Vio como ampliar el módulo To-Do creado en los capítulos
-anteriores.
+En el **capítulo 3**, ahora usted debe ser capaz de crear módulos nuevos
+para ampliar los módulos existentes. Vio como ampliar el módulo To-Do
+creado en los capítulos anteriores.
 
 Se agregaron nuevas características en las diferentes capas que forman
 la aplicación. Amplio el modelo Odoo para agregar campos nuevos, y

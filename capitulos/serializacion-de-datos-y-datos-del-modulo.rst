@@ -1,8 +1,9 @@
 :banner: banners/data_files.jpg
 
-==========================
-Capítulo 4 - Serialización
-==========================
+=============
+Serialización
+=============
+
 
 Serialización de Datos y Datos de Módulos
 =========================================
@@ -94,6 +95,7 @@ crear un nuevo registro. Esta es la razón de porque, en las siguientes
 actualizaciones del módulo, los registros cargados previamente se
 actualizaran en lugar de duplicarse.
 
+
 Encontrando los identificadores externos
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -131,11 +133,13 @@ ayuda. Para esto, utilice la opción de **Obtener Campos de Vista** o
 abra la información para la vista deseada usando la opción Editar , y
 seleccione la opción Ver metadatos.
 
+
 Exportar e importar datos
 =========================
 
 Va a empezar a trabajar en la exportación e importación de datos en
 Odoo, y desde allí, va a pasar a los detalles técnicos.
+
 
 Exportando datos
 ----------------
@@ -187,6 +191,7 @@ partir de allí, se mantienen unidos al mismos registro. Esto significa
 que las exportaciones posteriores preservarán los mismos identificadores
 externos.
 
+
 Importar datos
 --------------
 
@@ -227,6 +232,7 @@ importación de Odoo, es probable que es archivo sea correcto.
 
 Ahora podrá hacer clic en **Importar** y allí va: sus
 modificaciones y nuevos registros deberían haberse cargado en Odoo.
+
 
 Registros relacionados en archivos de datos CSV
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -300,6 +306,7 @@ incluirán en los módulos Odoo.
 A continuación va aprender más sobre el uso de los archivos de datos
 en los módulos.
 
+
 Datos de los Módulos
 --------------------
 
@@ -318,6 +325,7 @@ datos.
 Un ejemplo común es el acceso de seguridad, para cargar en el modelo
 ``ir.model.acess``. Esto se hace generalmente con archivos CSV, y que
 debe ser nombrado ``ir.model.acess.csv``.
+
 
 Datos de demostración
 ~~~~~~~~~~~~~~~~~~~~~
@@ -367,6 +375,7 @@ información es proporcionada por los elementos XML dentro del archivo.
 Va a aprender más sobre lo que los archivos de datos XML le permiten
 hacer y que los archivos CSV no.
 
+
 Archivos de datos XML
 ---------------------
 
@@ -415,6 +424,7 @@ cambio, el atributo especial ``ref`` se utiliza para hacer referencia a
 los identificadores externos. Se hablara de los valores para el campo
 relacional "a muchos" en un momento.
 
+
 El atributo de datos noupdate
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -458,6 +468,7 @@ casilla de verificación **No actualizable**.
     mantener ``noupdate="0"`` durante el desarrollo y sólo ponerlo a * 1
     *una vez terminado*.
 
+
 Definición de registros en XML
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -467,6 +478,7 @@ a cada columna. Como se mencionó antes, el atributo ``id`` corresponde
 ID Externo del registro y el ``model`` al el modelo de destino donde se
 escribirá el registro. Los elementos ``<field>`` tienen disponibles
 algunas maneras diferentes para asignar valores. Vea en detalle.
+
 
 Configuración de los valores de campo
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -483,6 +495,7 @@ general, esto también es adecuado para establecer los valores que no son
 texto: para Booleanos, ``0`` y ``1`` o valores ``False`` y ``True``;
 para fechas, fechas y horas, cadenas de texto como ``YYYY-MM-DD`` y
 ``YYYY-MM-DD HH:MI:SS``, se realizará una correcta conversión.
+
 
 Ajuste de valores utilizando expresiones
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -523,6 +536,7 @@ ejemplo del módulo de venta:
 .. code-block:: XML
 
     <value model="sale.order" eval="obj(ref('test_order_1')).amount_total" />
+
 
 Configuración de los valores de los campos de relación
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -572,6 +586,7 @@ el código utilizado:
 El símbolo guión bajo utilizado anteriormente representa valores
 irrelevantes, por lo general lleno de 0 o ``False``.
 
+
 Atajos para modelos de uso frecuente
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -601,6 +616,7 @@ correspondientes donde cargan los datos:
 
 - ``<url>``: Este es el modelo de acciones de URL ``ir.actions.act_url``.
 
+
 Otras acciones en archivos de datos XML
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -609,6 +625,7 @@ XML. Pero los archivos XML también permiten realizar otro tipo de
 acciones, a veces necesarios para configurar los datos. En particular,
 son capaces de eliminar los datos, ejecutar métodos arbitrarios del
 modelo, e iniciar la ejecución de eventos de flujo de trabajo.
+
 
 Eliminación de registros
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -634,6 +651,7 @@ En este caso, el mismo efecto se puede lograr mediante el atributo
 .. code-block:: XML
 
     <delete model="ir.rule" id="todo_app.todo_task_user_rule" />
+
 
 Activación de las funciones y flujos de trabajo
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -671,12 +689,13 @@ la instancia de flujo de trabajo sobre la cual esta actuando.
 ``action`` es la señal del flujo de trabajo enviada a la instancia de
 flujo de trabajo.
 
+
 Resumen
 =======
 
-Ha aprendido todo lo necesario sobre la serialización de datos, y
-ganado una mejor comprensión de los aspectos de XML que vio en los
-capítulos anteriores.
+En el **capítulo 4**, usted ha aprendido todo lo necesario sobre la
+serialización de datos, y ganado una mejor comprensión de los aspectos
+de XML que vio en los capítulos anteriores.
 
 También paso algún tiempo comprendiendo los identificadores externos,
 un concepto central para el manejo de datos en general, y para las

@@ -1,8 +1,9 @@
 :banner: banners/web_service_api.jpg
 
-========================
-Capítulo 9 - API Externa
-========================
+===========
+API Externa
+===========
+
 
 API Externa – Integración con otros Sistemas
 =============================================
@@ -492,6 +493,7 @@ tool for Odoo servers.
 Resumen
 =======
 
+En el **capítulo 9**, usted aprendió a trabajar con la API externa.
 Our goal for this chapter was to learn how the external API works and
 what it is capable of. We started exploring it using a simple Python
 XML-RPC client, but the external API can be used from any programming

@@ -1,8 +1,9 @@
 :banner: banners/module.jpg
 
-====================
-Capítulo 5 - Modelos
-====================
+=======
+Modelos
+=======
+
 
 Modelos – Estructura de los Datos de la Aplicación
 ==================================================
@@ -21,6 +22,7 @@ aplicación: modelos, vistas, y lógica de negocio.
 
 En este capítulo, aprenderá como diseñar las estructuras de datos que
 soportan una aplicación, y como representar las relaciones entre ellas.
+
 
 Organizar las características de las aplicaciones en módulos
 ------------------------------------------------------------
@@ -41,6 +43,7 @@ ser resuelto proporcionando un módulo de la aplicación que empaquete
 todas esas características, a través de sus dependencias. Para ilustrar
 este enfoque implementara las características adicionales usando
 módulos to-do nuevos.
+
 
 Introducción al módulo todo_ui
 -------------------------------
@@ -117,6 +120,7 @@ evitar concentrar un gran número de dependencias, como:
 Ahora podrá instalar el módulo en su base de datos de trabajo y
 comenzar con los modelos.
 
+
 Crear modelos
 =============
 
@@ -152,6 +156,7 @@ Stage, basada en la clase ``models.Model``, que define un modelo nuevo,
 Podrá ver algunos atributos del modelo, (con el guión bajo, ``_``,
 como prefijo) esto es nuevo para nosotros. Dele una mirada más profunda.
 
+
 Atributos del modelo
 --------------------
 
@@ -181,6 +186,7 @@ controlar alguno de sus comportamientos:
 
 Para completar, también podrá tener atributos ``inherit`` e
 ``_inherits``, como se explicara en el Capítulo 3.
+
 
 Modelos y clases Python
 -----------------------
@@ -230,6 +236,7 @@ usan esa convención. Pero la tendencia actual en usar CamelCase, debido
 a que es el estándar definido para Python por la convenciones de
 codificación PEP8. Puede haber notado que esta usando esta última
 forma.
+
 
 Modelos transitorios y abstractos
 ---------------------------------
@@ -293,11 +300,13 @@ son generados automáticamente pero bastante predecibles: para el modelo
     para construir prototipos antes de colocarlos definitivamente dentro de
     los propios modelos.
 
+
 Crear campos
 ============
 
 Después de crear un modelo nuevo, el siguiente paso es agregar los
 campos. Va a explorar diferentes tipos de campos disponibles en Odoo.
+
 
 Tipos básicos de campos
 -----------------------
@@ -385,6 +394,7 @@ Además de estos, también existen los campos relacionales, los cuales
 serán introducidos en este mismo capítulo. Pero por ahora, hay mucho que
 aprender sobre los tipos de campos y sus atributos.
 
+
 Atributos de campo comunes
 --------------------------
 
@@ -438,6 +448,7 @@ entre versiones principales de Odoo:
 -  ``oldname = 'field'``, es usado cuando un campo es re-nombrado en una
    versión nueva, permitiendo que la data en el campo viejo sea copiada
    automáticamente dentro del campo nuevo.
+
 
 Nombres de campo reservados
 ---------------------------
@@ -500,6 +511,7 @@ Hasta ahora ha discutido los valores escalares de los campos. Pero
 una buena parte de una estructura de datos de la aplicación es sobre la
 descripción de relaciones entre entidades. Vea algo sobre esto ahora.
 
+
 Relaciones entre modelos
 ========================
 
@@ -540,6 +552,7 @@ puede ser usada en muchas tareas.
 
 Vea con mayor detalle las definiciones de los campos relacionales.
 
+
 Relaciones muchos a uno
 -----------------------
 
@@ -570,6 +583,7 @@ ser usados con estos tipos de campo:
    usuario podrá tener acceso a los registros relacionados que las
    reglas de seguridad no le permitirían, pero las consultas SQL serán
    más eficientes y se ejecutarán con mayor rapidez.
+
 
 Relaciones muchos a muchos
 --------------------------
@@ -646,6 +660,7 @@ La relación inversa entre tareas y etiquetas puede ser implementada así:
         task_ids = fields.Many2many('todo.task', # modelo relacionado
                                     string='Tasks')
 
+
 Relaciones inversas de uno a muchos
 -----------------------------------
 
@@ -678,6 +693,7 @@ cadena de título. Los dos primeros corresponden a los argumentos
 Los parámetros adicionales disponibles son los mismos que para el muchos
 a uno: contexto, dominio, ``ondelete`` (aquí actúa en el lado "muchos" de la
 relación), y ``auto_join``.
+
 
 Relaciones jerárquicas
 ----------------------
@@ -728,6 +744,7 @@ registro:
 
     child_ids = fields.One2many('todo.task.tag', 'parent_id', 'Child Tags') 
 
+
 Hacer referencia a campos usando relaciones dinámicas
 -----------------------------------------------------
 
@@ -774,6 +791,7 @@ sera así:
 
     # class TodoTask(models.Model):
         refers_to = fields.Reference(referencable_models, 'Refers to') 
+
 
 Campos calculados
 =================
@@ -837,6 +855,7 @@ calculado esta funcionando como es esperado: usando el menú de
 directamente en el XML del formulario. No se preocupe: será reemplazado
 por una vista limpia del módulo en la próxima actualización.
 
+
 Buscar y escribir en campos calculados
 --------------------------------------
 
@@ -878,6 +897,7 @@ La función inversa realiza la lógica reversa del cálculo, para hallar el
 valor que sera escrito en el campo de origen. En su ejemplo, es
 solo escribir en ``stage_id.fold``.
 
+
 Guardar campos calculados
 -------------------------
 
@@ -886,6 +906,7 @@ la base de datos, configurando ``store`` a ``True`` en su definición. Estos
 serán calculados cuando cualquiera de sus dependencias cambie. Debido a
 que los valores ahora estarán almacenados, pueden ser buscados como un
 campo regular, entonces no es necesaria una función de búsqueda.
+
 
 Campos relacionados
 ===================
@@ -920,6 +941,7 @@ Detrás del escenario, los campos "Related" son solo campos calculados
 que convenientemente implementan las funciones de búsqueda e inversa.
 Esto significa que podrá realizar búsquedas y escribir en ellos sin
 tener que agregar código adicional.
+
 
 Restricciones del Modelo
 ========================
@@ -970,14 +992,17 @@ condición falla:
 El ejemplo anterior previene que el título de las tareas sean
 almacenados con menos de 5 caracteres.
 
+
 Resumen
 =======
 
-Vio una explicación minuciosa de los modelos y los campos, usándolos
-para ampliar la aplicación de Tareas por Hacer con etiquetas y estados
-de las tareas. Aprendió como definir relaciones entre modelos,
-incluyendo relaciones jerárquicas padre/hijo. Finalmente, vi ejemplos
-sencillos de campos calculados y restricciones usando código Python.
+En el **capítulo 5**, usted puedo ver una explicación minuciosa de los
+modelos y los campos, usándolos para ampliar la aplicación de *Tareas
+por Hacer* con etiquetas y estados de las tareas. Aprendió como definir
+relaciones entre modelos, incluyendo relaciones jerárquicas padre/hijo.
+
+Finalmente, puedo ver ejemplos sencillos de campos calculados y restricciones
+usando código Python.
 
 En el próximo capítulo, trabajara en la interfaz para las
 características "back-end" de ese modelo, haciéndolas disponibles para

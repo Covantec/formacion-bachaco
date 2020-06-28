@@ -1,8 +1,9 @@
 :banner: banners/orm_api.jpg
 
-=======================
-Capítulo 7 - Lógica ORM
-=======================
+==========
+Lógica ORM
+==========
+
 
 Lógica de la Aplicación ORM – Apoyo a los Procesos de Negocio
 =============================================================
@@ -12,6 +13,7 @@ de negocio en sus modelos y también como puede esto ser activado en
 eventos y acciones de usuario. Podrá escribir lógica compleja y
 asistentes usando la API de programación de Odoo, lo que les permitirá
 proveer una interacción más dinámica con el usuario con estos programas.
+
 
 Asistente de tareas por hacer
 -----------------------------
@@ -46,6 +48,7 @@ El código para cargar su código en el archivo
 
 Luego, necesita describir el modelo de datos que soporta su
 asistente.
+
 
 Modelo del asistente
 --------------------
@@ -100,6 +103,7 @@ registro podrá usar:
     _logger.error('An ERROR message') 
 
 Vea más ejemplos de su uso en este capítulo.
+
 
 Formularios de asistente
 ------------------------
@@ -165,6 +169,7 @@ Así es como lucirá su asistente:
 
   Gráfico 7.1 - Vista ToDo Tasks Wizard
 
+
 Lógica de negocio del asistente
 -------------------------------
 
@@ -210,6 +215,7 @@ Esto es más eficiente que escribir repetidamente en cada registro dentro
 de un bucle. Ahora trabajara en la lógica detrás de los dos botones
 en la parte superior. "Count" y "Get All".
 
+
 Elevar excepciones
 ------------------
 
@@ -237,6 +243,7 @@ interfaz, les aprovechará de esto para mostrar un mensaje en el botón
         count = Task.search_count([])
 
         raise exceptions.Warning('There are %d active tasks.' % count) 
+
 
 Recarga automática de los cambios en el código
 ----------------------------------------------
@@ -267,6 +274,7 @@ Usando pip, posiblemente en un entorno virtual (virtualenv), ejecutando el sigui
 .. code-block:: console
 
     $ pip install pyinotify
+
 
 Acciones en el dialogo del asistente
 ------------------------------------
@@ -337,6 +345,7 @@ valida usando ``self.ensure_one()``. No debe usar el decorador
 ``@api.one`` porque envuelve el valor retornado en una lista. Debido a
 que el cliente web espera recibir un diccionario y no una lista, no
 funcionaría como es requerido.
+
 
 Trabajar en el servidor
 -----------------------
@@ -432,6 +441,7 @@ solo un registro, por lo tanto solo se muestra un nombre. Como puede
 ver, ``self`` es un "singleton" y se comporta como un registro, pero al
 mismo tiempo es iterable como un conjunto de registros.
 
+
 Usar campos de relación
 -----------------------
 
@@ -461,6 +471,7 @@ como se muestra a continuación:
 
     >>> self.company_id.country_id res.country()
     >>> self.company_id.country_id.name False  
+
 
 Consultar los modelos
 ---------------------
@@ -504,6 +515,7 @@ Algunos ejemplos de su uso se muestran a continuación:
 
     >>> self.env['res.partner'].search([('name','like','Ag')]) res.partner(7,51) 
     >>> self.env['res.partner'].browse([7,51]) res.partner(7,51)  
+
 
 Escribir en los registros
 -------------------------
@@ -627,6 +639,7 @@ memoria (cache) debe ser limpiada después de su uso, a través de
     consecuencia la generación de inconsistencias en los datos. Debe usarse
     solo cuando tenga la seguridad de lo que esta haciendo.
 
+
 Trabajar con hora y fecha
 -------------------------
 
@@ -687,6 +700,7 @@ Para facilitar la conversión entre formatos, tanto el objeto
 -  ``to_string(value)``: convierte un objeto fecha o de fecha y hora en
    una cadena en el formato esperado por el servidor.
 
+
 Trabajar con campos de relación
 --------------------------------
 
@@ -708,6 +722,7 @@ ID correspondiente o la lista de Ids.
 
 Por ejemplo, en ves de ``self.write({'user_id': self.env.user})``,
 debería usar ``self.write({'user_id':    self.env.user.id})``.
+
 
 Manipular los conjuntos de registros
 ------------------------------------
@@ -776,6 +791,7 @@ a las precedentes usando ``write()``:
 -  ``self.write([(3, self.task_ids[-1].id, False)])``: Desconecta (quita
    en enlace) el último elemento.
 
+
 Otras operaciones de conjunto de registros
 ------------------------------------------
 
@@ -817,6 +833,7 @@ A continuación se muestran algunos ejemplos del uso de estas funciones:
     >>> rs2.mapped(lambda r: (r.id, r.name)) [(7, u'Agrolait'), (6, u'ASUSTeK'), (18, u'Axelor')] 
     >>> rs2.sorted(key=lambda r: r.id, reverse=True)
     res.partner(18, 7, 6)  
+
 
 El entorno de ejecución
 -----------------------
@@ -943,6 +960,7 @@ representar la interfaz y ejecutar la interacción básica:
 
        rset.fields_view_get(view_type='tree')
 
+
 Sobre escribir los métodos predeterminados
 ------------------------------------------
 
@@ -1010,6 +1028,7 @@ disponibles, y deben darse le prioridad:
    calculados pero se espera que arrojen errores cuando las condiciones
    no son cumplidas en vez de valores calculados.
 
+
 Decoradores de métodos del Modelo
 ---------------------------------
 
@@ -1071,6 +1090,7 @@ impedir al usuario continuar. Esto es realizado a través de un método
             'message': 'The warning text'
         }
     } 
+
 
 Depuración
 ----------
@@ -1173,13 +1193,14 @@ que podrá necesitar investigar algunos problemas en la instancia de
 despliegue. Solo se requiere elevar el nivel de registro del servidor a
 ``DEBUG`` y luego inspeccionar los archivos de registro.
 
+
 Resumen
 =======
 
-En los capítulos anteriores, vio como construir modelos y diseñar
-vistas. Aquí fue un poco más allá para aprender como implementar la
-lógica de negocio y usar conjuntos de registros para manipular los datos
-del modelo.
+En los capítulos anteriores, pudo ver como construir modelos y diseñar
+vistas. En el **capítulo 7**, aquí usted fue un poco más allá para aprender
+como implementar la lógica de negocio y usar conjuntos de registros para
+manipular los datos del modelo.
 
 También vio como la lógica de negocio interactúa con la interfaz y aprendió
 a crear ayudantes que dialoguen con el usuario y sirvan como una plataforma

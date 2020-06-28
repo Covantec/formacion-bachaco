@@ -1,8 +1,9 @@
 :banner: banners/build_a_module.jpg
 
-===============================
-Capítulo 2 - Primera aplicación
-===============================
+==================
+Primera aplicación
+==================
+
 
 Construyendo su primera aplicación con Odoo
 ===========================================
@@ -54,6 +55,7 @@ bloques básicos de desarrollo que conforman una aplicación y
 experimentar el proceso iterativo del desarrollo de módulos en Odoo
 desde cero.
 
+
 Entender las aplicaciones y los módulos
 =======================================
 
@@ -71,6 +73,7 @@ central, alrededor de la cual otros módulos agregan características u
 opciones. Estas proveen los elementos base para un área funcional, como
 contabilidad o RRHH, sobre las cuales otros módulos agregan
 características. Por esto son resaltadas en el menú Apps de Odoo.
+
 
 Modificar un módulo existente
 -----------------------------
@@ -103,6 +106,7 @@ ya que cada una será estudiada en detalle en los siguientes capítulos.
 Una vez este a gusto con la creación de un módulo nuevo, podrá
 sumergirse dentro de los mecanismos de herencia, los cuales serán
 estudiados en el siguiente capítulo.
+
 
 Crear un módulo nuevo
 ---------------------
@@ -211,6 +215,7 @@ Estos descriptores también están disponibles:
 Desde Odoo 8.0, en vez de la clave ``description`` podrá usar un
 archivo ``README.rst`` o ``README.md`` en el directorio raíz del módulo.
 
+
 Agregar el módulo a la ruta de complementos
 -------------------------------------------
 
@@ -257,6 +262,7 @@ Características Técnicas para que esta opción sea visible. Esto se logra
 seleccionando la caja de verificación de **Características técnicas**
 para su cuenta de usuario.
 
+
 Instalar el módulo nuevo
 ------------------------
 
@@ -273,6 +279,7 @@ búsqueda y debe ver su módulo nuevo, listo para ser instalado.
   Gráfico 2.1 - Instalar nuevo módulo 'todo_app'
 
 Haga clic en el botón **Instalar** y listo!
+
 
 Actualizar un módulo
 --------------------
@@ -321,6 +328,7 @@ Desafortunadamente, la actualización de la lista de módulos y la
 desinstalación son acciones que no están disponibles a través de la
 línea de comandos. Esto debe ser realizado a través de la interfaz web,
 en el menú Configuraciones.
+
 
 Crear un modelo de aplicación
 -----------------------------
@@ -423,6 +431,7 @@ modelo. Son los siguientes:
 - ``write_date`` y ``write_uid``: Estos les indican cuando fue la última vez
   que el registro fue modificado y quien lo modificó, respectivamente.
 
+
 Agregar entradas al menú
 ------------------------
 
@@ -517,6 +526,7 @@ miedo de experimentar.
     detenidamente el mensaje de error en los registros del servidor -
     debería decirle donde está el problema.
 
+
 Crear vistas - formulario, árbol y búsqueda
 -------------------------------------------
 
@@ -534,6 +544,7 @@ Todas las vistas son almacenadas en la base de datos, en el modelo
 ``ir.model.view``. Para agregar una vista en un módulo, declaro un
 elemento ``<record>`` describiendo la vista en un archivo XML que será
 cargado dentro de la base de datos cuando el modelo sea instalado.
+
 
 Creando una vista formulario
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -565,6 +576,7 @@ El atributo más importante es ``arch``, que contiene la definición de la
 vista. Aquí se dice que es un formulario, y que contiene tres campos, y
 que decidió hacer al campo ``active`` de solo lectura.
 
+
 Formatear como un documento de negocio
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -587,6 +599,7 @@ datos:
             <field name="is_done"/>
         </sheet>
     </form>
+
 
 Agregar botones de acción
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -615,6 +628,7 @@ muestra en el botón, ``type`` que hace referencia al tipo de acción que
 ejecuta, y ``name`` que es el identificador para esa acción. El atributo
 ``class`` puede aplicar estilos CSS, como un HTML común.
 
+
 Organizar formularios usando grupos
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -640,6 +654,7 @@ Cambio el contenido de ``<sheet>`` de su formulario:
             </group>
         </group>
     </sheet>
+
 
 La vista de formulario completa
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -680,6 +695,7 @@ nuevamente clic en la opción de menú que abre el formulario, o volviendo
 a cargar la página en el navegador (*F5* en la mayoría de los navegadores).
 
 Ahora, agregue la lógica de negocio para las acciones de los botones.
+
 
 Agregar vistas de lista y búsqueda
 ----------------------------------
@@ -733,6 +749,7 @@ Los elementos ``<field>`` definen campos que también son buscados cuando
 se escribe en el campo de búsqueda. Los elementos ``<filter>`` agregan
 condiciones predefinidas de filtro, usando la sintaxis de dominio que
 puede ser seleccionada por el usuario con un clic.
+
 
 Agregar la lógica de negocio
 ----------------------------
@@ -815,6 +832,7 @@ se ejecutará para cada uno de los registros seleccionados. La
 incluso si hay más de un registro seleccionado. Esto puede pasar si una
 opción es agregada a la vista de lista.
 
+
 Configurando la seguridad en el control de acceso
 -------------------------------------------------
 
@@ -882,6 +900,7 @@ confirmar que los permisos sean **correctos** accediendo con la cuenta
 de usuario demo (la contraseña es también demo) e intentar ejecutar la
 característica de "to-do tasks".
 
+
 Reglas de acceso de nivel de fila
 ---------------------------------
 
@@ -945,6 +964,7 @@ Como se hizo anteriormente, debe agregar el archivo a
         'security/todo_access_rules.xml',
     ],
 
+
 Agregar un ícono al módulo
 --------------------------
 
@@ -964,13 +984,14 @@ Los siguientes comandos agregan un ícono copiado del módulo raíz
 Ahora, si actualiza la lista de módulos, su módulo debe
 mostrarse con el ícono nuevo.
 
+
 Resumen
 =======
 
-Cree un módulo nuevo desde cero, cubriendo los elementos más
-frecuentemente usados en un módulo: modelos, los tres tipos base de
-vistas (formulario, lista y búsqueda), la lógica de negocio en los
-métodos del modelo, y seguridad en el acceso.
+En el **capítulo 2**, usted creo un módulo nuevo desde cero, cubriendo
+los elementos más frecuentemente usados en un módulo: modelos, los tres
+tipos base de vistas (formulario, lista y búsqueda), la lógica de negocio
+en los métodos del modelo, y seguridad en el acceso.
 
 En el proceso, se familiarizó con el proceso de desarrollo de módulos,
 el cual incluye la actualización del módulo y la aplicación de reinicio

@@ -1,8 +1,9 @@
 :banner: banners/views.jpg
 
-===================
-Capítulo 6 - Vistas
-===================
+======
+Vistas
+======
+
 
 Vistas – Diseñar la Interfaz
 ============================
@@ -38,6 +39,7 @@ configurado como una dependencia:
     } 
 
 Comience con las opciones de menú y las acciones de ventana.
+
 
 Acciones de ventana
 -------------------
@@ -113,6 +115,7 @@ usados para realizar esto:
 -  ``multi``: Si esta fijado a ``True``, estará disponible en la vista de
    lista. De lo contrario, estará disponible en la vista de formulario.
 
+
 Opciones de menú
 ----------------
 
@@ -150,6 +153,7 @@ El tercer elemento del menú agrega una nueva opción para acceder a los
 estados. Necesitará un orden para agregar algunos datos que permitan
 usar los estados en las tareas por hacer.
 
+
 Contexto y dominio
 ~~~~~~~~~~~~~~~~~~
 
@@ -157,6 +161,7 @@ Se ha referido varias veces al contexto y al dominio. También se ha
 visto que las acciones de ventana pueden fijar valores en estos, y que
 los campos relacionales pueden usarlos en sus atributos. Ambos conceptos
 son útiles para proveer interfaces más sofisticadas. Vea como.
+
 
 Contexto de sesión
 ~~~~~~~~~~~~~~~~~~
@@ -205,6 +210,7 @@ podrá habilitarlo usando:
 .. code-block:: python
 
     {'search_default_filter_my_tasks':  True} 
+
 
 Expresiones de dominio
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -313,6 +319,7 @@ siguiente condición. La siguiente condición es, nuevamente, la unión de
 otras dos condiciones: los registros donde el ``user_id`` es el usuario
 de la sesión actual o no esta fijado.
 
+
 Vistas de Formulario
 ====================
 
@@ -334,6 +341,7 @@ usará. La acción que definió al principio de este capítulo solo hace
 eso; el ``view_id`` le dice a la acción que use específicamente el
 formulario con el ID ``view_form_todo_task_ui``. Esta es la vista que
 creará a continuación.
+
 
 Vistas de negocio
 -----------------
@@ -385,6 +393,7 @@ parte inferior, es agregada por la herencia de su modelo de
 XML mencionado anteriormente al final de la vista de formulario. También
 vio esto en el :doc:`Capítulo 3 <herencia-extendiendo-funcionalidad-aplicaciones-existentes>`.
 
+
 La barra de estado del encabezado
 ---------------------------------
 
@@ -418,6 +427,7 @@ condiciones donde el botón debería ser invisible:
 Estas características de visibilidad también están disponibles para
 otros elementos de la vista, y no solo para los botones. Verá esto en
 detalle más adelante en este capítulo.
+
 
 El flujo de negocio
 ~~~~~~~~~~~~~~~~~~~
@@ -486,6 +496,7 @@ La estructura general del documento tiene estos componentes:
 -  Un cuaderno con páginas en etiquetas, con líneas de documento y otros
    detalles.
 
+
 Título y subtítulo
 ------------------
 
@@ -512,6 +523,7 @@ estar dentro de un elemento HTML ``div`` con la clase ``oe_title``:
 
 Aquí podrá ver el uso de elementos comunes de HTML como ``div``, ``span``,
 ``h1`` y ``h3``.
+
 
 Etiquetas y campos
 ------------------
@@ -542,6 +554,7 @@ Un ejemplo interesante es reemplazar el texto con un ícono:
 
 Odoo empaqueta los íconos "Font Awesome", que se usan aquí. Los íconos
 disponibles puede encontrar se en http://fontawesome.org.
+
 
 Botones inteligentes
 --------------------
@@ -613,6 +626,7 @@ El campo debe ser un campo calculado, definido en el módulo subyacente.
 También podrá usar texto estático en vez de o junto a los campos de
 ``statinfo``, como : ``<div>User's To-dos</div>``
 
+
 Organizar el contenido en formulario
 ====================================
 
@@ -648,6 +662,7 @@ agregarse usando un elemento ``separator``.
     sección del formulario, permitiendo un mejor entendimiento de como esta
     organizada la vista actual.
 
+
 Cuaderno con pestañas
 ---------------------
 
@@ -674,12 +689,14 @@ etapas de la tarea:
 Se considera una buena practica tener nombres en las páginas, esto hace
 que la ampliación de estas por parte de otros módulo sea más fiable
 
+
 Elementos de la vista
 ---------------------
 
 Ha visto como organizar el contenido dentro de un formulario, usando
 elementos como encabezado, grupo y cuaderno. Ahora, podrá ahondar en
 los elementos de campo y botón y que podrá hacer con ellos.
+
 
 Botones
 -------
@@ -713,6 +730,7 @@ Los botones soportar los siguientes atributos:
 
 -  ``special="cancel"``, se usa en los asistentes, para cancelar o
    cerrar el formulario. No debe ser usado con ``type``.
+
 
 Campos
 ------
@@ -769,6 +787,7 @@ Para los atributos *Booleanos* en general, podrá usar ``True`` o ``1`` para
 habilitarlo y ``False`` o ``0`` *(cero)* para deshabilitarlo. Por ejemplo,
 ``readonly="1"`` y ``realonly="True"`` son equivalentes.
 
+
 Campos relacionales
 -------------------
 
@@ -788,6 +807,7 @@ registros relacionados, y el dominio puede limitar los registros que
 pueden ser seleccionados, por ejemplo, basado en otro campo del registro
 actual. Tanto el contexto como el dominio pueden ser definidos en el
 modelo, pero solo son usados en la vista.
+
 
 Widgets de campo
 ----------------
@@ -840,6 +860,7 @@ Algunos widget para los campos relacionales y de selección:
 -  ``priority``: representa una selección como una lista de estrellas a las
    que se puede hacer clic.
 
+
 Eventos on-change
 -----------------
 
@@ -858,6 +879,7 @@ llamado cuando el campo cambiara. Esto todavía es soportado, pero es
 obsoleto. Tenga en cuenta que los métodos ``on-change`` con el estilo
 viejo no pueden ser ampliados usando la API nueva. Si necesita hacer
 esto, deberá usar la API vieja.
+
 
 Vistas dinámicas
 ================
@@ -901,6 +923,7 @@ obligatorios. Con esto podrá agregar alguna lógica de negocio haciendo
 a un campo obligatorio, dependiendo del valor de otro campo, o desde un
 cierto estado más adelante.
 
+
 Vistas de lista
 ---------------
 
@@ -942,6 +965,7 @@ Los atributos para el elemento ``tree`` de nivel superior son:
 
 -  ``create``, ``delete``, ``edit``: si se fija a ``false`` (en minúscula),
    deshabilita la acción correspondiente en la vista de lista.
+
 
 Vistas de búsqueda
 ------------------
@@ -1022,6 +1046,7 @@ Estos son los atributos disponibles para los elementos ``filter``:
 -  ``groups``: permite hacer que el filtro de búsqueda solo este disponible
    para una lista de grupos.
 
+
 Otros tipos de vista
 ====================
 
@@ -1033,6 +1058,7 @@ tipos de vista, y dará un vistazo a cada una de ellas. Las vistas
 
 Recuerde que los tipos de vista disponibles están definidos en el
 atributo ``view_mode`` de la acción de ventana correspondiente.
+
 
 Vistas de Calendario
 --------------------
@@ -1072,6 +1098,7 @@ Los atributos de ``calendar`` son los siguientes:
    calendario. Los campos pueden ser insertados usando ``[<field>]``.
    Estos campos deben ser declarados dentro del elemento ``calendar``.
 
+
 Vistas de Gantt
 ---------------
 
@@ -1106,6 +1133,7 @@ siguientes.
 
 -  ``default_group_by``: Este campo se usa para agrupar las tareas
    Gantt.
+
 
 Vistas de Gráfico
 -----------------
@@ -1159,13 +1187,14 @@ atributos:
    intervalo de tiempo para agrupar datos de fecha por "day", "week",
    "month", "quarter" o "year".
 
+
 Resumen
 =======
 
-Aprendió más sobre las vistas e Odoo que son usadas para la construcción
-de la interfaz. Comenzó agregando opciones de menú y acciones de
-ventana usadas para abrir las vistas. Fueron explicados en detalle los
-conceptos de contexto y dominio.
+En el **capítulo 6**, usted aprendió más sobre las vistas e Odoo que son
+usadas para la construcción de la interfaz. Comenzó agregando opciones de
+menú y acciones de ventana usadas para abrir las vistas. Fueron explicados
+en detalle los conceptos de contexto y dominio.
 
 También aprendió como diseñar vistas de lista y configurar opciones de
 búsqueda usando las vistas de búsqueda. Luego, se describieron de modo

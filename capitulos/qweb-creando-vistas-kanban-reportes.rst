@@ -1,8 +1,9 @@
-:banner: banners/qweb.jpg
+  :banner: banners/qweb.jpg
 
-=================
-Capítulo 8 - QweB
-=================
+====
+QweB
+====
+
 
 QweB - Creando vistas Kanban y Reportes
 =======================================
@@ -31,6 +32,7 @@ la columna más a la izquierda y viaja a través del tablero hasta que
 alcanzan la columna más a la derecha, representando el trabajo
 completado.
 
+
 Iniciándose con el tablero Kanban
 ---------------------------------
 
@@ -49,6 +51,7 @@ que necesite:
 
 Las vistas Kanban una característica distintiva de Odoo, haciendo fácil
 implementar estos tableros. Aprenda a cómo usarlos.
+
 
 Vistas Kanban
 -------------
@@ -101,6 +104,7 @@ izquierda, tal como se muestra en la siguiente imagen:
 Vera el esqueleto y elementos típicos usados en ambos estilos de
 vistas tal que puedas sentirte cómodo adaptándolos a tus casos de usos
 particular.
+
 
 Diseña vistas Kanban
 --------------------
@@ -163,6 +167,7 @@ Existentes.
 
 Antes de iniciar con las vistas kanban, necesita agregar un para de
 campos en el modelo de la aplicación *tareas por hacer*.
+
 
 Prioridad y estado Kanban
 -------------------------
@@ -330,6 +335,7 @@ almacenado en la base de datos. Se explicara esto en otras directivas
 QWeb en un momento. También podrá ver el uso del atributo especial
 ``type`` en la etiqueta ``<a>``. Eche un vistazo más de cerca.
 
+
 Acciones en las vistas Kanban
 -----------------------------
 
@@ -407,6 +413,7 @@ de HTML y etiquetas especiales (``field``, ``button``, ``a``). Pero podrá tener
 resultados mucho más interesantes usando contenido HTML generado
 dinámicamente. Vea como podrá hacer eso usando Qweb.
 
+
 Agregando contenido dinámico Qweb
 ---------------------------------
 
@@ -437,6 +444,7 @@ kanban.
 
 A continuación explorara las distintas directiva Qweb disponibles,
 usando ejemplos que mejorarán su tarjeta ``kanban`` de la tarea to-do.
+
 
 Renderizado Condicional con t-if
 --------------------------------
@@ -510,6 +518,7 @@ inequality operations as follows:
 
 -  ``gte``: This is for greater than or equal to.
 
+
 Renderinzando valores con t-esc y t-raw
 ---------------------------------------
 
@@ -529,6 +538,7 @@ the following code:
 .. code-block:: XML
 
     <t t-raw="record.message_follower_ids.raw_value" />
+
 
 Bucle de renderizado con t-foreach
 ----------------------------------
@@ -620,6 +630,7 @@ sub-template through the magic variable 0. Instead of the argument
 variables, we can define an HTML code fragment that could be inserted in
 the sub-template using ``<t t-raw="0" />``.
 
+
 Otras directivas QWeb
 =====================
 
@@ -627,6 +638,7 @@ We have gone through through the most important Qweb directives, but
 there are a few more we should be aware of. Weve seen the basics about
 kanban views and QWeb templates. There are still a few techniques we can
 use to bring a richer user experience to our kanban cards.
+
 
 Adición de un menú de opciones de la tarjeta Kanban
 ---------------------------------------------------
@@ -655,6 +667,7 @@ use QWeb to make them visible only when their actions are enabled on the
 view. The widget.view.is_action_enabled function allows us to inspect
 if the edit and delete actions are available and to decide what to make
 available to the current user.
+
 
 Adición de colores para tarjetas Kanban
 ----------------------------------------
@@ -706,6 +719,7 @@ we should replace the element with the following:
 
     <t t-esc="kanban_text_ellipsis(record.name.value, 32)" />
 
+
 Archivos CSS y JavaScript personalizados
 ----------------------------------------
 
@@ -747,6 +761,7 @@ addresses, as shown in the following:
 By default, some pictograms, such as a phone, are displayed in the
 address. The no_marker="true" option disables them.
 
+
 Habilitando la traducción de idiomas en reportes
 ------------------------------------------------
 
@@ -761,8 +776,10 @@ efficient method.
 If you cans growing in importance in the Odoo toolset. Finally, you had
 an overview on how to create reports, also using the QWeb engine.
 
+
 Resumen
 =======
 
+En el **capítulo 8**, usted aprendió a trababar con los reportes QWeb.
 En el siguiente capítulo, explorara cómo aprovechar la API RPC para
 interactuar con Odoo desde aplicaciones externas.

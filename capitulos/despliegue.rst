@@ -1,8 +1,9 @@
 :banner: banners/deploying_odoo.jpg
 
-========================
-Capítulo 10 - Despliegue
-========================
+==========
+Despliegue
+==========
+
 
 !Lista de Verificación para Despliegue – En Vivo!
 =================================================
@@ -28,6 +29,7 @@ Esta es la lista de verificación para la configuración que seguirá:
 
 Comience.
 
+
 Instalar Odoo
 =============
 
@@ -40,6 +42,7 @@ http://nightly.odoo.com.
 Aunque esta es una forma fácil y conveniente de instalar Odoo, aquí
 se prefiere ejecutar una versión controlada desde el código fuente,
 debido a que proporciona mejor control sobre lo que se esta desplegando.
+
 
 Instalación desde el código fuente
 ----------------------------------
@@ -101,6 +104,7 @@ versiones de los despliegues de Odoo. Solo ha visto la superficie de
 lo que puede hacerse para gestionar las versiones de código. Si aun no
 conoce Git, vale la pena aprender más sobre este. Un buen sitio para
 comenzar es http://git-scm.com/doc.*
+
 
 Crear el archivo de configuración
 =================================
@@ -186,6 +190,7 @@ continuación:
 .. code-block:: console
 
     $ ./odoo.py -c /etc/odoo/openerp-server.conf 
+
 
 Configurar como un servicio del sistema
 =======================================
@@ -283,6 +288,7 @@ Luego de esto, al reiniciar el servidor, el servicio de Odoo debería
 comenzar a ejecutarse automáticamente son errores. Es un buen momento
 para verificar que todo este funcionando como se espera.
 
+
 Usar un proxy inverso
 =====================
 
@@ -314,6 +320,7 @@ Apache es una opción popular que se usa como proxy inverso. Nginx es una
 alternativa reciente con buenos argumentos técnicos. Aquí usara nginx
 como proxy inverso y mostrará como puede usarse para ejecutar las
 funciones mencionadas anteriormente.
+
 
 Configurar nginx como proxy inverso
 -----------------------------------
@@ -406,6 +413,7 @@ servidor de Odoo, como se muestra a continuación:
 
     $ curl http://localhost
     <html><head><script>window.location = '/web' + location.hash;</script> </head></html>
+
 
 Reforzar el HTTPS
 =================
@@ -519,6 +527,7 @@ Odoo trabajando a través de HTTPS, como se muestra a continuación:
 La última salida confirma que el cliente Odoo esta siendo servido sobre
 HTTPS.
 
+
 Optimización de Nginx
 =====================
 
@@ -566,6 +575,7 @@ Con esto, se hace caché de los datos estáticos por 60 minutos. Las
 solicitudes siguientes de esas solicitudes en este intervalo de tiempo
 serán respondidas directamente por nginx desde el caché.
 
+
 Long polling
 ============
 
@@ -592,6 +602,7 @@ solicitudes HTTPS, como se muestra a continuación:
 
 Con estas configuraciones, nginx debería pasar estas solicitudes al
 puerto apropiado del servidor Odoo.
+
 
 Actualización del servidor y módulos
 ====================================
@@ -632,10 +643,11 @@ como se muestra aquí:
     $ ./odoo.py -c /etc/odoo/openerp-server.conf --stop-after-init -d v8dev -u all
     $ sudo /etc/init.d/odoo restart
 
+
 Resumen
 =======
 
-En este capítulo, aprendió sobre los pasos adicionales para configurar y
+En el **capítulo 10**, usted aprendió sobre los pasos adicionales para configurar y
 ejecutar Odoo en un servidor de producción basado en Debian. Fueron
 vistas las configuraciones más importantes del archivo de configuración,
 y aprendió como aprovechar el modo multiproceso.
