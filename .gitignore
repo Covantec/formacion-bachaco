@@ -1,3 +1,5 @@
+# compiled python files
+__pycache__/
 *.pyc
 *.pyo
 
@@ -42,3 +44,18 @@ Thumbs.db
 # Editor backup files #
 #######################
 *~
+
+# Sublime Text Editor #
+#######################
+*.sublime-*
+
+# various virtualenv
+/bin/
+/build/
+/dist/
+/include/
+/lib/
+/man/
+/share/
+/src/
+/venv/
