@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import sys, os
 import sphinx
+import sphinx_fontawesome
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -30,7 +31,8 @@ extensions = [
     'odoo_ext',
     'html_domain',
     'exercise_admonition',
-    'patchqueue'
+    'patchqueue',
+    'sphinx_fontawesome'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -213,6 +215,9 @@ def setup(app):
 
     app.connect('html-page-context', analytics)
     app.add_config_value('google_analytics_key', '', 'env')
+
+    # for sphinx_fontawesome extention
+    app.add_css_file('css/font-awesome-4.7.0.min.css')
 
 def canonicalize(app, pagename, templatename, context, doctree):
     """ Adds a 'canonical' URL for the current document in the rendering
