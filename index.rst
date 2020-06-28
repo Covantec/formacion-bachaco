@@ -15,4 +15,4 @@ Index
 
     odoo-development-essentials
     capitulos
-    acercade
+    acerca
