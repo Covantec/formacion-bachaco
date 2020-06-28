@@ -6,11 +6,11 @@ import sphinx
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 DIR = os.path.dirname(__file__)
-sys.path.append(
+sys.path.insert(0,
     os.path.abspath(
         os.path.join(DIR, '_extensions')))
-# autodoc
-sys.path.append(os.path.abspath(os.path.join(DIR, '..')))
+# put current odoo's source on PYTHONPATH for autodoc
+sys.path.insert(0, os.path.abspath(os.path.join(DIR, '..')))
 
 # -- General configuration -----------------------------------------------------
 
@@ -24,9 +24,10 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx.ext.autodoc',
     'sphinx.ext.intersphinx',
-    'sphinx.ext.linkcode',
-    'github_link',
-    'odoo',
+    # 'sphinx.ext.linkcode',
+    # 'autojsdoc.ext',
+    # 'github_link',
+    'odoo_ext',
     'html_domain',
     'exercise_admonition',
     'patchqueue'
@@ -75,8 +76,9 @@ today_fmt = '%B %d, %Y'
 # directories to ignore when looking for source files.
 exclude_patterns = ['_build', 'README.rst']
 
-# The reST default role (used for this markup: `text`) to use for all documents.
-#default_role = None
+# markdown compatibility: make `foo` behave like ``foo``, the rst default is
+# title-reference which is never what people are looking for
+default_role = 'literal'
 
 # If true, '()' will be appended to :func: etc. cross-reference text.
 add_function_parentheses = True
@@ -99,7 +101,7 @@ pygments_style = 'odoo'
 # -- Options for HTML output ---------------------------------------------------
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'odoo'
+html_theme = 'odoo_ext'
 
 odoo_cover_default = 'banners/installing_odoo.jpg'
 odoo_cover_external = {
@@ -189,10 +191,8 @@ latex_elements = {
 todo_include_todos = False
 
 intersphinx_mapping = {
-    'python': ('https://docs.python.org/2/', None),
+    'python': ('https://docs.python.org/3/', None),
     'werkzeug': ('http://werkzeug.pocoo.org/docs/', None),
-    'sqlalchemy': ('http://docs.sqlalchemy.org/en/rel_0_9/', None),
-    'django': ('https://django.readthedocs.org/en/latest/', None),
 }
 
 github_user = 'Covantec'
