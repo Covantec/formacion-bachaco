@@ -86,8 +86,8 @@ relevantes.
    orden es relevante y el primero de la lista será la vista que se
    abrirá de forma predeterminada.
 
--  ``target``: Si es fijado como "new", la vista se abrirá en una ventana de
-   dialogo.De forma predeterminada esta fijado a "current", por lo que
+-  ``target``: Si es fijado como ``new``, la vista se abrirá en una ventana de
+   dialogo. De forma predeterminada esta fijado a ``current``, por lo que
    abre la vista en el área principal de contenido.
 
 -  ``context``: Este fija información de contexto en las vistas de destino,
@@ -109,7 +109,7 @@ formulario. Note que esto no funcionará hasta crear las vistas
 correspondientes.
 
 La tercera acción de ventana demuestra como agregar una opción bajo el
-botón "Mas", en la parte superior de la vista. Estos son los atributos
+botón "Más", en la parte superior de la vista. Estos son los atributos
 usados para realizar esto:
 
 -  ``multi``: Si esta fijado a ``True``, estará disponible en la vista de
@@ -246,10 +246,13 @@ Los operadores que pueden ser usados son:
 
 -  ``=``, ``like`` para coincidencias con el valor del patrón donde el
    símbolo de guión bajo (``_``) coincida con cualquier carácter único,
-   y ``%`` coincida con cualquier secuencia de caracteres. ``like`` para
-   hacer coincidir con el patrón SQL ``%value%`` sensible a mayúsculas,
-   e ``ilike`` para coincidencias sin sensibilidad de mayúsculas. Los
-   operadores ``not like`` y ``not ilike`` hacen la operación inversa.
+   y ``%`` coincida con cualquier secuencia de caracteres.
+
+-  ``like`` para hacer coincidir con el patrón SQL ``%value%`` sensible
+   a mayúsculas, e ``ilike`` para coincidencias sin sensibilidad de
+   mayúsculas.
+
+-  Los operadores ``not like`` y ``not ilike`` hacen la operación inversa.
 
 -  ``child_of`` encuentra los hijos directos e indirectos, si las
    relaciones padre/hijo están configuradas en el modelo de destino.
@@ -258,10 +261,21 @@ Los operadores que pueden ser usados son:
    valor de la derecha debe ser una lista Python. Estos son los únicos
    operadores que pueden ser usados con valores de una lista. Un caso
    especial es cuando el lado izquierdo es un campo "a-muchos": aquí el
-   operador "in" ejecuta una operación "contains".
+   operador ``in`` ejecuta una operación ``contains``.
 
 Están disponibles los operadores de comparación usuales:
-``<, >, <=, >=, =, y !=``.
+
+- ``<`` menor.
+
+- ``>`` mayor.
+
+- ``<=`` menor o igual que.
+
+- ``>=`` mayor o igual que.
+
+- ``=`` igual.
+
+- ``!=`` distinto.
 
 El valor dela derecha puede puede ser una constante o una expresión
 Python a ser evaluada. Lo que puede ser usado en estas expresiones
@@ -280,7 +294,7 @@ hora, y también esta disponible la función ``context_today()`` que
 devuelve la fecha actual del cliente.
 
 Los dominios usados en las reglas de registro de seguridad y en el
-código Pyhton del servidor son evaluados del lado el servidor. El
+código Python del servidor son evaluados del lado el servidor. El
 contexto de evaluación tiene los campos los registros actuales
 disponibles, y se permite la notación de puntos. También están
 disponibles los registros de la sesión de usuario actual. Al usar
@@ -290,16 +304,20 @@ lado del cliente.
 Las condiciones de dominio pueden ser combinadas usando los operadores
 lógicos:
 
-- ``&`` para "**AND**" (el predeterminado).
+- ``&`` para el operador lógico ``AND`` (el predeterminado).
 
-- ``|`` para "**OR**" y ``!`` para la negación.
+- ``|`` para el operador lógico ``OR``.
+
+- ``!`` para el operador lógico de negación.
 
 La negación es usada antes de la condición que será negada. Por ejemplo,
 para encontrar todas las tareas que no pertenezca al usuario actual:
 ``['!', ('user_id','=', uid)]``.
 
-El "**AND**" y "**OR**" operan en las dos condiciones siguientes. Por ejemplo:
-para filtrar las tareas del usuario actual o sin un responsable
+Los operadores lógicos ``AND`` y ``OR`` operan en las dos condiciones
+siguientes. Por ejemplo:
+
+Para filtrar las tareas del usuario actual o sin un usuario *(responsable)*
 asignado:
 
 .. code-block:: python
@@ -313,11 +331,14 @@ servidor:
 
     ['|', ('message_follower_ids', 'in', [user.partner_id.id]), '|', ('user_id', '=', user.id), ('user_id', '=', False)]
 
-El dominio filtra todos los registro donde los seguidores (un campo de
-muchos a muchos) contienen al usuario actual además del resultado de la
-siguiente condición. La siguiente condición es, nuevamente, la unión de
-otras dos condiciones: los registros donde el ``user_id`` es el usuario
-de la sesión actual o no esta fijado.
+El dominio filtra:
+
+- Todos los registros donde los seguidores (un campo de
+  *muchos a muchos*) contienen al usuario actual además del resultado
+  de la siguiente condición.
+
+- La siguiente condición es, nuevamente, la unión de otras dos
+  condiciones: los registros donde el ``user_id`` es el usuario de la sesión actual o no esta fijado.
 
 
 Vistas de Formulario
@@ -402,8 +423,8 @@ negocio y los botones de acción.
 
 Los botones de acción son botones regulares de formulario, y lo más
 común es que el siguiente paso sea resaltarlos, usando
-``class="oe_highlight"``. En ``todo_ui/todo_view.xml`` podrá ampliar
-el encabezado vacío para agregar le una barra de estado:
+``class="oe_highlight"``. En el archivo ``todo_ui/todo_view.xml`` podrá
+ampliar el encabezado vacío para agregar le una barra de estado:
 
 .. code-block:: XML
 
@@ -852,7 +873,7 @@ Algunos widget para los campos relacionales y de selección:
    uno.
 
 -  ``radio``: permite seleccionar un valor para una opción del campo de
-   selección usando botones de selección (radio buttons).
+   selección usando botones de selección simple.
 
 -  ``kanban_state_selection``: muestra una luz de semáforo para la lista
    de selección de esta vista ``kanban``.
@@ -1000,9 +1021,9 @@ Podrá ver dos campos que serán buscados: ``name`` y ``user_id``. En
 descripción como en el usuario responsable. Luego tendrá dos filtros
 predefinidos, filtrando las "tareas no culminadas" y "tareas
 culminadas". Estos filtros pueden ser activados de forma independiente,
-y serán unidos por un operador **"OR"** si ambos son habilitados. Los
+y serán unidos por un operador ``OR`` si ambos son habilitados. Los
 bloques de ``filters`` separados por un elemento ``<separator/>`` serán
-unidos por un operador **"AND"**.
+unidos por un operador ``AND``.
 
 El tercer filtro solo fija un contexto o "group-by". Esto le dice a la
 vista que agrupe los registros por ese campo, ``user_id`` en este caso.
@@ -1169,7 +1190,7 @@ tabla pivote:
     </record> 
 
 El elemento ``graph`` tiene el atributo ``type`` fijado a ``pivot``. También
-puede ser "bar" (predeterminado), "pie" o "line". En el caso que sea
+puede ser ``bar`` (predeterminado), ``pie`` o ``line``. En el caso que sea
 "bar", gráfico de barras, adicionalmente se puede usar
 ``stacked="True"`` para hacer un gráfico de barras apilado.
 
@@ -1184,8 +1205,8 @@ atributos:
    medida, "mesure".
 
 -  ``interval``: Solo es significativo para los campos de fecha, es un
-   intervalo de tiempo para agrupar datos de fecha por "day", "week",
-   "month", "quarter" o "year".
+   intervalo de tiempo para agrupar datos de fecha por ``day``, ``week``,
+   ``month``, ``quarter`` o ``year``.
 
 
 Resumen
