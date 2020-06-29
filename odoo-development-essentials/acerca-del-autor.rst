@@ -16,9 +16,15 @@ Acerca del autor
   :figclass: align-center
   :alt: Daniel Reis
 
-  Daniel Reis
+  Daniel Reis - *Autor*
 
-  **Autor**
+  .. raw:: html
+
+      <a href="https://www.opensourceintegrators.com/"><i class="fa fa-home"></i></a>
+      <a href="https://github.com/dreispt"><i class="fa fa-github-square"></i></a>
+      <a href="https://www.linkedin.com/in/danielgreis/"><i class="fa fa-linkedin"></i></a>
+      <a href="https://twitter.com/reis_pt"><i class="fa fa-twitter"></i></a>
+      <a href="mailto:dreis@opensourceintegrators.com"><i class="fa fa-envelope"></i></a>
 
 **Daniel Reis** has worked in the IT industry for over 15 years, most of it for a multinational
 consultancy firm, implementing business applications for a variety of sectors, including telco,

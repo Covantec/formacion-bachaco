@@ -16,9 +16,15 @@ Acerca de los revisores
   :figclass: align-center
   :alt: Pedro M. Baeza
 
-  Pedro M. Baeza
+  Pedro M. Baeza - *Revisor técnico*
 
-  **Revisor técnico**
+  .. raw:: html
+
+      <a href="https://www.tecnativa.com/"><i class="fa fa-home"></i></a>
+      <a href="https://github.com/pedrobaeza"><i class="fa fa-github-square"></i></a>
+      <a href="https://www.linkedin.com/in/pedro-manuel-baeza-romero-63793950/"><i class="fa fa-linkedin"></i></a>
+      <a href="https://twitter.com/pedrombaeza"><i class="fa fa-twitter"></i></a>
+      <a href="mailto:pedro.baeza@tecnativa.com"><i class="fa fa-envelope"></i></a>
 
 **Pedro M. Baeza** is an Odoo freelance consultant, developer, and trainer with more than
 16 years of experience in IT. He’s been in the Odoo world for 4 years, and has been involved
@@ -51,9 +57,15 @@ commitment to the community.
   :figclass: align-center
   :alt: Nicholas Bessi
 
-  Nicholas Bessi
+  Nicholas Bessi - *Revisor técnico*
 
-  **Revisor técnico**
+  .. raw:: html
+
+      <a href="http://www.camptocamp.com"><i class="fa fa-home"></i></a>
+      <a href="https://github.com/nbessi"><i class="fa fa-github-square"></i></a>
+      <a href="https://www.linkedin.com/in/nbessi/"><i class="fa fa-linkedin"></i></a>
+      <a href="https://twitter.com/nbessi"><i class="fa fa-twitter"></i></a>
+      <a href="mailto:nicolas.bessi@camptocamp.com"><i class="fa fa-envelope"></i></a>
 
 **Nicholas Bessi** has been an Odoo/OpenERP developer and consultant since 2006 when it
 was still TinyERP. He is the author of many modules including the “report webkit” add-on
@@ -81,9 +93,15 @@ working alongside Odoo to bring the solution to the next level.
   :figclass: align-center
   :alt: Alexandre Fayolle
 
-  Alexandre Fayolle
+  Alexandre Fayolle - *Revisor técnico*
 
-  **Revisor técnico**
+  .. raw:: html
+
+      <a href="http://www.camptocamp.com"><i class="fa fa-home"></i></a>
+      <a href="https://github.com/gurneyalex"><i class="fa fa-github-square"></i></a>
+      <a href="https://www.linkedin.com/in/alexandre-fayolle-9a7845/"><i class="fa fa-linkedin"></i></a>
+      <a href="https://twitter.com/gurneyalex"><i class="fa fa-twitter"></i></a>
+      <a href="mailto:alexandre.fayolle@camptocamp.com"><i class="fa fa-envelope"></i></a>
 
 **Alexandre Fayolle** installed his first Linux distribution in 1995 (Slackware at the time, before
 moving to Debian in 1996) and has never used another OS on his computers since. He started using
