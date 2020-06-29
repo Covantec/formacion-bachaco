@@ -1,8 +1,18 @@
+# compiled python files #
+#########################
 *.pyc
 *.pyo
+__pycache__/
 
-# sphinx build folder
-_build
+# sphinx build folder #
+#######################
+_build/
+
+# dotfiles #
+############
+.*
+!.gitignore
+!.mailmap
 
 # Compiled source #
 ###################
@@ -42,3 +52,19 @@ Thumbs.db
 # Editor backup files #
 #######################
 *~
+
+# Sublime Text Editor #
+#######################
+*.sublime-*
+
+# various virtualenv #
+######################
+/bin/
+/build/
+/dist/
+/include/
+/lib/
+/man/
+/share/
+/src/
+/venv*
