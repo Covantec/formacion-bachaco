@@ -1,10 +1,18 @@
-# compiled python files
-__pycache__/
+# compiled python files #
+#########################
 *.pyc
 *.pyo
+__pycache__/
 
-# sphinx build folder
-_build
+# sphinx build folder #
+#######################
+_build/
+
+# dotfiles #
+############
+.*
+!.gitignore
+!.mailmap
 
 # Compiled source #
 ###################
@@ -49,7 +57,8 @@ Thumbs.db
 #######################
 *.sublime-*
 
-# various virtualenv
+# various virtualenv #
+######################
 /bin/
 /build/
 /dist/
@@ -58,4 +67,4 @@ Thumbs.db
 /man/
 /share/
 /src/
-/venv/
+/venv*
