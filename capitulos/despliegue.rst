@@ -4,7 +4,8 @@
 Capítulo 10 - Despliegue
 ========================
 
-!Lista de Verificación para Despliegue – En Vivo!
+
+¡Lista de Verificación para Despliegue – En Vivo!
 =================================================
 
 En este capítulo, aprenderá como preparar su servidor Odoo para usarlo
