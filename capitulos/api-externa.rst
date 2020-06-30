@@ -406,11 +406,6 @@ ejemplo de formas interesantes de aprovechar la API de Odoo RPC.
 Introduciendo al cliente ERPpeek
 ================================
 
-``ERPpeek`` is a versatile tool that can be used both as an interactive
-Command-line Interface (CLI ) and as a Python library , with a more
-convenient API than the one provided by ``xmlrpclib``. It is available from
-the PyPi index and can be installed with the following:
-
 ``ERPpeek`` es una herramienta versátil que se puede utilizar tanto como
 una aplicación interactiva de interfaz de línea de comandos (*Command-line Interface - CLI*)
 y como biblioteca de **Python**, con más API conveniente que la proporcionada
