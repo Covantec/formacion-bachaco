@@ -52,7 +52,7 @@ opciones de menú, para abrir las vistas de las tareas por hacer y de los
 estados. Cree el archivo de datos ``todo_view.xml`` con el siguiente
 código:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <?xml version="1.0"?>
         <openerp>
@@ -128,7 +128,7 @@ submenú que puede encontrarse navegando a través de **Mensajería** >
 **Organizador**. En el ``todo_view.xml``, después de las acciones de
 ventana, agregue el siguiente código:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <menuitem id="menu_todo_task_main" name="To-Do" parent="mail.mail_my_stuff"/>
     <menuitem id="todo_app.menu_todo_task" name="To-Do Tasks" parent="menu_todo_task_main" sequence="10" action="todo_app.action_todo_task"/>
@@ -373,7 +373,7 @@ La vista de formulario correspondiente debe ser agregada después de las
 acciones y los elementos del menú, que agrego anteriormente, y su
 estructura genérica es esta:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <record id="view_form_todo_task_ui" model="ir.ui.view">
         <field name="name">view_form_todo_task_ui</field>
@@ -417,7 +417,7 @@ común es que el siguiente paso sea resaltarlos, usando
 ``class="oe_highlight"``. En el archivo ``todo_ui/todo_view.xml`` podrá
 ampliar el encabezado vacío para agregar le una barra de estado:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <header>
         <field name="stage_state" invisible="True" />
@@ -471,7 +471,7 @@ el registro.
 
 Para agregar un flujo de "stage" en su encabezado de formulario:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <!--    Add stage   statusbar:  ... --> 
     <field name="stage_id" widget="statusbar" clickable="True" options="{'fold_field': 'fold'}" /> 
@@ -519,7 +519,7 @@ También se puede usar las etiquetas HTML para hacer que el título
 resplandezca. Para mejores resultados, el título del documento debe
 estar dentro de un elemento HTML ``div`` con la clase ``oe_title``:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <div class="oe_title">
         <label for="name" class="oe_edit_only"/>
@@ -557,7 +557,7 @@ Las etiquetas de los campos no son mostradas fuera de las secciones
 
 Un ejemplo interesante es reemplazar el texto con un ícono:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <label for="name" string=" " class="fafa-wrench"/> 
 
@@ -586,7 +586,7 @@ Primero necesita agregar el campo calculado correspondiente a
 Ahora agregará la caja del botón con un botón dentro de ella. Agregue
 lo siguiente justo después del bloque ``div`` ``oe_title``:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <div name="buttons" class="oe_right oe_button_box">
         <button class="oe_stat_button" type="action" icon="fa-tasks" name="%(todo_app.action_todo_task)d" string="" context="{'search_default_user_id': user_id, 'default_user_id': user_id}" help="Other to-dos for this user" >
@@ -645,7 +645,7 @@ dentro de un grupo, estos serán apilados verticalmente.
 Si anido dos elementos ``<group>`` dentro de un grupo superior,
 tendrá dos columnas de campos con etiquetas, una al lado de la otra.
 
-.. code-block:: XML
+.. code-block:: xml
 
     <group name="group_top">
         <group name="group_left">
@@ -681,7 +681,7 @@ No necesitará esto en su formulario de tareas por hacer, pero el
 siguiente es un ejemplo que podría agregar en el formularios de
 etapas de la tarea:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <notebook>
         <page string="Whiteboard" name="whiteboard">
@@ -907,7 +907,7 @@ usando el atributo ``attrs`` con un diccionario que mapea el atributo
 Por ejemplo, para hacer que el campo ``refers_to`` sea visible en todos
 los estados menos ``draft``:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <field name="refers_to" attrs="{'invisible': [('state','=','draft')]}"  /> 
 
@@ -932,7 +932,7 @@ muchos de los atributos de los formularios también están disponibles.
 Aquí se muestra un ejemplo de una vista de lista para su Tareas por
 Hacer:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <record id="todo_app.view_tree_todo_task"   model="ir.ui.view">
         <field name="name">To-do Task Tree</field>
@@ -975,7 +975,7 @@ agrupación de datos para los registros en las vistas de lista o ``kanban``.
 
 Aquí se muestra una vista de búsqueda para las tareas por hacer:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <record id="todo_app.view_filter_todo_task" model="ir.ui.view">
         <field name="name">To-do Task Filter</field>
@@ -1062,7 +1062,7 @@ Como su nombre lo indica, esta presenta los registros en un calendario.
 Una vista de calendario para las tareas por hacer puede ser de la
 siguiente manera:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <record id="view_calendar_todo_task" model="ir.ui.view">
         <field name="name">view_calendar_todo_task</field>
@@ -1101,7 +1101,7 @@ la planificación. Las tareas por hacer solo tiene un campo de fecha para
 la fecha de límite, pero podrá usarla para tener una vista funcional
 de un gráfico Gantt básico:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <record id="view_gantt_todo_task" model="ir.ui.view">
         <field name="name">view_gantt_todo_task</field>
@@ -1146,7 +1146,7 @@ También debe ser agregado al formulario de tareas por hacer para que
 podrá fijar datos allí. Ahora, agregue la vista de gráfico con una
 tabla pivote:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <record id="view_graph_todo_task" model="ir.ui.view">
         <field name="name">view_graph_todo_task</field>
