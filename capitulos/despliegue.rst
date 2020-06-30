@@ -65,7 +65,7 @@ en disco usado y hace que el proceso de clonación sea más rápido.
 Puede valer la pena tener una configuración un poco más sofisticada, con
 un entorno de prueba junto al entorno de producción.
 
-Con esto, podrá traernos la última versión de código fuente y
+Con esto, podrá traerle la última versión de código fuente y
 probarlo en el entorno de prueba, sin perturbar el entorno de
 producción. Cuando la nueva versión este lista, puede desplegarla
 desde el entorno de pruebas a producción.
@@ -311,15 +311,15 @@ Y del lado del desempeño, puede proveer mejoras significativas:
 -  Balancea la carga distribuyendo la entre varios servidores.
 
 Apache es una opción popular que se usa como proxy inverso. Nginx es una
-alternativa reciente con buenos argumentos técnicos. Aquí usara nginx
+alternativa reciente con buenos argumentos técnicos. Aquí usara ``nginx``
 como proxy inverso y mostrará como puede usarse para ejecutar las
 funciones mencionadas anteriormente.
 
 Configurar nginx como proxy inverso
 -----------------------------------
 
-Primero, debe instalar nginx. Querrá que escuche en los puertos
-HTTP predeterminados, así que debe asegurarnos que no estén siendo
+Primero, debe instalar ``nginx``. Querrá que escuche en los puertos
+HTTP predeterminados, así que debe asegurarse que no estén siendo
 usados por otro servicio. Ejecutar el siguiente comando debe arrojar un
 error, como se muestra a continuación:
 
@@ -329,28 +329,28 @@ error, como se muestra a continuación:
     curl:   (7) Failed to connect to localhost port 80  
 
 De lo contrario, deberá deshabilitar o eliminar ese servicio para
-permitir que nginx use esos puertos. Por ejemplo, para parar un servidor
+permitir que ``nginx`` use esos puertos. Por ejemplo, para parar un servidor
 Apache existente, deberá hacer lo siguiente:
 
 .. code-block:: console
 
-    $ sudo /etc/init.d/apache2 stop  
+    $ sudo /etc/init.d/apache2 stop
 
-Ahora podrá instalar nginx, lo cual es realizado de la forma esperada:
+Ahora podrá instalar ``nginx``, lo cual es realizado de la forma esperada:
 
 .. code-block:: console
 
-    $ sudo apt-get install nginx  
+    $ sudo apt-get install nginx
 
 Para conformar que este funcionando correctamente, debería ver una
 página que diga **"Welcome to nginx"** cuando se ingrese la dirección del
 servidor en la navegador o usando ``curl http://localhost``
 
-Los archivos de configuración de nginx siguen el mismo enfoque que los
+Los archivos de configuración de ``nginx`` siguen el mismo enfoque que los
 de Apache: son almacenados en ``/etc/nginx/available-sites/`` y se
 activan agregando un enlace simbólico en ``/etc/nginx/enabled-sites/``.
 Debería deshabilitar la configuración predeterminada que provee la
-instalación de nginx, como se muestra a continuación:
+instalación de ``nginx``, como se muestra a continuación:
 
 .. code-block:: console
 
@@ -359,14 +359,14 @@ instalación de nginx, como se muestra a continuación:
     $ sudo ln -s /etc/nginx/sites-available/odoo /etc/nginx/sites-enabled/odoo
 
 Usando un editor, como ``nano`` o ``vi``, edite sus archivo de
-configuración nginx como sigue:
+configuración ``nginx`` como sigue:
 
 .. code-block:: console
 
     $ sudo nano /etc/nginx/sites-available/odoo 
 
 Primero agregue los ``upstreams``, los servidores traseros hacia los
-cuales nginx redireccionará el tráfico, en su caso el servidor
+cuales ``nginx`` redireccionará el tráfico, en su caso el servidor
 Odoo, el cual escucha en el puerto ``8069``, como se muestra a continuación:
 
 ::
@@ -390,16 +390,16 @@ Para probar que la configuración es correcta, use lo siguiente:
 En caso que se encuentren errores, verifique que el archivo de
 configuración esta bien escrito. Además, un problema común es que el
 HTTP este tomado de forma predeterminada por otro servicio, como Apache
-o la página web predeterminada de nginx. Realice una doble revisión de
+o la página web predeterminada de ``nginx``. Realice una doble revisión de
 las instrucciones dadas anteriormente para asegurarse que este no sea el
-caso, luego reinicio nginx. Luego de esto, podrá hacer que nginx
+caso, luego reinicio ``nginx``. Luego de esto, podrá hacer que ``nginx``
 cargue la nueva configuración:
 
 .. code-block:: console
 
     $ sudo /etc/init.d/nginx reload
 
-Ahora podrá verificar que nginx este redirigiendo el tráfico al
+Ahora podrá verificar que ``nginx`` este redirigiendo el tráfico al
 servidor de Odoo, como se muestra a continuación:
 
 .. code-block:: console
@@ -452,7 +452,7 @@ archivos llave. Finalmente, estos archivos serán propiedad del usuario
     reconocida. Esto es particularmente importante si se esta ejecutando un
     sitio web comercial o de *e-commerce*.
 
-Ahora que tiene un certificado SSL, podrá configurar nginx para
+Ahora que tiene un certificado SSL, podrá configurar ``nginx`` para
 usarlo.
 
 Para reforzar HTTPS, redireccionara todo el tráfico HTTP. Reemplace
@@ -466,7 +466,7 @@ la directiva ``server`` que defina anteriormente con lo siguiente:
         rewrite ^/.*$ https://$host$request_uri? permanent; 
     } 
 
-Si recargue la configuración de nginx y acceda al servidor con el
+Si recargue la configuración de ``nginx`` y acceda al servidor con el
 navegador web, vera que la dirección ``http://`` se convierte en
 ``https://``.
 
@@ -522,7 +522,7 @@ HTTPS.
 Optimización de Nginx
 =====================
 
-Es hora para algunas mejoras en las configuraciones de nginx. Estas son
+Es hora para algunas mejoras en las configuraciones de ``nginx``. Estas son
 recomendadas para habilitar el búfer de respuesta y compresión de datos
 que debería mejorar la velocidad del sitio web. También fije una
 localización específica para los registros.
@@ -564,19 +564,19 @@ y para impedir su carga en el servidor Odoo. Después de la sección
 
 Con esto, se hace caché de los datos estáticos por 60 minutos. Las
 solicitudes siguientes de esas solicitudes en este intervalo de tiempo
-serán respondidas directamente por nginx desde el caché.
+serán respondidas directamente por ``nginx`` desde el caché.
 
 Long polling
 ============
 
-"Long polling" es usada para soportar la aplicación de mensajería
+*"Long polling"* es usada para soportar la aplicación de mensajería
 instantánea, y cuando se usan trabajos multiproceso, esta es gestionada
 en un puerto separado, el cual de forma predeterminada es el puerto
 8072.
 
 Para su proxy inverso, esto significa que las solicitudes
 "longpolling" deberían ser pasadas por este puerto. Para soportar esto,
-necesita agregar un nuevo ``upstream`` a su configuración nginx,
+necesita agregar un nuevo ``upstream`` a su configuración ``nginx``,
 como se muestra en el siguiente código:
 
 ::
@@ -590,7 +590,7 @@ solicitudes HTTPS, como se muestra a continuación:
 
     location /longpolling { proxy_pass http://backend-odoo-im; } 
 
-Con estas configuraciones, nginx debería pasar estas solicitudes al
+Con estas configuraciones, ``nginx`` debería pasar estas solicitudes al
 puerto apropiado del servidor Odoo.
 
 Actualización del servidor y módulos
@@ -599,7 +599,7 @@ Actualización del servidor y módulos
 Una vez que el servidor Odoo este listo y ejecutándose, llegara el
 momento en que necesite instalar actualizaciones. Lo cual involucra dos
 pasos: primero, obtener las nuevas versiones del código fuente (servidor
-o módulos), y segundo, instalar las.
+o módulos), y segundo, instalarlas.
 
 Si ha seguido el enfoque descrito en la sección *Instalación desde el
 código fuente*, podrá buscar y probar las nuevas versiones dentro
@@ -640,7 +640,7 @@ ejecutar Odoo en un servidor de producción basado en Debian. Fueron
 vistas las configuraciones más importantes del archivo de configuración,
 y aprendió como aprovechar el modo multiproceso.
 
-También aprendió como usar nginx como un proxy inverso frente a su
+También aprendió como usar ``nginx`` como un proxy inverso frente a su
 servidor Odoo, para mejorar la seguridad y la escalabilidad.
 
 Ojala que esto cubra lo esencial de lo que es necesario para
