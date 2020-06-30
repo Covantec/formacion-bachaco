@@ -393,7 +393,7 @@ Para mostrar esto, va a añadir un segundo archivo de datos para el
 módulo ``todo_user``, llamado ``todo_data.xml``, con el siguiente
 contenido:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <?xml version="1.0"?>
         <openerp>
@@ -514,7 +514,7 @@ cálculo de los valores de fecha, algo que se utiliza con frecuencia en
 los datos de demostración (y prueba). Por ejemplo, para establecer un
 valor de ayer se usaría:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <field name="expiration_date" eval="(datetime.now()+timedelta(-1)).strftime('%Y-%m-%d')"/>
 
@@ -524,7 +524,7 @@ datos correspondiente. Esto puede ser usado para establecer los valores
 para los campos relacionales. A modo de ejemplo, lo ha usado antes
 para ajustar el valor para el ``user_id``:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <field name="user_id" eval="ref('base.group_user')" />
 
@@ -533,7 +533,7 @@ el Modelo actual, escrita a través de ``obj``. Se puede utilizar junto
 con ``ref()`` para acceder a los valores de otros registros. He aquí un
 ejemplo del módulo de venta:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <value model="sale.order" eval="obj(ref('test_order_1')).amount_total" />
 
@@ -549,7 +549,7 @@ El elemento ``<field>`` también tiene un atributo ``ref`` para
 establecer el valor de campo *many-to-one* utilizando un ID Externo.
 Usándolo, podrá establecer el valor de ``user_id`` con solo:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <field name="user_id" ref="base.group_user" />
 
@@ -561,7 +561,7 @@ campos.
 El siguiente ejemplo, tomado de la aplicación de Flota, sustituye a la
 lista de registros relacionados de un campo ``tag_ids``:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <field name="tag_ids" eval="[(6,0,[ref('vehicle_tag_leasing'),ref('fleet.vehicle_tag_compact'),ref('fleet.vehicle_tag_senior')] )]" />
 
@@ -641,14 +641,14 @@ aplicación de tareas pendientes. En el archivo
 ``<delete>``, con un dominio de búsqueda para encontrar el registro a
 eliminar:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <delete model="ir.rule" search="[('id','=',ref('todo_app.todo_task_user_rule'))]" />
 
 En este caso, el mismo efecto se puede lograr mediante el atributo
 ``id`` para identificar el registro a eliminar:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <delete model="ir.rule" id="todo_app.todo_task_user_rule" />
 
@@ -661,7 +661,7 @@ carga a través del elemento ``<function>``. Esto puede ser usado para
 establecer datos de demostración y de prueba. Por ejemplo, en el módulo
 de miembros se utiliza para crear facturas de demostración de membresía:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <function model="res.partner" name="create_membership_invoice" eval="(ref('base.res_partner_2'), ref('membership_0'), {'amount':180})" />
 
@@ -680,7 +680,7 @@ pedido de cliente o convertirlo en una factura. He aquí un ejemplo
 tomado del módulo de venta, la conversión de un proyecto de orden de
 ventas para el estado confirmado:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <workflow model="sale.order" ref="sale_order_4" action="order_confirm" />
 

@@ -5,67 +5,75 @@ API Externa
 ===========
 
 
+
 API Externa – Integración con otros Sistemas
 =============================================
 
-Until now, we have been working with server-side code. However, the Odoo
-server also provides an external API, which is used by its web client
-and is also available for other client applications.
+Hasta ahora, usted ha estado trabajando con el código del lado del servidor.
+Sin embargo, el servidor Odoo también proporciona una API externa, que es
+utilizada por su cliente web y también está disponible para otras aplicaciones
+cliente.
 
-In this chapter, we will learn how to use the Odoo external API from our
-own client programs. For simplicity, we will focus on Python-based
-clients.
+En este capítulo, aprenderá cómo usar la API externa de Odoo de su propios
+programas de clientes HTTP. Para simplificar, se centraran en la clientela
+disponible para Python.
 
-Setting up a Python client
---------------------------
 
-The Odoo API can be accessed externally using two different protocols:
-XML-RPC and JSON-RPC. Any external program capable of implementing a
-client for one of these protocols will be able to interact with an Odoo
-server. To avoid introducing additional programming languages, we will
-keep using Python to explore the external API.
+Configurar un cliente Python
+----------------------------
 
-Until now, we have been running Python code only on the server. This
-time, we will use Python on the client side, so it’s possible you might
-need to do some additional setup on your workstation.
+Se puede acceder a la API de Odoo externamente usando dos (02) protocolos
+diferentes: ``XML-RPC`` y ``JSON-RPC``. Cualquier programa externo capaz
+de implementar un el cliente para uno de estos protocolos podrá interactuar
+con un servidor Odoo. Para evitar introducir lenguajes de programación
+adicionales, se seguirá usando Python para explorar la API externa.
 
-To follow the examples in this chapter, you will need to be able to run
-Python files on your work computer. The Odoo server requires Python 2,
-but our RPC client can be in any language, so Python 3 will be just
-fine. However, since some readers may be running the server on the same
-machine they are working on (hello Ubuntu users!), it will be simpler
-for everyone to follow if we stick to Python 2.
+Hasta ahora, usted ha estado ejecutando código Python solo en el servidor.
+Esta vez, usara Python en el lado del cliente, por lo que es posible que
+pueda necesita hacer una configuración adicional en su estación de trabajo.
 
-If you are using Ubuntu or a Macintosh, probably Python is already
-installed. Open a terminal console, type python, and you should be
-greeted with something like the following:
+Para seguir los ejemplos de este capítulo, deberá poder ejecutar archivos
+Python en su computadora de trabajo. El servidor Odoo requiere **Python 2**,
+pero su cliente ``RPC`` puede estar en cualquier idioma, por lo que **Python 3**
+estará bien. Sin embargo, dado que algunos lectores pueden estar ejecutando
+el servidor en el mismo máquina en la que están trabajando (¡hola usuarios de
+Ubuntu!), será más simple para que todos sigan si sigue usando a **Python 2**.
+
+Si está utilizando *Ubuntu* o *Macintosh*, probablemente **Python** ya esté
+instalado Abra una consola de terminal, escriba ``python``, y debería estar
+recibido con algo como lo siguiente:
 
 .. code-block:: python
 
-    Python 2.7.8 (default, Oct 20  2014, 15:05:29) [GCC 4.9.1] on linux2 Type "help", "copyright",", "credits" or "license" for more information. 
+    Python 2.7.8 (default, Oct 20  2014, 15:05:29)
+    [GCC 4.9.1] on linux2
+    Type "help", "copyright",", "credits" or "license" for more information.
     >>>
 
 .. note::
-    Windows users can find an installer and also quickly get up to speed.
-    The official installation packages can be found at
-    https://www.python.org/downloads/.
+    Los usuarios de Windows pueden encontrar un instalador y también ponerse
+    al día rápidamente. Los paquetes de instalación oficiales se pueden
+    encontrar en https://www.python.org/downloads/.
 
-Calling the Odoo API using XML-RPC
-==================================
 
-The simplest method to access the server is using XML-RPC. We can use
-the ``xmlrpclib`` library from Python’s standard library for this. Remember
-that we are programming a client in order to connect to a server, so we
-need an Odoo server instance running to connect to. In our examples, we
-will assume that an Odoo server instance is running on the same machine
-(localhost), but you can use any IP address or server name, if the
-server is running on another machine.
+Llamando a la API Odoo usando XML-RPC
+=====================================
 
-Opening an XML-RPC connection
+El método más simple para acceder al servidor es usar ``XML-RPC``. Usted
+puede usar la biblioteca ``xmlrpclib`` de la biblioteca estándar de **Python**
+para esto. Recuerda que esta programando un cliente para conectarse a un
+servidor, entonces necesita una instancia del servidor Odoo ejecutándose
+para conectarse. En sus ejemplos, se asumirá que una instancia del servidor
+Odoo se está ejecutando en la misma máquina (``localhost``), pero puede usar
+cualquier dirección IP o nombre de servidor, si el servidor se está
+ejecutando en otra máquina.
+
+
+Abriendo una conexión XML-RPC
 -----------------------------
 
-Let’s get a fist contact with the external API. Start a Python console
-and type the following:
+Usted va a tener un primer contacto con la API externa. Iniciar una consola
+de **Python** y escriba lo siguiente:
 
 .. code-block:: python
 
@@ -75,92 +83,106 @@ and type the following:
     >>> common.version()
     {'server_version_info': [8, 0, 0, 'final', 0], 'server_serie': '8.0', 'server_version': '8.0', 'protocol_version': 1} 
 
-Here, we import the xmlrpclib library and then set up some variables
-with the information for the server location and connection credentials.
-Feel free to adapt these to your specific setup.
+Aquí, importa la biblioteca ``xmlrpclib`` y luego la configura algunas
+variables con la información para la ubicación del servidor y las credenciales
+de conexión. Siéntase libre de adaptarlos a su configuración específica.
 
-Next, we set up access to the server’s public services (not requiring a
-login), exposed at the ``/xmlrpc/2/common`` endpoint. One of the methods
-that are available is version(), which inspects the server version. We
-use it to confirm that we can communicate with the server.
+A continuación, configura el acceso a los servicios públicos del servidor
+(no requiere un inicio de sesión), expuesto en el *endpoint* ``/xmlrpc/2/common``.
+Uno de los métodos que están disponibles es ``version()``, que inspecciona la
+versión del servidor. Este se usa para confirmar que puede comunicar con el servidor.
 
-Another public method is ``authenticate()``. In fact, this does not create a
-session, as you might be led to believe. This method just confirms that
-the username and password are accepted and returns the user ID that
-should be used in requests instead of the username, as shown here:
+Otro método público es ``authenticate()``. De hecho, esto no crea un sesión,
+como puede ser llevado a creer. Este método solo confirma que el nombre de usuario
+y la contraseña son aceptados y devuelve la identificación de usuario que debe
+usarse en solicitudes en lugar del nombre de usuario, como se muestra aquí:
 
 .. code-block:: python
 
     >>> uid = common.authenticate(db, user, pwd, {}) 
     >>> print uid
-    1 
+    1
 
-Reading data from the server
-----------------------------
 
-With XML-RPC, no session is maintained and the authentication
-credentials are sent with every request. This adds some overhead to the
-protocol, but makes it simpler to use. Next, we set up access to the
-server methods that need a login to be accessed. These are exposed at
-the ``/xmlrpc/2/object`` endpoint, as shown in the following:
+Leyendo data desde el servidor
+------------------------------
+
+Con ``XML-RPC``, no se mantiene ninguna sesión y la autenticación de
+las credenciales se envían con cada solicitud. Esto agrega algo de
+sobrecarga al protocolo, pero hace que sea más fácil de usar. A continuación,
+configure el acceso a métodos de servidor que necesitan un inicio de sesión
+para acceder. Estos están expuestos en el punto final ``/xmlrpc/2/object``,
+como se muestra a continuación:
 
 .. code-block:: python
 
     >>> api = xmlrpclib.ServerProxy('%s/xmlrpc/2/object' % srv) 
     >>> api.execute_kw(db, uid, pwd, 'res.partner', 'search_count', [[]])
-    70 
+    70
 
-Here, we are doing our first access to the server API, performing a
-count on the Partner records. Methods are called using the ``execute_kw()``
-method that takes the following arguments: The name of the database to
-connect to The connection user ID The user password The target model
-identifier name The method to call A list of positional arguments An
-optional dictionary with keyword arguments
+Aquí, esta haciendo su primer acceso a la API del servidor, realizando
+un conteo con los registros de socios (*Partners*). Los métodos se llaman
+usando el método ``execute_kw()`` que toma los siguientes argumentos:
 
-The preceding example calls the ``search_count`` method of the res.partner
-model with one positional argument, [], and no keyword arguments. The
-positional argument is a search domain; since we are providing an empty
-list, it counts all the Partners.
+- El nombre de la base de datos a conectarse.
 
-Frequent actions are search and read. When called from the RPC, the
-``search`` method returns a list of IDs matching a domain. The browse method
-is not available from the RPC, and read should be used in its place to,
-given a list of record IDs, retrieve their data, as shown in the
-following code:
+- La conexión ID de usuario.
+
+- La contraseña de usuario.
+
+- El nombre del modelo de destino identificador.
+
+- El método para llamar Una lista de argumentos posicionales.
+
+- Un diccionario opcional con argumentos de palabras clave.
+
+El ejemplo anterior llama al método ``search_count`` del modelo ``res.partner``
+con un argumento posicional, ``[]``, y sin argumentos de palabras clave. Los
+argumento posicional es un dominio de búsqueda; ya que esta proporcionando una
+lista vacía, cuenta todos los socios (*Partners*).
+
+Las acciones frecuentes son ``search`` y ``read``. Cuando se llama desde el ``RPC``,
+el método ``search`` devuelve una lista de ID que coinciden con un dominio. El método
+de navegación no está disponible desde el ``RPC``, y el método ``read`` debe usarse en
+su lugar para, dada una lista de ID de registro, recupere sus datos, como se muestra
+en el siguiente código:
 
 .. code-block:: python
 
     >>> api.execute_kw(db, uid, pwd, 'res.partner', 'search', [[('country_id', '=', 'be'), ('parent_id', '!=', False)]])
     [43,  42] 
     >>> api.execute_kw(db, uid, pwd, 'res.partner', 'read', [[43]], {'fields': ['id', 'name', 'parent_id']})
-    [{'parent_id': [7, 'Agrolait'], 'id':43, 'name': 'Michel Fletcher'}] 
+    [{'parent_id': [7, 'Agrolait'], 'id':43, 'name': 'Michel Fletcher'}]
 
-Note that for the ``read`` method, we are using one positional argument for
-the list of IDs, [43], and one keyword argument, fields. We can also
-notice that relational fields are retrieved as a pair, with the related
-record’s ID and display name. That’s something to keep in mind when
-processing the data in your code.
+Tenga en cuenta que para el método ``read``, esta utilizando un argumento
+posicional para la lista de ID, ``[43]`` y un argumento de palabra clave,
+campos. También puede observar que los campos relacionales se recuperan
+como un par, con los ID de registro y nombre para mostrar. Eso es algo a
+tener en cuenta cuando procesando los datos en su código.
 
-The search and read combination is so frequent that a ``search_read``
-method is provided to perform both operations in a single step. The same
-result as the previous two steps can be obtained with the following:
+La combinación de búsqueda y lectura es tan frecuente que un método ``search_read``
+se proporciona el método para realizar ambas operaciones en un solo paso.
+El mismo resultado ya que los dos pasos anteriores se pueden obtener con
+lo siguiente:
 
 .. code-block:: python
 
-    >>> api.execute_kw(db, uid, pwd, 'res.partner', 'search_read', [[('country_id', '=',    'be'), ('parent_id', '!=', False)]], {'fields': ['id', 'name', 'parent_id']}) 
+    >>> api.execute_kw(db, uid, pwd, 'res.partner', 'search_read', [[('country_id', '=', 'be'), ('parent_id', '!=', False)]], {'fields': ['id', 'name', 'parent_id']}) 
 
-The ``search_read`` method behaves like read, but expects as first
-positional argument a domain instead of a list of IDs. It’s worth
-mentioning that the field argument on read and search_read is not
-mandatory. If not provided, all fields will be retrieved.
+El método ``search_read`` se comporta como leído, pero espera como
+primero argumento posicional un dominio en lugar de una lista de ID.
+Merece la pena mencionando que el argumento de campo en ``read`` y
+``search_read`` no es obligatorio. Si no se proporciona, se recuperarán
+todos los campos.
 
-Calling other methods
-=====================
 
-The remaining model methods are all exposed through RPC, except for
-those starting with "_" that are considered private. This means that we
-can use ``create``, ``write``, and ``unlink`` to modify data on the server as
-follows:
+Llamando otros métodos
+======================
+
+Todos los métodos de modelo restantes están expuestos a través de ``RPC``,
+excepto aquellos que comienzan con ``_`` que se consideran privados. Esto
+significa que usted puede usar ``create``, ``write`` y ``unlink`` para
+modificar datos en el servidor como sigue:
 
 .. code-block:: python
 
@@ -173,11 +195,17 @@ follows:
     >>> api.execute_kw(db, uid, pwd, 'res.partner', 'unlink', [[75]])
     True
 
-One limitation of the XML-RPC protocol is that it does not support None
-values. The implication is that methods that don’t return anything won’t
-be usable through XML-RPC, since they are implicitly returning None.
-This is why methods should always finish with at least a return True
-statement.
+Una limitación del protocolo ``XML-RPC`` es que no admite los valores
+``None``. La implicación es que los métodos que no devuelven nada no
+ser utilizable a través de ``XML-RPC``, ya que están devolviendo
+implícitamente ``None``. Es por eso que los métodos siempre deben terminar
+con al menos una declaración de retorno ``True``.
+
+Escribir una aplicación de escritorio de **Notes** haga algo interesante
+con la *API RPC*. ¿Qué pasaría si los usuarios pudieran administrar sus
+tareas pendientes de Odoo directamente desde el escritorio de su computadora?
+Usted va a escribir una aplicación Python simple hacer exactamente eso, como
+se muestra en la siguiente captura de pantalla:
 
 .. figure:: images/328_1.jpg
   :align: center
@@ -185,23 +213,24 @@ statement.
 
   Gráfico 9.1 - Cliente Python Tk
 
-Writing a Notes desktop application Let’s do something interesting with
-the RPC API. What if users could manage their Odoo to-do tasks directly
-from their computer’s desktop? Let’s write a simple Python application
-to do just that, as shown in the following screenshot:
+Para mayor claridad, lo divide en dos archivos: uno para interactuar con
+el servidor backend, en el archivo ``note_api.py``, y otro con la interfaz
+gráfico de usuario, en el archivo ``note_gui.py``.
 
-For clarity, we will split it into two files: one concerned to interact
-with the server backend, note_api.py, and another with the graphical
-user interface, note_gui.py.
 
-Communication layer with Odoo
+Capa de comunicación con Odoo
 -----------------------------
 
-We will create a class to set up the connection and store its
-information. It should expose two methods: ``get()`` to retrieve task data
-and ``set()`` to create or update tasks. Select a directory to host the
-application files and create the ``note_api.py`` file. We can start by
-adding the class constructor, as follows:
+Cree una clase para configurar la conexión y almacenar su información. Debería
+exponer dos métodos:
+
+- El método ``get()`` para recuperar datos de la tarea.
+
+- El método ``set()`` para crear o actualizar tareas.
+
+Seleccione un directorio para alojar los archivos de aplicación y cree el
+archivo ``note_api.py``. Puede empezar por agregando el constructor de clase,
+de la siguiente manera:
 
 .. code-block:: python
 
@@ -218,11 +247,12 @@ adding the class constructor, as follows:
             self.db = db
             self.model = 'todo.task' 
 
-Here we store in the created object all the information needed to
-execute calls on a model: the API reference, ``uid``, ``password``, ``database
-name``, and the ``model`` to use. Next we will define a helper method to
-execute the calls. It takes advantage of the object stored data to
-provide a smaller function signature, as shown next:
+Aquí almacena en el objeto creado toda la información necesaria para
+ejecutar llamadas en un modelo: la referencia API, ``uid``, ``cpassword``,
+``database name`` y el ``model`` a usar. A continuación definirá un método
+helper para ejecutar las llamadas. Aprovecha los datos almacenados del objeto
+para proporcione una firma de función más pequeña, como se muestra a
+continuación:
 
 .. code-block:: python
 
@@ -236,9 +266,10 @@ provide a smaller function signature, as shown next:
                                        arg_list,
                                        kwarg_dict or {}) 
 
-Now we can use it to implement the higher level ``get()`` and ``set()`` methods.
-The ``get()`` method will accept an optional list of IDs to retrieve. If
-none are listed, all records will be returned, as shown here:
+Ahora puede usarlo para implementar los métodos de nivel superior ``get()`` y
+``set()``. El método ``get()`` aceptará una lista opcional de ID para recuperar.
+Si ninguno está en la lista, todos los registros serán devueltos, como se muestra
+aquí:
 
 .. code-block:: python
 
@@ -248,55 +279,59 @@ none are listed, all records will be returned, as shown here:
             fields = ['id', 'name']
             return  self.execute('search_read', [domain, fields]) 
 
-The ``set()`` method will have as arguments the task text to write, and an
-optional ID. If ID is not provided, a new record will be created. It
-returns the ID of the record written or created, as shown here:
+El método ``set()`` tendrá como argumentos el texto de la tarea a escribir,
+y un ID opcional. Si no se proporciona ID, se creará un nuevo registro. Eso
+devuelve la ID del registro escrito o creado, como se muestra aquí:
 
 .. code-block:: python
 
-    def set(self, text, id=None):
-        if id:
-            self.execute('write', [[id], {'name': text}])
-        else:
-            vals = {'name': text, 'user_id': self.uid}
-            id = self.execute('create', [vals])``
+        def set(self, text, id=None):
+            if id:
+                self.execute('write', [[id], {'name': text}])
+            else:
+                vals = {'name': text, 'user_id': self.uid}
+                id = self.execute('create', [vals])
+            return id
 
-return id Let’s end the file with a small piece of test code that will
-be executed if we run the Python file:
+Termine el archivo con un pequeño fragmento de código de prueba que se ejecutará
+si ejecuta el archivo Python:
 
 .. code-block:: python
 
-    if  __name__    ==  '__main__':
+    if  __name__ == '__main__':
         srv, db = 'http://localhost:8069', 'v8dev'
         user, pwd = 'admin', 'admin'
         api =  NoteAPI(srv, db, user, pwd)
         from pprint import pprint
         pprint(api.get()) 
 
-If we run the Python script, we should see the content of our to-do
-tasks printed out. Now that we have a simple wrapper around our Odoo
-backend, let’s deal with the desktop user interface.
+Si ejecuta el script **Python**, debería ver el contenido de su tareas pendientes
+impresas. Ahora que tiene un contenedor simple alrededor de su backend de Odoo,
+trate con la interfaz de usuario de escritorio.
 
-Creating the GUI
-================
 
-Our goal here was to learn to write the interface between an external
-application and the Odoo server, and this was done in the previous
-section. But it would be a shame not going the extra step and actually
-making it available to the end user. To keep the setup as simple as
-possible, we will use ``Tkinter`` to implement the graphical user interface.
-Since it is part of the standard library, it does not require any
-additional installation. It is not our goal to explain how ``Tkinter``
-works, so we will be short on explanations about it.
+Creando la GUI
+==============
 
-Each Task should have a small yellow window on the desktop. These
-windows will have a single Text widget. Pressing *Ctrl* + *N* will open
-a new Note, and pressing *Ctrl* + *S* will write the content of the
-current note to the Odoo server.
+Su objetivo aquí era aprender a escribir la interfaz entre una aplicación
+externo y el servidor Odoo, y esto se hizo en el anterior sección. Pero
+sería una pena no ir más allá y, de hecho, poniéndolo a disposición del
+usuario final.
 
-Now, alongside the ``note_api.py`` file, create a new ``note_gui.py`` file. It
-will first import the ``Tkinter`` modules and widgets we will use, and then
-the NoteAPI class, as shown in the following:
+Para mantener la configuración tan simple como posible, usara la librería
+``Tkinter`` para implementar la interfaz gráfica de usuario. Como es parte
+de la biblioteca estándar, no requiere ninguna instalación adicional.
+No es el objetivo explicar cómo funciona ``Tkinter``, por lo que faltarán
+explicaciones al respecto.
+
+Cada tarea debe tener una pequeña ventana amarilla en el escritorio. Estas
+ventanas tendrá un solo widget de texto. Al presionar *Ctrl* + *N* se abrirá
+una nueva *Nota*, y presionando *Ctrl* + *S* escribirá el contenido de la
+nota actual al servidor Odoo.
+
+Ahora, junto con el archivo ``note_api.py``, cree un nuevo archivo ``note_gui.py``.
+Primero importará los módulos y widgets de ``Tkinter`` que usara, y luego
+la clase ``NoteAPI``, como se muestra a continuación:
 
 .. code-block:: python
 
@@ -304,9 +339,10 @@ the NoteAPI class, as shown in the following:
     import tkMessageBox
     from note_api import NoteAPI
 
-Next we create our own Text widget derived from the ``Tkinter`` one. When
-creating an instance, it will expect an API reference, to use for the
-save action, and also the Task’s text and ID, as shown in the following:
+A continuación, cree su propio widget de texto derivado del ``Tkinter``.
+Cuando al crear una instancia, esperará una referencia de API que se utilizará
+para guardar la acción, y también el texto y la ID de la tarea, como se muestra
+a continuación:
 
 .. code-block:: python
 
@@ -326,12 +362,13 @@ save action, and also the Task’s text and ID, as shown in the following:
                 self.master.geometry('220x235')
                 self.pack(fill='both',  expand=1) 
 
-The ``Tk()`` constructor creates a new UI window and the Text widget places
-itself inside it, so that creating a new NoteText instance automatically
-opens a desktop window. Next, we will implement the create and save
-actions. The create action opens a new empty window, but it will be
-stored in the server only when a save action is performed, as shown in
-the following code:
+El método constructor ``Tk()`` crea una nueva ventana de IU y el widget de
+texto coloca dentro de él, de modo que crear una nueva instancia de ``NoteText``
+automáticamente abre una ventana de escritorio. A continuación, implementara
+las acciones ``create`` y ``save``. La acción ``create`` abre una nueva ventana
+vacía, pero será almacenado en el servidor solo cuando se realiza una acción
+``save``, como se muestra en el siguiente código:
+
 
 .. code-block:: python
 
@@ -343,12 +380,12 @@ the following code:
             self.id = self.api.set(text,  self.id)
             tkMessageBox.showinfo('Info', 'Note %d Saved.' % self.id) 
 
-The save action can be performed either on existing or on new tasks, but
-there is no need to worry about that here since those cases are already
-handled by the ``set()`` method of ``NoteAPI``.
+La acción ``save`` se puede realizar en tareas existentes o nuevas, pero
+no hay necesidad de preocuparse por eso aquí ya que esos casos ya están
+manejado por el método ``set()`` de la clase ``NoteAPI``.
 
-Finally, we will add the code that retrieves and creates all note
-windows when the program is started, as shown in the following code:
+Finalmente, agregara el código que recupera y crea todas las ventanas notas
+cuando se inicia el programa, como se muestra en el siguiente código:
 
 .. code-block:: python
 
@@ -360,37 +397,46 @@ windows when the program is started, as shown in the following code:
             x = NoteText(api, note['name'], note['id'])
             x.master.mainloop() 
 
-The last command runs ``mainloop()`` on the last Note window created, to
-start waiting for window events.
+El último comando ejecuta ``mainloop()`` en la última ventana de Nota creada,
+para iniciar a esperar eventos de ventana.
 
-This is a very basic application, but the point here is to make an
-example of interesting ways to leverage the Odoo RPC API.
+Esta es una aplicación muy básica, pero el punto aquí es hacer un
+ejemplo de formas interesantes de aprovechar la API de Odoo RPC.
 
-Introducing the ERPpeek client
-==============================
+
+Introduciendo al cliente ERPpeek
+================================
 
 ``ERPpeek`` is a versatile tool that can be used both as an interactive
 Command-line Interface (CLI ) and as a Python library , with a more
 convenient API than the one provided by ``xmlrpclib``. It is available from
 the PyPi index and can be installed with the following:
 
+``ERPpeek`` es una herramienta versátil que se puede utilizar tanto como
+una aplicación interactiva de interfaz de línea de comandos (*Command-line Interface - CLI*)
+y como biblioteca de **Python**, con más API conveniente que la proporcionada
+por ``xmlrpclib``. Está disponible desde el índice PyPi y se puede instalar
+con lo siguiente:
+
 .. code-block:: console
 
     $ pip install -U erppeek
 
-On a Unix system, if you are installing it system wide, you might need
-to prepend sudo to the command.
+En un sistema Unix, si lo está instalando en todo el sistema, es posible
+que necesite anteponer ``sudo`` al comando.
 
-The ERPpeek API
----------------
 
-The ``erppeek`` library provides a programming interface, wrapping around
-``xmlrpclib``, which is similar to the programming interface we have for the
-server-side code. Our point here is to provide a glimpse of what ``ERPpeek``
-has to offer, and not to provide a full explanation of all its features.
+La API ERPpeek
+--------------
 
-We can start by reproducing our first steps with ``xmlrpclib`` using ``erppeek``
-as follows:
+La biblioteca ``erppeek`` proporciona una interfaz de programación, envolviendo
+la biblioteca ``xmlrpclib``, que es similar a la interfaz de programación que
+tiene para el código del lado del servidor. Su punto aquí es proporcionar una
+idea de lo que ``ERPpeek`` tiene para ofrecer, y no para proporcionar una explicación
+completa de todas sus características.
+
+Puede comenzar reproduciendo sus primeros pasos con la biblioteca ``xmlrpclib``
+usando ``erppeek`` como lo sigue:
 
 .. code-block:: python
 
@@ -401,20 +447,20 @@ as follows:
     >>> api.search('res.partner', [('country_id', '=', 'be'), ('parent_id', '!=', False)])
     >>> api.read('res.partner', [43], ['id',  'name', 'parent_id'])
 
-As you can see, the API calls use fewer arguments and are similar to the
-server-side counterparts.
+Como puede ver, las llamadas a la API usan menos argumentos y son similares a las
+contrapartes del lado del servidor.
 
-But ``ERPpeek`` doesn’t stop here, and also provides a representation for
-Models. We have the following two alternative ways to get an instance
-for a model, either using the ``model()`` method or accessing an attribute
-in camel case:
+Pero ``ERPpeek`` no se detiene aquí, y también proporciona una representación para
+*Modelos*. Tiene las siguientes dos formas alternativas de obtener una instancia
+para un modelo, ya sea utilizando el método ``model()`` o accediendo a un atributo
+en caso de camello:
 
 .. code-block:: python
 
     >>> m = api.model('res.partner') 
     >>> m = api.ResPartner 
 
-Now we can perform actions on that model as follows:
+Ahora puede realizar acciones en ese modelo de la siguiente manera:
 
 .. code-block:: python
 
@@ -423,8 +469,8 @@ Now we can perform actions on that model as follows:
     >>> m.search([('name', 'like', 'Packt%')])
     [76] 
 
-It also provides client-side object representation for records as
-follows:
+También proporciona representación de objetos del lado del cliente para registros como
+sigue:
 
 .. code-block:: python
 
@@ -432,27 +478,28 @@ follows:
     >>> recs <RecordList 'res.partner,[76]'> 
     >>> recs.name ['Packt'] 
 
-As you can see, ``ERPpeek`` goes a long way from plain ``xmlrpclib``, and makes
-it possible to write code that can be reused server side with little or
-no modification.
+Como puede ver, ``ERPpeek`` recorre un largo camino desde el simple ``xmlrpclib``, y
+hace es posible escribir código que se pueda reutilizar del lado del servidor con poco
+o sin modificaciones.
 
-The ERPpeek CLI
----------------
 
-Not only can erppeek be used as a Python library, it is also a CLI that
-can be used to perform administrative actions on the server. Where the
-odoo shell command provided a local interactive session on the host
-server, erppeek provides a remote interactive session on a client across
-the network.
+El CLI ERPpeek
+--------------
 
-Opening a command line, we can have a peek at the options available, as
-shown in the following:
+No solo se puede usar como una biblioteca de Python, sino que también es una
+CLI que se puede usar para realizar acciones administrativas en el servidor.
+Donde el comando *odoo shell* proporcionó una sesión interactiva local en el
+servidor host, ``erppeek`` proporciona una sesión interactiva remota en un
+cliente a través de la red.
+
+Al abrir una línea de comando, puede echar un vistazo a las opciones disponibles,
+como se muestra a continuación:
 
 .. code-block:: console
 
     $ erppeek --help  
 
-Let’s see a sample session as follows:
+Vea una sesión de muestra de la siguiente manera:
 
 .. code-block:: console
 
@@ -470,43 +517,45 @@ Let’s see a sample session as follows:
     v8dev
     >>> rec.name 'Michel Fletcher'  
 
-As you can see, a connection was made to the server, and the execution
-context provided a reference to the ``model()`` method to get model
-instances and perform actions on them.
+Como puede ver, se realizó una conexión con el servidor y la ejecución
+del contexto proporcionó una referencia al método ``model()`` para obtener
+el modelo instancias y realizar acciones sobre ellos.
 
-The ``erppeek.Client`` instance used for the connection is also available
-through the client variable. Notably, it provides an alternative to the
-web client to manage the following modules installed:
+La instancia ``erppeek.Client`` utilizada para la conexión también está
+disponible a través de la variable cliente. En particular, proporciona
+una alternativa a la cliente web para gestionar los siguientes módulos
+instalados:
 
--  ``client.modules()``: This can search and list modules available or
-   installed
+-  ``client.modules()``: Esto puede buscar y enumerar módulos disponibles
+   o instalados
 
--  ``client.install()``: This performs module installation
+-  ``client.install()``: Esto realiza la instalación del módulo
 
--  ``client.upgrade()``: This orders modules to be upgraded
+-  ``client.upgrade()``: Esto ordena que los módulos se actualicen
 
--  ``client.uninstall()``: This uninstalls modules
+-  ``client.uninstall()``: Esto desinstala módulos
 
-So, ``ERPpeek`` can also provide good service as a remote administration
-tool for Odoo servers.
+Entonces, ``ERPpeek`` también puede proporcionar un buen servicio como
+administración remota herramienta para servidores Odoo.
+
 
 Resumen
 =======
 
-En el **capítulo 9**, usted aprendió a trabajar con la API externa.
-Our goal for this chapter was to learn how the external API works and
-what it is capable of. We started exploring it using a simple Python
-XML-RPC client, but the external API can be used from any programming
-language. In fact, the official docs provide code examples for Java,
-PHP, and Ruby.
+El objetivo para el **capítulo 9** fue aprender cómo funciona la API externa
+y de lo que es capaz. Usted inicio a explorarlo usando un simple cliente
+``XML-RPC`` en Python, pero la API externa se puede usar desde cualquier
+programación idioma. De hecho, los documentos oficiales proporcionan
+ejemplos de código para Java, PHP y Ruby.
 
-There are a number of libraries to handle XML-RPC or JSON-RPC, some
-generic and some specific for use with Odoo. We tried not point out any
-libraries in particular, except for erppeek, since it is not only a
-proven wrapper for the Odoo/OpenERP XML-RPC but because it is also an
-invaluable tool for remote server management and inspection.
+Hay varias bibliotecas para manejar ``XML-RPC`` o ``JSON-RPC``, algunas
+genéricos y algunos específicos para usar con Odoo. No intento señalar
+ninguno bibliotecas en particular, a excepción de ``erppeek``, ya que no
+es solo un contenedor comprobado para el ``XML-RPC`` *Odoo/OpenERP* pero
+porque también es un herramienta invaluable para la gestión e inspección
+remota del servidor.
 
-Until now, we used our Odoo server instances for development and tests.
-But to have a production grade server, there are additional security and
-optimization configurations that need to be done. In the next chapter,
-we will focus on them.
+Hasta ahora, utiliza sus instancias de servidor Odoo para desarrollo y pruebas.
+Pero para tener un servidor de grado de producción, hay seguridad adicional y
+configuraciones de optimización que deben hacerse. En el siguiente capitulo,
+Usted se centrara en ellos.

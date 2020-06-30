@@ -5,6 +5,7 @@ QweB
 ====
 
 
+
 QweB - Creando vistas Kanban y Reportes
 =======================================
 
@@ -139,10 +140,10 @@ como sigue:
 
 A continuación, cree el archivo XML donde irán sus nuevas y brillantes
 vistas Kanban y configurar Kanban como la vista por defecto en la
-acción "action" de ventana de la aplicación *tareas por hacer*, tal como
+acción ``action`` de ventana de la aplicación *tareas por hacer*, tal como
 se muestra a continuación:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <?xml version="1.0"?>
     <openerp>
@@ -219,7 +220,7 @@ Elementos de la vista kanban
 La arquitectura de la vista kanban tiene un elemento superior y la
 siguiente estructura básica:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <kanban>
       <!-- Fields to use in expressions... -->
@@ -248,7 +249,7 @@ le permite tener un valor agregado, mostrado en en el área superior de
 las columnas ``kanban``. Esto se logra mediante la adición de un atributo
 con la agregación a usar, por ejemplo:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <field name="effort_estimated" sum="Total Effort" />
 
@@ -277,7 +278,7 @@ La vista ``kanban`` viñeta
 
 Para las plantillas QWeb de las viñetas kanban, el esqueleto se ve así:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <t t-name="kanban-box"/>
         <div class="oe_kanban_vignette">
@@ -301,7 +302,7 @@ estilo viñeta: ``oe_kanban_vignette`` para el contenedor superior y
 La vista completa de viñeta ``kanban`` para las tareas por hacer es como
 sigue:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <kanban>
         <templates>
@@ -357,15 +358,15 @@ acción también están disponibles:
 
 -  ``delete``: Elimina el registro y remueve el elemento de la vista kanban.
 
-**La vista kanban de tarjeta** El ``kanban`` de **tarjeta** puede ser un
-poco más complejo. Este tiene un área de contenido principal y dos
+**La vista kanban de tarjeta** El **tarjeta** de ``kanban`` puede ser un poco
+más complejo. Este tiene un área de contenido principal y dos
 sub-contenedores al pie, alineados a cada lado de la tarjeta. También
 podría contener un botón de apertura de una acción de menú en la esquina
 superior derecha de la tarjeta.
 
 El esqueleto para esta plantilla se vería así:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <t t-name="kanban-box">
         <div class="oe_kanban_card">
@@ -384,7 +385,7 @@ Un **tarjeta** ``kanban`` es más apropiada para las tareas to-do, así que en
 lugar de la vista descrita en la sección anterior, mejor debería usar
 la siguiente:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <t t-name="kanban-box">
         <div class="oe_kanban_card">
@@ -457,7 +458,7 @@ Por ejemplo, en la tarjeta kanban, para mostrar el esfuerzo estimado de
 la Tarea, solo si este contiene un valor, después del campo
 ``date_deadline``, agrega lo siguiente:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <t t-if="record.effort_estimate.raw_value > 0">
         <li>Estimate <field name="effort_estimate"/></li>
@@ -492,50 +493,53 @@ evaluación de expresiones Qweb:
 
 -  ``read_only_mode``:
 
--  ``widget``: This is a reference to the current ``KanbanRecord`` widget
-   object, responsible for the rendering of the current record into a
-   kanban card. It exposes some useful helper functions we can use.
+-  ``widget``: Esta es una referencia al widget actual `` KanbanRecord``
+   objeto, responsable de la representación del registro actual en un
+   tarjeta ``kanban``. Expone algunas funciones ``helper`` útiles que
+   puede usar.
 
--  ``record``: This is a shortcut for widget.records and provides access to
-   the fields available, using dot notation.
+-  ``record``: Este es un acceso directo para ``widget.records`` y
+   proporciona acceso a los campos disponibles, utilizando la notación de
+   puntos.
 
--  ``read_only_mode``: This indicates if the current view is in read mode
-   (and not in edit mode). It is a shortcut for
-   widget.view.options.read_only_mode.
+-  ``read_only_mode``: Esto indica si la vista actual está en modo de
+   lectura (y no en modo de edición). Es un atajo para ``widget.view.options.read_only_mode``.
 
--  ``instance``: This is a reference to the full web client instance.
+-  ``instance``: Esta es una referencia a la instancia completa del
+   cliente web.
 
-It is also noteworthy that some characters are not allowed inside
-expressions. The lower than sign (*<*) is such a case. You may use a
-negated *>=* instead. Anyway, alternative symbols are available for
-inequality operations as follows:
+También es digno de mención que algunos caracteres no están permitidos
+dentro expresiones El signo inferior a (``<``) es un caso así. Puedes
+usar un negado ``>=`` en su lugar. De todos modos, hay símbolos alternativos
+disponibles para operaciones de desigualdad de la siguiente manera:
 
--  ``lt``: This is for less than.
+-  ``lt``: Esto es para *menor que*.
 
--  ``lte``: This is for less than or equal to.
+-  ``lte``: Esto es para *menor o igual que*.
 
--  ``gt``: This is for greater than.
+-  ``gt``: Esto es para *mayor que*.
 
--  ``gte``: This is for greater than or equal to.
+-  ``gte``: Esto es para *mayor o igual que*.
+
 
 
 Renderinzando valores con t-esc y t-raw
 ---------------------------------------
 
-We have used the element to render the field content. But field values
-can also be presented directly without a tag. The t-esc directive
-evaluates an expression and renders its HTML escaped value, as shown in
-the following:
+Usted ha utilizado el elemento para representar el contenido del campo. Pero
+los valores de campo también se puede presentar directamente sin una etiqueta.
+La directiva ``t-esc`` evalúa una expresión y representa su valor escapado de
+HTML, como se muestra en el seguimiento:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <t t-esc="record.message_follower_ids.raw_value" />
 
-In some cases, and if the source data is ensured to be safe, t-raw can
-be used to render the field raw value, without any escaping, as shown in
-the following code:
+En algunos casos, y si se garantiza que los datos de origen sean seguros, la
+directiva ``t-raw`` puede se utilizará para representar el valor sin procesar
+del campo, sin ningún escape, como se muestra en el siguiente código:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <t t-raw="record.message_follower_ids.raw_value" />
 
@@ -543,38 +547,41 @@ the following code:
 Bucle de renderizado con t-foreach
 ----------------------------------
 
-A block of HTML can be repeated by iterating through a loop. We can use
-it to add the avatars of the task followers to the tasks start by
-rendering just the Partner IDs of the task, as follows:
+Un bloque de HTML puede repetirse iterando a través de un bucle. Usted podrá
+usar para agregar los avatares de los seguidores de tareas a las tareas que
+comienzan por representando solo las ID de socio de la tarea, de la siguiente
+manera:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <t t-foreach="record.message_follower_ids.raw_value" t-as="rec"/>
       <t t-esc="rec" />;
     </t>
 
-The t-foreach directive accepts a JavaScript expression evaluating to a
-collection to iterate. In most cases, this will be just the name of a
-*to many* relation field. It is used with a t-as directive to set the
-name to be used to refer to each item in the iteration.
+La directiva ``t-foreach`` acepta una expresión JavaScript que evalúa
+colección para iterar. En la mayoría de los casos, este será solo el
+nombre de un campo de relación *a muchos*. Se utiliza con una directiva
+``t-as`` para establecer el nombre que se utilizará para referirse a cada
+elemento en la iteración.
 
-In the previous example, we loop through the task followers, stored in
-the message_follower_ids field. Since there is limited space on the
-kanban card, we could have used the slice() JavaScript function to limit
-the number of followers to display, as shown in the following:
+En el ejemplo anterior, recorre los seguidores de la tarea, almacenados
+en el campo ``message_follower_ids``. Como hay espacio limitado en el tarjeta
+Kanban, podría haber usado la función de JavaScript ``slice()`` para limitar
+el número de seguidores a mostrar, como se muestra a continuación:
 
-.. code-block:: XML
+.. code-block:: xml
 
     t-foreach="record.message_follower_ids.raw_value.slice(0, 3)" 
 
-The rec variable holds each iterations avatar stored in the database.
-Kanban views provide a helper function to conveniently generate that:
-kanban_image(). It accepts as arguments the model name, the field name
-holding the image we want, and the ID for the record to retrieve.
+La variable ``rec`` contiene cada avatar de iteraciones almacenado en la
+base de datos. Las vistas Kanban proporcionan una función auxiliar para
+generar convenientemente eso: ``kanban_image()``. Acepta como argumentos
+el nombre del modelo, el nombre del campo sosteniendo la imagen que quiere
+y la ID para recuperar el registro.
 
-With this, we can rewrite the followers loop as follows:
+Con esto, puede reescribir el bucle de seguidores de la siguiente manera:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <div>
       <t t-foreach="record.message_follower_ids.raw_value.slice(0, 3)" t-as="rec">
@@ -585,26 +592,26 @@ With this, we can rewrite the followers loop as follows:
       </t>
     </div>
 
-We used it for the src attribute, but any attribute can be dynamically
-generated with a ``t-  att-`` prefix.
+Lo usa para el atributo ``src``, pero cualquier atributo puede ser dinámicamente
+generado con un prefijo ``t-att-``.
 
-String substitution in attributes with ``t-attf-`` prefixes.
+Sustitución de cadenas en atributos con los prefijos ``t-attf-``.
 
-Another way to dynamically generate tag attributes is using string
-substitution. This is helpful to have parts of larger strings generated
-dynamically, such as a URL address or CSS class names.
+Otra forma de generar dinámicamente atributos de etiqueta es usar cadena
+sustitución. Esto es útil para generar partes de cadenas más grandes
+dinámicamente, como una dirección URL o nombres de clase CSS.
 
-The directive contains expression blocks that will be evaluated and
-replaced by the result. These are delimited either by ``{{ and }}`` or by
-``#{ and }``. The content of the blocks can be any valid JavaScript expression
-and can use any of the variables available for QWeb expressions, such as
-record and widget.
+La directiva contiene bloques de expresión que serán evaluados y reemplazado
+por el resultado. Estos están delimitados por ``{{ and }}`` o por ``#{ and }``.
+El contenido de los bloques puede ser cualquier expresión JavaScript válida
+y puede usar cualquiera de las variables disponibles para las expresiones QWeb,
+como registro y widget.
 
-Now lets rework it to use a sub-template. We should start by adding
-another template to our XML file, inside the element, after the
-``<t t-name="kanban-box">`` node, as shown in the following:
+Ahora va a modificar para usar una sub-plantilla. Deberá comenzar agregando
+otra plantilla para su archivo XML, dentro del elemento, después del nodo
+``<t t-name="kanban-box">``, como se muestra a continuación:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <t t-name="follower_avatars">
         <div>
@@ -615,39 +622,42 @@ another template to our XML file, inside the element, after the
       </div>
     </t>
 
-Calling it from the kanban-box main template is quite straightforwardfor
-eacht exist in the caller3s value when performing the sub-template call
-as follows:
+Llamarlo desde la plantilla principal de ``kanban-box`` es bastante sencillo para
+cada uno existe en el valor del llamador al realizar la llamada de sub-plantilla
+como sigue:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <t t-call="follower_avatars">
         <t t-set="arg_max" t-value="3" />
     </t>
 
-The entire content inside the t-call element is also available to the
-sub-template through the magic variable 0. Instead of the argument
-variables, we can define an HTML code fragment that could be inserted in
-the sub-template using ``<t t-raw="0" />``.
+Todo el contenido dentro del elemento ``t-call`` también está disponible para
+sub-plantilla a través de la variable mágica ``0``. En lugar del argumento
+de las variables, puede definir un fragmento de código HTML que podría insertarse
+en la sub-plantilla usando la sintaxis ``<t t-raw="0" />``.
+
 
 
 Otras directivas QWeb
 =====================
 
-We have gone through through the most important Qweb directives, but
-there are a few more we should be aware of. Weve seen the basics about
-kanban views and QWeb templates. There are still a few techniques we can
-use to bring a richer user experience to our kanban cards.
+Usted ha revisado las directivas Qweb más importantes, pero hay algunos
+más que debe tener en cuenta. Usted ha visto lo básico sobre Vistas
+kanban y plantillas QWeb. Todavía hay algunas técnicas que puede utilizar
+para brindar una experiencia de usuario más rica a nuestras tarjetas kanban.
+
 
 
 Adición de un menú de opciones de la tarjeta Kanban
 ---------------------------------------------------
 
-Kanban cards can have an option menu, placed at the top right. Usual
-actions are to edit or delete the record, but any action callable from a
-button is possible. There is also available a widget to set the card
+Las tarjetas Kanban pueden tener un menú de opciones, ubicado en la parte superior
+derecha. Las acciones usuales son para editar o eliminar el registro, pero cualquier
+acción invocable desde un el botón es posible. También hay disponible un widget para
+configurar la tarjeta.
 
-.. code-block:: XML
+.. code-block:: xml
 
         </a>
       </li>
@@ -662,60 +672,61 @@ button is possible. There is also available a widget to set the card
       </ul>
     </li></div>
 
-It is basically an HTML list of elements. The Edit and Delete options
-use QWeb to make them visible only when their actions are enabled on the
-view. The widget.view.is_action_enabled function allows us to inspect
-if the edit and delete actions are available and to decide what to make
-available to the current user.
+Básicamente es una lista HTML de elementos. Las opciones **Editar** y **Eliminar**
+usa QWeb para hacerlos visibles solo cuando sus acciones estén habilitadas en el
+ver. La función ``widget.view.is_action_enabled`` nos permite inspeccionar si las
+acciones de edición y eliminación están disponibles y para decidir qué hacer
+disponible para el usuario actual.
+
 
 
 Adición de colores para tarjetas Kanban
 ----------------------------------------
 
-The color picker option allows the user to choose the color of a kanban
-card. The color is stored in a model field as a numeric index.
+La opción del selector de color permite al usuario elegir el color de una tarjeta
+``kanban``. El color se almacena en un campo modelo como un índice numérico.
 
-We should start by adding this field to the to-do task model, by adding
-to ``todo_kanban/todo_model.py`` the following line:
+Debería comenzar agregando este campo al modelo de tareas pendientes, agregando
+al archivo ``todo_kanban/todo_model.py`` en la siguiente línea:
 
 .. code-block:: python
 
     color = fields.Integer('Color Index') 
 
-Here we used the usual name for the field, color, and this is what is
-expected in the data- field attribute on the color picker.
+Aquí usa el nombre habitual para el campo, el color, y esto es lo que es
+esperado en el atributo de campo ``data-`` en el selector de color.
 
-Next, for the colors selected with the picker to have any effect on the
-card, we must add some dynamic CSS based on the color field value. On
-the kanban view, just before the tag, we must also declare the color
-field, as shown in the following:
+A continuación, para que los colores seleccionados con el selector tengan algún
+efecto en el tarjeta, debe agregar algunos CSS dinámicos basados en el valor del
+campo de color. En la vista ``kanban``, justo antes de la etiqueta, también debe
+declarar el color campo, como se muestra a continuación:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <field name="color" />
 
-And, we need to replace the kanban card top element,
+Y, necesita reemplazar el elemento superior de la tarjeta kanban,
 
-.. raw:: html
+.. code-block:: html
 
-   <div class="oe_kanban_card">
+    <div class="oe_kanban_card">
 
-with the following:
+con lo siguiente:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <div t-attf-class="oe_kanban_card
                        #{kanban_color(record.color.raw_value)}"/>
 
-The kanban_color helper function does the translation of the color
-index into the corresponding CSS class name.
+La función auxiliar ``kanban_color`` hace la traducción del índice de
+color al nombre de la clase CSS correspondiente.
 
-And that). A helper function for this is available in kanban views.
+Y eso. Una función auxiliar para esto está disponible en vistas ``kanban``.
 
-For example, to limit our to-do task titles to the first 32 characters,
-we should replace the element with the following:
+Por ejemplo, para limitar nuestros títulos de tareas pendientes a los primeros
+32 caracteres, debe reemplazar el elemento con lo siguiente:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <t t-esc="kanban_text_ellipsis(record.name.value, 32)" />
 
@@ -723,58 +734,60 @@ we should replace the element with the following:
 Archivos CSS y JavaScript personalizados
 ----------------------------------------
 
-As we have seen, kanban views are mostly HTML and make heavy use of CSS
-classes. We have been introducing some frequently used CSS classes
-provided by the standard product. But for best results, modules can also
-add their own CSS.
+Como usted ha visto, las vistas ``kanban`` son principalmente HTML y hacen
+un uso intensivo de clases CSS. Usted ha estado introduciendo algunas clases
+CSS de uso frecuente proporcionado por el producto estándar. Pero para obtener
+mejores resultados, los módulos también pueden agregar su propio CSS.
 
-We are not going into details here on how to write CSS, but itt work,
-since we havenWebkit HTML to PDF.s probably not what you will get now on
-your system. Lett display the You need Wkhtmltopdf to print a pdf
-version of the reports time library
+Usted no va a entrar en detalles aquí sobre cómo escribir CSS, pero funciona,
+dado que no tiene HTML en PDF. Probablemente no sea lo que obtendrá ahora
+su sistema. Deje mostrar usted necesita ``Wkhtmltopdf`` para imprimir un pdf
+versión de la biblioteca de tiempo de informes
 
--  ``user``: This is the record for the user running the report
+-  ``user``: Este es el registro del usuario que ejecuta el informe.
 
--  ``res_company``: This is the record for the current user Designing the
-   User Interface, with an additional widget to set the widget to use
-   to render the field.
+-  ``res_company``: Este es el registro para el usuario actual. Diseño del
+   Interfaz de usuario, con un widget adicional para configurar el widget
+   a usar para representar el campo.
 
-A common example is a monetary field, as shown in the following:
+Un ejemplo común es un campo monetario, como se muestra a continuación:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <span t-field="o.amount"
           t-field-options='{
                    "widget": "monetary",
                    "display_currency": "o.pricelist_id.currency_id"}'/>
 
-A more sophisticated case is the contact widget, used to format
-addresses, as shown in the following:
+Un caso más sofisticado es el widget de contacto, utilizado para formatear
+direcciones, como se muestra a continuación:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <div t-field="res_company.partner_id" t-field-options='{
             "widget": "contact",
             "fields": ["address", "name", "phone", "fax"],
                     "no_marker": true}' />
 
-By default, some pictograms, such as a phone, are displayed in the
-address. The no_marker="true" option disables them.
+Por defecto, algunos pictogramas, como un teléfono, se muestran en la dirección.
+La opción ``no_marker="true"`` los desactiva.
+
 
 
 Habilitando la traducción de idiomas en reportes
 ------------------------------------------------
 
-A helper function, ``translate_doc()``, is available to dynamically
-translate the report content to a specific language.
+Una función auxiliar, ``translate_doc()``, está disponible para dinámicamente
+traducir el contenido del informe a un idioma específico.
 
-It needs the name of the field where the language to use can be found.
-This will frequently be the Partner the document is to be sent to,
-usually stored at ``partner_id.lang``. In our case, we dons also a less
-efficient method.
+Necesita el nombre del campo donde se puede encontrar el idioma a utilizar.
+Con frecuencia será el Socio (Partner) al que se enviará el documento,
+generalmente almacenado en ``partner_id.lang``. En su caso, también tiene un
+método menos eficiente.
 
-If you cans growing in importance in the Odoo toolset. Finally, you had
-an overview on how to create reports, also using the QWeb engine.
+Si puede ganar importancia en el conjunto de herramientas Odoo. Finalmente tuviste
+una descripción general sobre cómo crear informes, también utilizando el motor QWeb.
+
 
 
 Resumen

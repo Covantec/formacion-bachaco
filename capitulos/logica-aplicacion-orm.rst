@@ -118,7 +118,7 @@ formularios regulares, excepto por dos elementos específicos:
 
 Este es el contenido del archivo ``todo_wizard/todo_wizard_view.xml``:
 
-.. code-block:: XML
+.. code-block:: xml
 
     <openerp>
         <data>

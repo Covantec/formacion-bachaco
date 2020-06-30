@@ -5,7 +5,7 @@ Despliegue
 ==========
 
 
-!Lista de Verificación para Despliegue – En Vivo!
+¡Lista de Verificación para Despliegue – En Vivo!
 =================================================
 
 En este capítulo, aprenderá como preparar su servidor Odoo para usarlo
@@ -68,7 +68,7 @@ en disco usado y hace que el proceso de clonación sea más rápido.
 Puede valer la pena tener una configuración un poco más sofisticada, con
 un entorno de prueba junto al entorno de producción.
 
-Con esto, podrá traernos la última versión de código fuente y
+Con esto, podrá traerle la última versión de código fuente y
 probarlo en el entorno de prueba, sin perturbar el entorno de
 producción. Cuando la nueva versión este lista, puede desplegarla
 desde el entorno de pruebas a producción.
@@ -81,8 +81,8 @@ producción, como se muestra en el siguiente ejemplo:
 
 .. code-block:: console
 
-    $ mkdir ~/odoo-prd && cd ~/odoo-prd 
-    $ git clone ~/odoo-dev/odoo ~/odoo-prd/odoo/  
+    $ mkdir ~/odoo-prd && cd ~/odoo-prd
+    $ git clone ~/odoo-dev/odoo ~/odoo-prd/odoo/
 
 Esto creará el repositorio de producción en ``~/odoo-prd/odoo`` clonado
 desde en entorno de prueba ``~/odoo-dev/odoo``. Se configurara para que
@@ -118,8 +118,8 @@ como se muestra a continuación:
 .. code-block:: console
 
     $ sudo mkdir /etc/odoo
-    $ sudo chown $(whoami) /etc/odoo 
-    $ cp ~/.openerp_serverrc /etc/odoo/openerp-server.conf  
+    $ sudo chown $(whoami) /etc/odoo
+    $ cp ~/.openerp_serverrc /etc/odoo/openerp-server.conf
 
 Este tendrá los parámetros de configuración para ser usados en su
 instancia del servidor. Los siguientes son los parámetros para que el
@@ -131,7 +131,7 @@ servidor trabaje correctamente:
    izquierda tienen mayor prioridad.
 
 -  ``xmlrpc_port``: Es el número de puerto en el cual escuchara el
-   servidor. De forma predeterminada es el puerto 8069.
+   servidor. De forma predeterminada es el puerto ``8069``.
 
 -  ``log_level``: Este es la cantidad de información en el registro. De
    forma predeterminada es el nivel "info", pero al usar el nivel
@@ -189,7 +189,8 @@ continuación:
 
 .. code-block:: console
 
-    $ ./odoo.py -c /etc/odoo/openerp-server.conf 
+    $ ./odoo.py -c /etc/odoo/openerp-server.conf
+
 
 
 Configurar como un servicio del sistema
@@ -204,8 +205,8 @@ algunas modificaciones menores, como se muestra a continuación:
 
 .. code-block:: console
 
-    $ sudo cp ~/odoo-prd/odoo/debian/init /etc/init.d/odoo 
-    $ sudo chmo +x /etc/init.d/odoo  
+    $ sudo cp ~/odoo-prd/odoo/debian/init /etc/init.d/odoo
+    $ sudo chmo +x /etc/init.d/odoo
 
 En este momento, quizás quiera verificar el contenido del script de
 inicio. Los parámetros claves son a variables al inicio del archivo. A
@@ -213,14 +214,14 @@ continuación se muestra un ejemplo:
 
 ::
 
-    PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin 
-    DAEMON=/usr/bin/openerp-server 
-    NAME=odoo 
-    DESC=odoo 
-    CONFIG=/etc/odoo/openerp-server.conf 
-    LOGFILE=/var/log/odoo/odoo-server.log 
-    PIDFILE=/var/run/${NAME}.pid 
-    USER=odoo 
+    PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin
+    DAEMON=/usr/bin/openerp-server
+    NAME=odoo
+    DESC=odoo
+    CONFIG=/etc/odoo/openerp-server.conf
+    LOGFILE=/var/log/odoo/odoo-server.log
+    PIDFILE=/var/run/${NAME}.pid
+    USER=odoo
 
 La variable ``USER`` es el usuario del sistema bajo el cual se ejecutara el
 servidor, y probablemente quiera cambiarlo. Las otras variables deberían
@@ -234,8 +235,8 @@ ubicación actual de Odoo, como se muestra a continuación:
 
 .. code-block:: console
 
-    $ sudo ln -s ~/odoo-prd/odoo/odoo.py /usr/bin/openerp-server 
-    $ sudo chown $(whoami) /usr/bin/openerp-server  
+    $ sudo ln -s ~/odoo-prd/odoo/odoo.py /usr/bin/openerp-server
+    $ sudo chown $(whoami) /usr/bin/openerp-server
 
 Luego debe crear el directorio ``LOGFILE`` como sigue:
 
@@ -282,7 +283,7 @@ se inicia el sistema:
 
 .. code-block:: console
 
-    $ sudo update-rc.d odoo defaults  
+    $ sudo update-rc.d odoo defaults
 
 Luego de esto, al reiniciar el servidor, el servicio de Odoo debería
 comenzar a ejecutarse automáticamente son errores. Es un buen momento
@@ -317,7 +318,7 @@ Y del lado del desempeño, puede proveer mejoras significativas:
 -  Balancea la carga distribuyendo la entre varios servidores.
 
 Apache es una opción popular que se usa como proxy inverso. Nginx es una
-alternativa reciente con buenos argumentos técnicos. Aquí usara nginx
+alternativa reciente con buenos argumentos técnicos. Aquí usara ``nginx``
 como proxy inverso y mostrará como puede usarse para ejecutar las
 funciones mencionadas anteriormente.
 
@@ -325,55 +326,55 @@ funciones mencionadas anteriormente.
 Configurar nginx como proxy inverso
 -----------------------------------
 
-Primero, debe instalar nginx. Querrá que escuche en los puertos
-HTTP predeterminados, así que debe asegurarnos que no estén siendo
+Primero, debe instalar ``nginx``. Querrá que escuche en los puertos
+HTTP predeterminados, así que debe asegurarse que no estén siendo
 usados por otro servicio. Ejecutar el siguiente comando debe arrojar un
 error, como se muestra a continuación:
 
 .. code-block:: console
 
     $ curl http://localhost 
-    curl:   (7) Failed to connect to localhost port 80  
+    curl:   (7) Failed to connect to localhost port 80
 
 De lo contrario, deberá deshabilitar o eliminar ese servicio para
-permitir que nginx use esos puertos. Por ejemplo, para parar un servidor
+permitir que ``nginx`` use esos puertos. Por ejemplo, para parar un servidor
 Apache existente, deberá hacer lo siguiente:
 
 .. code-block:: console
 
-    $ sudo /etc/init.d/apache2 stop  
+    $ sudo /etc/init.d/apache2 stop
 
-Ahora podrá instalar nginx, lo cual es realizado de la forma esperada:
+Ahora podrá instalar ``nginx``, lo cual es realizado de la forma esperada:
 
 .. code-block:: console
 
-    $ sudo apt-get install nginx  
+    $ sudo apt-get install nginx
 
 Para conformar que este funcionando correctamente, debería ver una
 página que diga **"Welcome to nginx"** cuando se ingrese la dirección del
 servidor en la navegador o usando ``curl http://localhost``
 
-Los archivos de configuración de nginx siguen el mismo enfoque que los
+Los archivos de configuración de ``nginx`` siguen el mismo enfoque que los
 de Apache: son almacenados en ``/etc/nginx/available-sites/`` y se
 activan agregando un enlace simbólico en ``/etc/nginx/enabled-sites/``.
 Debería deshabilitar la configuración predeterminada que provee la
-instalación de nginx, como se muestra a continuación:
+instalación de ``nginx``, como se muestra a continuación:
 
 .. code-block:: console
 
-    $ sudo rm /etc/nginx/sites-enabled/default 
-    $ sudo touch /etc/nginx/sites-available/odoo 
+    $ sudo rm /etc/nginx/sites-enabled/default
+    $ sudo touch /etc/nginx/sites-available/odoo
     $ sudo ln -s /etc/nginx/sites-available/odoo /etc/nginx/sites-enabled/odoo
 
 Usando un editor, como ``nano`` o ``vi``, edite sus archivo de
-configuración nginx como sigue:
+configuración ``nginx`` como sigue:
 
 .. code-block:: console
 
-    $ sudo nano /etc/nginx/sites-available/odoo 
+    $ sudo nano /etc/nginx/sites-available/odoo
 
 Primero agregue los ``upstreams``, los servidores traseros hacia los
-cuales nginx redireccionará el tráfico, en su caso el servidor
+cuales ``nginx`` redireccionará el tráfico, en su caso el servidor
 Odoo, el cual escucha en el puerto ``8069``, como se muestra a continuación:
 
 ::
@@ -397,16 +398,16 @@ Para probar que la configuración es correcta, use lo siguiente:
 En caso que se encuentren errores, verifique que el archivo de
 configuración esta bien escrito. Además, un problema común es que el
 HTTP este tomado de forma predeterminada por otro servicio, como Apache
-o la página web predeterminada de nginx. Realice una doble revisión de
+o la página web predeterminada de ``nginx``. Realice una doble revisión de
 las instrucciones dadas anteriormente para asegurarse que este no sea el
-caso, luego reinicio nginx. Luego de esto, podrá hacer que nginx
+caso, luego reinicio ``nginx``. Luego de esto, podrá hacer que ``nginx``
 cargue la nueva configuración:
 
 .. code-block:: console
 
     $ sudo /etc/init.d/nginx reload
 
-Ahora podrá verificar que nginx este redirigiendo el tráfico al
+Ahora podrá verificar que ``nginx`` este redirigiendo el tráfico al
 servidor de Odoo, como se muestra a continuación:
 
 .. code-block:: console
@@ -454,13 +455,13 @@ archivos llave. Finalmente, estos archivos serán propiedad del usuario
 
 .. note::
     Usar un certificado auto-firmado puede plantear algunos riesgos
-    de seguridad, como ataques "man-in-the-middle", y pueden no ser
+    de seguridad, como ataques **"man-in-the-middle"**, y pueden no ser
     permitidos por algunos navegadores. Para una solución más robusta, debe
     usar un certificado firmado por una autoridad de certificación
     reconocida. Esto es particularmente importante si se esta ejecutando un
     sitio web comercial o de *e-commerce*.
 
-Ahora que tiene un certificado SSL, podrá configurar nginx para
+Ahora que tiene un certificado SSL, podrá configurar ``nginx`` para
 usarlo.
 
 Para reforzar HTTPS, redireccionara todo el tráfico HTTP. Reemplace
@@ -471,10 +472,10 @@ la directiva ``server`` que defina anteriormente con lo siguiente:
     server {
         listen 80; 
         add_header Strict-Transport-Security max-age=2592000;
-        rewrite ^/.*$ https://$host$request_uri? permanent; 
+        rewrite ^/.*$ https://$host$request_uri? permanent;
     } 
 
-Si recargue la configuración de nginx y acceda al servidor con el
+Si recargue la configuración de ``nginx`` y acceda al servidor con el
 navegador web, vera que la dirección ``http://`` se convierte en
 ``https://``.
 
@@ -531,30 +532,30 @@ HTTPS.
 Optimización de Nginx
 =====================
 
-Es hora para algunas mejoras en las configuraciones de nginx. Estas son
+Es hora para algunas mejoras en las configuraciones de ``nginx``. Estas son
 recomendadas para habilitar el búfer de respuesta y compresión de datos
 que debería mejorar la velocidad del sitio web. También fije una
 localización específica para los registros.
 
 Las siguientes configuraciones deberían ser agregadas dentro de ``server``
-que escucha en el puerto **443**, por ejemplo, justo después de las
+que escucha en el puerto ``443``, por ejemplo, justo después de las
 definiciones del proxy:
 
 ::
 
     # odoo log files access_log /var/log/nginx/odoo-access.log;
-    error_log /var/log/nginx/odoo-error.log; 
-    # increase proxy buffer size 
+    error_log /var/log/nginx/odoo-error.log;
+    # increase proxy buffer size
     proxy_buffers 16 64k;
-    proxy_buffer_size 128k; 
+    proxy_buffer_size 128k;
     # force timeouts if the backend dies
     proxy_next_upstream error timeout invalid_header http_500 http_502 http_503; 
-    # enable data compression 
-    gzip on; 
-    gzip_min_length 1100; 
+    # enable data compression
+    gzip on;
+    gzip_min_length 1100;
     gzip_buffers 4 32k;
     gzip_types text/plain application/x-javascript text/xml text/css;
-    gzip_vary on; 
+    gzip_vary on;
 
 También podrá activar el caché de contenido para respuestas más
 rápidas para los tipos de solicitudes mencionados en el código anterior
@@ -573,34 +574,34 @@ y para impedir su carga en el servidor Odoo. Después de la sección
 
 Con esto, se hace caché de los datos estáticos por 60 minutos. Las
 solicitudes siguientes de esas solicitudes en este intervalo de tiempo
-serán respondidas directamente por nginx desde el caché.
+serán respondidas directamente por ``nginx`` desde el caché.
 
 
 Long polling
 ============
 
-"Long polling" es usada para soportar la aplicación de mensajería
+*"Long polling"* es usada para soportar la aplicación de mensajería
 instantánea, y cuando se usan trabajos multiproceso, esta es gestionada
 en un puerto separado, el cual de forma predeterminada es el puerto
-8072.
+``8072``.
 
 Para su proxy inverso, esto significa que las solicitudes
 "longpolling" deberían ser pasadas por este puerto. Para soportar esto,
-necesita agregar un nuevo ``upstream`` a su configuración nginx,
+necesita agregar un nuevo ``upstream`` a su configuración ``nginx``,
 como se muestra en el siguiente código:
 
 ::
 
-    upstream backend-odoo-im { server 127.0.0.1:8072; } 
+    upstream backend-odoo-im { server 127.0.0.1:8072; }
 
 Luego, debería agregar otra ``location`` al ``server`` que gestiona las
 solicitudes HTTPS, como se muestra a continuación:
 
 ::
 
-    location /longpolling { proxy_pass http://backend-odoo-im; } 
+    location /longpolling { proxy_pass http://backend-odoo-im; }
 
-Con estas configuraciones, nginx debería pasar estas solicitudes al
+Con estas configuraciones, ``nginx`` debería pasar estas solicitudes al
 puerto apropiado del servidor Odoo.
 
 
@@ -610,7 +611,7 @@ Actualización del servidor y módulos
 Una vez que el servidor Odoo este listo y ejecutándose, llegara el
 momento en que necesite instalar actualizaciones. Lo cual involucra dos
 pasos: primero, obtener las nuevas versiones del código fuente (servidor
-o módulos), y segundo, instalar las.
+o módulos), y segundo, instalarlas.
 
 Si ha seguido el enfoque descrito en la sección *Instalación desde el
 código fuente*, podrá buscar y probar las nuevas versiones dentro
@@ -623,7 +624,7 @@ ser realizado con los siguientes comandos:
 
     $ dropdb v8test ; createdb v8test
     $ pg_dump v8dev | psqlpsql -d v8test
-    $ cd ~/odoo-dev/odoo/ 
+    $ cd ~/odoo-dev/odoo/
     $ ./odoo.py -d v8test --xmlrpc-port=8080 -c /etc/odoo/openerp-server.conf -u all
 
 Si todo resulta bien, debería ser seguro realizar la actualización en el
@@ -648,11 +649,11 @@ Resumen
 =======
 
 En el **capítulo 10**, usted aprendió sobre los pasos adicionales para configurar y
-ejecutar Odoo en un servidor de producción basado en Debian. Fueron
+ejecutar Odoo en un servidor de producción basado en *Debian*. Fueron
 vistas las configuraciones más importantes del archivo de configuración,
 y aprendió como aprovechar el modo multiproceso.
 
-También aprendió como usar nginx como un proxy inverso frente a su
+También aprendió como usar ``nginx`` como un proxy inverso frente a su
 servidor Odoo, para mejorar la seguridad y la escalabilidad.
 
 Ojala que esto cubra lo esencial de lo que es necesario para
