@@ -4,6 +4,7 @@
 Capítulo 4 - Serialización
 ==========================
 
+
 Serialización de Datos y Datos de Módulos
 =========================================
 
@@ -94,6 +95,7 @@ crear un nuevo registro. Esta es la razón de porque, en las siguientes
 actualizaciones del módulo, los registros cargados previamente se
 actualizaran en lugar de duplicarse.
 
+
 Encontrando los identificadores externos
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -131,11 +133,13 @@ ayuda. Para esto, utilice la opción de **Obtener Campos de Vista** o
 abra la información para la vista deseada usando la opción Editar , y
 seleccione la opción Ver metadatos.
 
+
 Exportar e importar datos
 =========================
 
 Va a empezar a trabajar en la exportación e importación de datos en
 Odoo, y desde allí, va a pasar a los detalles técnicos.
+
 
 Exportando datos
 ----------------
@@ -176,7 +180,7 @@ a este:
 
 ::
 
-    "id","name","user_id/id","date_deadline","is_done" "__export__.todo_task_1","Install    Odoo","base.user_root","2015-01- 30","True" "__export__.todo_task_2","Create    dev    database","base.user_root","","False"
+    "id","name","user_id/id","date_deadline","is_done" "__export__.todo_task_1","Install Odoo","base.user_root","2015-01- 30","True" "__export__.todo_task_2","Create dev database","base.user_root","","False"
 
 Observe que Odoo exporta automáticamente una columna adicional
 identificada. Este es un ID externo que se genera automáticamente para
@@ -186,6 +190,7 @@ identificadores solo se asignan a los que no poseen uno asignado, y ya a
 partir de allí, se mantienen unidos al mismos registro. Esto significa
 que las exportaciones posteriores preservarán los mismos identificadores
 externos.
+
 
 Importar datos
 --------------
@@ -227,6 +232,7 @@ importación de Odoo, es probable que es archivo sea correcto.
 
 Ahora podrá hacer clic en **Importar** y allí va: sus
 modificaciones y nuevos registros deberían haberse cargado en Odoo.
+
 
 Registros relacionados en archivos de datos CSV
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -300,6 +306,7 @@ incluirán en los módulos Odoo.
 A continuación va aprender más sobre el uso de los archivos de datos
 en los módulos.
 
+
 Datos de los Módulos
 --------------------
 
@@ -318,6 +325,7 @@ datos.
 Un ejemplo común es el acceso de seguridad, para cargar en el modelo
 ``ir.model.acess``. Esto se hace generalmente con archivos CSV, y que
 debe ser nombrado ``ir.model.acess.csv``.
+
 
 Datos de demostración
 ~~~~~~~~~~~~~~~~~~~~~
@@ -345,7 +353,7 @@ este aspecto:
 
 ::
 
-    id,name,user_id/id,date_deadline todo_task_a,"Install    Odoo","base.user_root","2015-01-30" todo_task_b","Create    dev    database","base.user_root",""
+    id,name,user_id/id,date_deadline todo_task_a,"Install Odoo","base.user_root","2015-01-30" todo_task_b","Create dev database","base.user_root",""
 
 No hay que olvidar agregar este archivo de datos en el atributo ``demo``
 del ``__openerp__.py``:
@@ -367,6 +375,7 @@ información es proporcionada por los elementos XML dentro del archivo.
 Va a aprender más sobre lo que los archivos de datos XML le permiten
 hacer y que los archivos CSV no.
 
+
 Archivos de datos XML
 ---------------------
 
@@ -387,16 +396,16 @@ contenido:
 .. code-block:: xml
 
     <?xml version="1.0"?>
-        <openerp>
-            <data>
-                <!-- Data to load -->
-                <record model="todo.task" id="todo_task_c">
-                    <field name="name">Reinstall Odoo</field>
-                    <field name="user_id" ref="base.user_root" />
-                    <field name="date_deadline">2015-01-30</field>
-                </record>
-            </data>
-        </openerp>
+    <openerp>
+      <data>
+        <!-- Data to load -->
+        <record model="todo.task" id="todo_task_c">
+          <field name="name">Reinstall Odoo</field>
+          <field name="user_id" ref="base.user_root" />
+          <field name="date_deadline">2015-01-30</field>
+        </record>
+      </data>
+    </openerp>
 
 Este XML es equivalente al archivo de datos CSV que acaba de ver en
 la sección anterior.
@@ -414,6 +423,7 @@ está disponible aquí: no podrá usar ``<field name="user_id/id">``. En
 cambio, el atributo especial ``ref`` se utiliza para hacer referencia a
 los identificadores externos. Se hablara de los valores para el campo
 relacional "a muchos" en un momento.
+
 
 El atributo de datos noupdate
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -458,6 +468,7 @@ casilla de verificación **No actualizable**.
     mantener ``noupdate="0"`` durante el desarrollo y sólo ponerlo a * 1
     *una vez terminado*.
 
+
 Definición de registros en XML
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -467,6 +478,7 @@ a cada columna. Como se mencionó antes, el atributo ``id`` corresponde
 ID Externo del registro y el ``model`` al el modelo de destino donde se
 escribirá el registro. Los elementos ``<field>`` tienen disponibles
 algunas maneras diferentes para asignar valores. Vea en detalle.
+
 
 Configuración de los valores de campo
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -483,6 +495,7 @@ general, esto también es adecuado para establecer los valores que no son
 texto: para Booleanos, ``0`` y ``1`` o valores ``False`` y ``True``;
 para fechas, fechas y horas, cadenas de texto como ``YYYY-MM-DD`` y
 ``YYYY-MM-DD HH:MI:SS``, se realizará una correcta conversión.
+
 
 Ajuste de valores utilizando expresiones
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -523,6 +536,7 @@ ejemplo del módulo de venta:
 .. code-block:: xml
 
     <value model="sale.order" eval="obj(ref('test_order_1')).amount_total" />
+
 
 Configuración de los valores de los campos de relación
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -572,6 +586,7 @@ el código utilizado:
 El símbolo guión bajo utilizado anteriormente representa valores
 irrelevantes, por lo general lleno de 0 o ``False``.
 
+
 Atajos para modelos de uso frecuente
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -601,6 +616,7 @@ correspondientes donde cargan los datos:
 
 - ``<url>``: Este es el modelo de acciones de URL ``ir.actions.act_url``.
 
+
 Otras acciones en archivos de datos XML
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -609,6 +625,7 @@ XML. Pero los archivos XML también permiten realizar otro tipo de
 acciones, a veces necesarios para configurar los datos. En particular,
 son capaces de eliminar los datos, ejecutar métodos arbitrarios del
 modelo, e iniciar la ejecución de eventos de flujo de trabajo.
+
 
 Eliminación de registros
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -635,6 +652,7 @@ En este caso, el mismo efecto se puede lograr mediante el atributo
 
     <delete model="ir.rule" id="todo_app.todo_task_user_rule" />
 
+
 Activación de las funciones y flujos de trabajo
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -645,7 +663,8 @@ de miembros se utiliza para crear facturas de demostración de membresía:
 
 .. code-block:: xml
 
-    <function model="res.partner" name="create_membership_invoice" eval="(ref('base.res_partner_2'), ref('membership_0'), {'amount':180})" />
+    <function model="res.partner" name="create_membership_invoice"
+              eval="(ref('base.res_partner_2'), ref('membership_0'), {'amount':180})" />
 
 Esto llama al método ``create_membership_invoice()`` del modelo
 ``res.partner``. Los argumentos se pasan como una tupla en el atributo
@@ -670,6 +689,7 @@ A estas alturas, ``model`` se explica por sí mismo, y ``ref`` identifica
 la instancia de flujo de trabajo sobre la cual esta actuando.
 ``action`` es la señal del flujo de trabajo enviada a la instancia de
 flujo de trabajo.
+
 
 Resumen
 =======

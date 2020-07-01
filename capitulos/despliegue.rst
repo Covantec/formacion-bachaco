@@ -242,13 +242,13 @@ Luego debe crear el directorio ``LOGFILE`` como sigue:
 .. code-block:: console
 
     $ sudo mkdir /var/log/odoo
-    $ sudo chown $(whoami) /etc/odoo  
+    $ sudo chown $(whoami) /etc/odoo
 
 Ahora debería poder iniciar y parar el servicio de Odoo:
 
 .. code-block:: console
 
-    $ sudo /etc/init.d/odoo start 
+    $ sudo /etc/init.d/odoo start
     Starting odoo: ok  
 
 Debería ser capaces de obtener una respuesta del servidor sin ningún
@@ -414,6 +414,7 @@ servidor de Odoo, como se muestra a continuación:
     $ curl http://localhost
     <html><head><script>window.location = '/web' + location.hash;</script> </head></html>
 
+
 Reforzar el HTTPS
 =================
 
@@ -526,6 +527,7 @@ Odoo trabajando a través de HTTPS, como se muestra a continuación:
 La última salida confirma que el cliente Odoo esta siendo servido sobre
 HTTPS.
 
+
 Optimización de Nginx
 =====================
 
@@ -573,6 +575,7 @@ Con esto, se hace caché de los datos estáticos por 60 minutos. Las
 solicitudes siguientes de esas solicitudes en este intervalo de tiempo
 serán respondidas directamente por ``nginx`` desde el caché.
 
+
 Long polling
 ============
 
@@ -599,6 +602,7 @@ solicitudes HTTPS, como se muestra a continuación:
 
 Con estas configuraciones, ``nginx`` debería pasar estas solicitudes al
 puerto apropiado del servidor Odoo.
+
 
 Actualización del servidor y módulos
 ====================================
@@ -638,6 +642,7 @@ como se muestra aquí:
     $ git pull 
     $ ./odoo.py -c /etc/odoo/openerp-server.conf --stop-after-init -d v8dev -u all
     $ sudo /etc/init.d/odoo restart
+
 
 Resumen
 =======

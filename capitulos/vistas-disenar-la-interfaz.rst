@@ -4,6 +4,7 @@
 Capítulo 6 - Vistas
 ===================
 
+
 Vistas – Diseñar la Interfaz
 ============================
 
@@ -18,10 +19,10 @@ Usuario y modificara las vistas existentes que fueron agregadas en capítulos
 anteriores.
 
 La mejor manera de modificar vistas existentes es usar la herencia, como
-se explico en el :doc:`Capítulo 3 <herencia-extendiendo-funcionalidad-aplicaciones-existentes>`. Sin embargo, para mejorar la claridad en la
-explicación, sobre escribirá las vistas existentes, y las
-reemplazara por unas vistas completamente nuevas. Esto hará que los
-temas sean más fáciles de entender y seguir.
+se explico en el :doc:`Capítulo 3 <herencia-extendiendo-funcionalidad-aplicaciones-existentes>`.
+Sin embargo, para mejorar la claridad en la explicación, sobre escribirá las
+vistas existentes, y las reemplazara por unas vistas completamente nuevas.
+Esto hará que los temas sean más fáciles de entender y seguir.
 
 Es necesario agregar un archivo XML nuevo al módulo, así que comience por
 editar el archivo manifiesto ``__openerp__.py``.
@@ -31,13 +32,14 @@ configurado como una dependencia:
 .. code-block:: python
 
     { 'name': 'User interface improvements to the To-Do app',
-      'description': 'User friendly features.',
-      'author': 'Daniel Reis',
-      'depends': ['todo_user'],
-      'data': ['todo_view.xml']
-    } 
+        'description': 'User friendly features.',
+        'author': 'Daniel Reis',
+        'depends': ['todo_user'],
+        'data': ['todo_view.xml']
+    }
 
 Comience con las opciones de menú y las acciones de ventana.
+
 
 Acciones de ventana
 -------------------
@@ -55,13 +57,16 @@ código:
 .. code-block:: xml
 
     <?xml version="1.0"?>
-        <openerp>
-            <data>
-                <act_window id="action_todo_stage" name="To-Do Task Stages" res_model="todo.task.stage" view_mode="tree,form"/>
-                <act_window id="todo_app.action_todo_task" name="To-Do Tasks" res_model="todo.task" view_mode="tree,form,calendar,gantt,graph" target="current "context="{'default_user_id':    uid}" domain="[]" limit="80"/>
-                <act_window id="action_todo_task_stage" name="To-Do Task Stages" res_model="todo.task.stage" src_model="todo.task" multi="False"/>  
-            </data> 
-         </openerp> 
+    <openerp>
+      <data>
+        <act_window id="action_todo_stage" name="To-Do Task Stages" res_model="todo.task.stage" view_mode="tree,form"/>
+        <act_window id="todo_app.action_todo_task" name="To-Do Tasks" res_model="todo.task"
+                    view_mode="tree,form,calendar,gantt,graph" target="current"
+                    context="{'default_user_id':uid}" domain="[]" limit="80"/>
+        <act_window id="action_todo_task_stage" name="To-Do Task Stages"
+                    res_model="todo.task.stage" src_model="todo.task" multi="False"/>
+      </data>
+     </openerp>
 
 Las acciones de ventana se almacenan en el modelo ``ir.actions.act_window``,
 y pueden ser definidas en archivos XML usando el acceso directo ``<act_window>``
@@ -113,6 +118,7 @@ usados para realizar esto:
 -  ``multi``: Si esta fijado a ``True``, estará disponible en la vista de
    lista. De lo contrario, estará disponible en la vista de formulario.
 
+
 Opciones de menú
 ----------------
 
@@ -131,8 +137,10 @@ ventana, agregue el siguiente código:
 .. code-block:: xml
 
     <menuitem id="menu_todo_task_main" name="To-Do" parent="mail.mail_my_stuff"/>
-    <menuitem id="todo_app.menu_todo_task" name="To-Do Tasks" parent="menu_todo_task_main" sequence="10" action="todo_app.action_todo_task"/>
-    <menuitem id="menu_todo_task_stage" name="To-Do Stages" parent="menu_todo_task_main" sequence="20" action="action_todo_stage"/> 
+    <menuitem id="todo_app.menu_todo_task" name="To-Do Tasks" parent="menu_todo_task_main"
+              sequence="10" action="todo_app.action_todo_task"/>
+    <menuitem id="menu_todo_task_stage" name="To-Do Stages" parent="menu_todo_task_main"
+              sequence="20" action="action_todo_stage"/>
 
 La opción de menú "data" para el modelo ``ir.ui.menu`` también puede
 cargarse usando el elemento de acceso directo ``<menuitem>``, como se
@@ -150,6 +158,7 @@ El tercer elemento del menú agrega una nueva opción para acceder a los
 estados. Necesitará un orden para agregar algunos datos que permitan
 usar los estados en las tareas por hacer.
 
+
 Contexto y dominio
 ~~~~~~~~~~~~~~~~~~
 
@@ -157,6 +166,7 @@ Se ha referido varias veces al contexto y al dominio. También se ha
 visto que las acciones de ventana pueden fijar valores en estos, y que
 los campos relacionales pueden usarlos en sus atributos. Ambos conceptos
 son útiles para proveer interfaces más sofisticadas. Vea como.
+
 
 Contexto de sesión
 ~~~~~~~~~~~~~~~~~~
@@ -173,7 +183,7 @@ actual. La información inicial de sesión puede verse así:
 
 .. code-block:: python
 
-    {'lang': 'en_US',   'tz': 'Europe/Brussels', 'uid': 1} 
+    {'lang': 'en_US', 'tz': 'Europe/Brussels', 'uid': 1}
 
 Tiene información del ID de usuario actual, y las preferencias de
 idioma y zona horaria para la sesión de usuario.
@@ -197,14 +207,15 @@ corresponda a la sesión actual de usuario, debe usar:
 
 .. code-block:: python
 
-    {'default_user_id': uid} 
+    {'default_user_id': uid}
 
 Y si la vista de destino tiene un filtro llamado ``filter_my_task``,
 podrá habilitarlo usando:
 
 .. code-block:: python
 
-    {'search_default_filter_my_tasks':  True} 
+    {'search_default_filter_my_tasks': True}
+
 
 Expresiones de dominio
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -219,7 +230,7 @@ Por ejemplo, para limitar solo a las Tareas del usuario actual:
 
 .. code-block:: python
 
-    domain=[('user_id', '=', uid)] 
+    domain=[('user_id', '=', uid)]
 
 El valor ``uid`` usado aquí es provisto por el contexto de sesión. Cuando
 se usa en un campo relacional, limitara las opciones disponibles de
@@ -316,7 +327,7 @@ asignado:
 
 .. code-block:: python
 
-    ['|', ('user_id', '=', uid), ('user_id', '=', False)] 
+    ['|', ('user_id', '=', uid), ('user_id', '=', False)]
 
 Un ejemplo más complejo, usado en las reglas de registro del lado del
 servidor:
@@ -332,7 +343,9 @@ El dominio filtra:
   de la siguiente condición.
 
 - La siguiente condición es, nuevamente, la unión de otras dos
-  condiciones: los registros donde el ``user_id`` es el usuario de la sesión actual o no esta fijado.
+  condiciones: los registros donde el ``user_id`` es el usuario de la
+  sesión actual o no esta fijado.
+
 
 Vistas de Formulario
 ====================
@@ -355,6 +368,7 @@ usará. La acción que definió al principio de este capítulo solo hace
 eso; el ``view_id`` le dice a la acción que use específicamente el
 formulario con el ID ``view_form_todo_task_ui``. Esta es la vista que
 creará a continuación.
+
 
 Vistas de negocio
 -----------------
@@ -380,8 +394,8 @@ estructura genérica es esta:
         <field name="model">todo.task</field>
         <field name="arch" type="xml">
             <form>
-                <header><!-- Buttons and status widget --> </header>
-                <sheet><!-- Form    content --> </sheet>
+                <header><!-- Buttons and status widget --></header>
+                <sheet><!-- Form content --></sheet>
                 <!-- History and communication: -->
                 <div class="oe_chatter">
                     <field name="message_follower_ids" widget="mail_followers" />
@@ -406,6 +420,7 @@ parte inferior, es agregada por la herencia de su modelo de
 XML mencionado anteriormente al final de la vista de formulario. También
 vio esto en el :doc:`Capítulo 3 <herencia-extendiendo-funcionalidad-aplicaciones-existentes>`.
 
+
 La barra de estado del encabezado
 ---------------------------------
 
@@ -421,7 +436,9 @@ ampliar el encabezado vacío para agregar le una barra de estado:
 
     <header>
         <field name="stage_state" invisible="True" />
-        <button name="do_toggle_done" type="object" attrs="{'invisible' [('stage_state','in',['done','cancel'])]}" string="Toggle Done" class="oe_highlight" />
+        <button name="do_toggle_done" type="object"
+                attrs="{'invisible' [('stage_state','in',['done','cancel'])]}"
+                string="Toggle Done" class="oe_highlight" />
         <!-- Add stage statusbar:   … --> 
     </header> 
 
@@ -473,23 +490,24 @@ Para agregar un flujo de "stage" en su encabezado de formulario:
 
 .. code-block:: xml
 
-    <!--    Add stage   statusbar:  ... --> 
-    <field name="stage_id" widget="statusbar" clickable="True" options="{'fold_field': 'fold'}" /> 
+    <!-- Add stage statusbar: ... -->
+    <field name="stage_id" widget="statusbar" clickable="True"
+           options="{'fold_field': 'fold'}" />
 
-El atributo ``clickable`` permite hacer clic en el widget, para cambiar la
-etapa o el estado del documento. Es posible que no querrá esto si el
+El atributo ``clickable`` permite hacer clic en el widget, para cambiar
+la etapa o el estado del documento. Es posible que no querrá esto si el
 progreso del proceso debe realizarse a través de botones de acción.
 
 En el atributo ``options`` podrá usar algunas configuraciones
 específicas:
 
--  ``fold_fields``, cuando de usa el atributo ``stages``, es el nombre del campo que
-   usa el atributo ``stage`` del modelo usa para indicar en cuales etapas debe ser
-   mostrado en **negritas** o "**fold**".
+-  ``fold_fields``, cuando de usa el atributo ``stages``, es el nombre del
+   campo que usa el atributo ``stage`` del modelo usa para indicar en cuales
+   etapas debe ser mostrado en **negritas** o "**fold**".
 
--  ``statusbar_visible``, cuando se usa el atributo ``states``, lista los estados que
-   deben estar siempre visibles, para mantener ocultos los estados de
-   excepción que se usan para casos menos comunes. Por ejemplo:
+-  ``statusbar_visible``, cuando se usa el atributo ``states``, lista los
+   estados que deben estar siempre visibles, para mantener ocultos los
+   estados de excepción que se usan para casos menos comunes. Por ejemplo:
    ``statusbar_visible="draft,open.done"``.
 
 La hoja ``canvas`` es el área del formulario que contiene los elementos
@@ -533,6 +551,7 @@ estar dentro de un elemento HTML ``div`` con la clase ``oe_title``:
 
 Aquí podrá ver el uso de elementos comunes de HTML como ``div``, ``span``,
 ``h1`` y ``h3``.
+
 
 Etiquetas y campos
 ------------------
@@ -589,7 +608,10 @@ lo siguiente justo después del bloque ``div`` ``oe_title``:
 .. code-block:: xml
 
     <div name="buttons" class="oe_right oe_button_box">
-        <button class="oe_stat_button" type="action" icon="fa-tasks" name="%(todo_app.action_todo_task)d" string="" context="{'search_default_user_id': user_id, 'default_user_id': user_id}" help="Other to-dos for this user" >
+        <button class="oe_stat_button" type="action" icon="fa-tasks"
+                name="%(todo_app.action_todo_task)d" string=""
+                context="{'search_default_user_id': user_id, 'default_user_id': user_id}"
+                help="Other to-dos for this user">
             <field string="To-dos" name="user_todo_count" widget="statinfo"/>
         </button>
     </div> 
@@ -632,7 +654,8 @@ para mostrar estadísticas. Estos son campos regulares que usan el widget
 
 El campo debe ser un campo calculado, definido en el módulo subyacente.
 También podrá usar texto estático en vez de o junto a los campos de
-``statinfo``, como : ``<div>User's To-dos</div>``
+``statinfo``, como: ``<div>User's To-dos</div>``
+
 
 Organizar el contenido en formulario
 ====================================
@@ -669,6 +692,7 @@ agregarse usando un elemento ``separator``.
     sección del formulario, permitiendo un mejor entendimiento de como esta
     organizada la vista actual.
 
+
 Cuaderno con pestañas
 ---------------------
 
@@ -690,10 +714,11 @@ etapas de la tarea:
         <page name="second_page">
             <!-- Second page content -->
         </page>
-    </notebook> 
+    </notebook>
 
 Se considera una buena practica tener nombres en las páginas, esto hace
 que la ampliación de estas por parte de otros módulo sea más fiable
+
 
 Elementos de la vista
 ---------------------
@@ -701,6 +726,7 @@ Elementos de la vista
 Ha visto como organizar el contenido dentro de un formulario, usando
 elementos como encabezado, grupo y cuaderno. Ahora, podrá ahondar en
 los elementos de campo y botón y que podrá hacer con ellos.
+
 
 Botones
 -------
@@ -734,6 +760,7 @@ Los botones soportar los siguientes atributos:
 
 -  ``special="cancel"``, se usa en los asistentes, para cancelar o
    cerrar el formulario. No debe ser usado con ``type``.
+
 
 Campos
 ------
@@ -790,6 +817,7 @@ Para los atributos *Booleanos* en general, podrá usar ``True`` o ``1`` para
 habilitarlo y ``False`` o ``0`` *(cero)* para deshabilitarlo. Por ejemplo,
 ``readonly="1"`` y ``realonly="True"`` son equivalentes.
 
+
 Campos relacionales
 -------------------
 
@@ -809,6 +837,7 @@ registros relacionados, y el dominio puede limitar los registros que
 pueden ser seleccionados, por ejemplo, basado en otro campo del registro
 actual. Tanto el contexto como el dominio pueden ser definidos en el
 modelo, pero solo son usados en la vista.
+
 
 Widgets de campo
 ----------------
@@ -861,6 +890,7 @@ Algunos widget para los campos relacionales y de selección:
 -  ``priority``: representa una selección como una lista de estrellas a las
    que se puede hacer clic.
 
+
 Eventos on-change
 -----------------
 
@@ -879,6 +909,7 @@ llamado cuando el campo cambiara. Esto todavía es soportado, pero es
 obsoleto. Tenga en cuenta que los métodos ``on-change`` con el estilo
 viejo no pueden ser ampliados usando la API nueva. Si necesita hacer
 esto, deberá usar la API vieja.
+
 
 Vistas dinámicas
 ================
@@ -909,7 +940,7 @@ los estados menos ``draft``:
 
 .. code-block:: xml
 
-    <field name="refers_to" attrs="{'invisible': [('state','=','draft')]}"  /> 
+    <field name="refers_to" attrs="{'invisible': [('state','=','draft')]}" />
 
 El atributo ``invisible`` esta disponible para cualquier elemento, no solo
 para los campos. Podrá usarlo en las páginas de un cuaderno o en
@@ -921,6 +952,7 @@ datos, convirtiéndolos en campos que no pueden ser editados u
 obligatorios. Con esto podrá agregar alguna lógica de negocio haciendo
 a un campo obligatorio, dependiendo del valor de otro campo, o desde un
 cierto estado más adelante.
+
 
 Vistas de lista
 ---------------
@@ -963,6 +995,7 @@ Los atributos para el elemento ``tree`` de nivel superior son:
 
 -  ``create``, ``delete``, ``edit``: si se fija a ``false`` (en minúscula),
    deshabilita la acción correspondiente en la vista de lista.
+
 
 Vistas de búsqueda
 ------------------
@@ -1043,6 +1076,7 @@ Estos son los atributos disponibles para los elementos ``filter``:
 -  ``groups``: permite hacer que el filtro de búsqueda solo este disponible
    para una lista de grupos.
 
+
 Otros tipos de vista
 ====================
 
@@ -1054,6 +1088,7 @@ tipos de vista, y dará un vistazo a cada una de ellas. Las vistas
 
 Recuerde que los tipos de vista disponibles están definidos en el
 atributo ``view_mode`` de la acción de ventana correspondiente.
+
 
 Vistas de Calendario
 --------------------
@@ -1071,7 +1106,7 @@ siguiente manera:
             <calendar date_start="date_deadline" color="user_id" display="[name], Stage[stage_id]">
                 <!-- Fields used for the text of display attribute -->
                 <field name="name" />
-                <field name="stage_id"  />
+                <field name="stage_id" />
             </calendar>
         </field>
     </record>
@@ -1092,6 +1127,7 @@ Los atributos de ``calendar`` son los siguientes:
 -  ``display``: Este es el texto que se mostrará en las entradas del
    calendario. Los campos pueden ser insertados usando ``[<field>]``.
    Estos campos deben ser declarados dentro del elemento ``calendar``.
+
 
 Vistas de Gantt
 ---------------
@@ -1128,6 +1164,7 @@ siguientes.
 -  ``default_group_by``: Este campo se usa para agrupar las tareas
    Gantt.
 
+
 Vistas de Gráfico
 -----------------
 
@@ -1140,7 +1177,7 @@ agregar un campo. En la clase ``TodoTask``, del archivo
 
 .. code-block:: python
 
-    effort_estimate = fields.Integer('Effort Estimate') 
+    effort_estimate = fields.Integer('Effort Estimate')
 
 También debe ser agregado al formulario de tareas por hacer para que
 podrá fijar datos allí. Ahora, agregue la vista de gráfico con una
@@ -1179,6 +1216,7 @@ atributos:
 -  ``interval``: Solo es significativo para los campos de fecha, es un
    intervalo de tiempo para agrupar datos de fecha por ``day``, ``week``,
    ``month``, ``quarter`` o ``year``.
+
 
 Resumen
 =======

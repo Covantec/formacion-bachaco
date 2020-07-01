@@ -4,6 +4,7 @@
 Capítulo 7 - Lógica ORM
 =======================
 
+
 Lógica de la Aplicación ORM – Apoyo a los Procesos de Negocio
 =============================================================
 
@@ -12,6 +13,7 @@ de negocio en sus modelos y también como puede esto ser activado en
 eventos y acciones de usuario. Podrá escribir lógica compleja y
 asistentes usando la API de programación de Odoo, lo que les permitirá
 proveer una interacción más dinámica con el usuario con estos programas.
+
 
 Asistente de tareas por hacer
 -----------------------------
@@ -33,9 +35,10 @@ como se muestra en el siguiente código:
     {
         'name': 'To-do Tasks Management Assistant', 
         'description': 'Mass edit your To-Do backlog.',
-        'author': 'Daniel Reis', 'depends': ['todo_user'],
-        'data': ['todo_wizard_view.xml'],   
-    } 
+        'author': 'Daniel Reis',
+        'depends': ['todo_user'],
+        'data': ['todo_wizard_view.xml'],
+    }
 
 El código para cargar su código en el archivo
 ``todo_wizard/__init__.py``, es solo una línea:
@@ -46,6 +49,7 @@ El código para cargar su código en el archivo
 
 Luego, necesita describir el modelo de datos que soporta su
 asistente.
+
 
 Modelo del asistente
 --------------------
@@ -73,13 +77,13 @@ responsable, y la fecha límite, como se muestra aquí:
     # -*- coding: utf-8 -*- 
     from openerp import models, fields, api 
     from openerp import exceptions # will be used in the code
-    import logging_logger = logging.getLogger(__name__) 
+    import logging_logger = logging.getLogger(__name__)
 
-    class   TodoWizard(models.TransientModel):
-        _name        = 'todo.wizard' 
+    class TodoWizard(models.TransientModel):
+        _name        = 'todo.wizard'
         task_ids     = fields.Many2many('todo.task', string='Tasks')
         new_deadline = fields.Date('Deadline to Set')
-        new_user_id  = fields.Many2one('res.users',string='Responsible to Set') 
+        new_user_id  = fields.Many2one('res.users',string='Responsible to Set')
 
 No vale de que nada, si usa una relación uno a muchos tener que
 agregar el campo inverso muchos a uno. Debería evitar las relaciones
@@ -94,12 +98,13 @@ registro podrá usar:
 
 .. code-block:: python
 
-    _logger.debug('A DEBUG message') 
-    _logger.info('An INFO message') 
-    _logger.warning('A WARNING message') 
-    _logger.error('An ERROR message') 
+    _logger.debug('A DEBUG message')
+    _logger.info('An INFO message')
+    _logger.warning('A WARNING message')
+    _logger.error('An ERROR message')
 
 Vea más ejemplos de su uso en este capítulo.
+
 
 Formularios de asistente
 ------------------------
@@ -137,14 +142,18 @@ Este es el contenido del archivo ``todo_wizard/todo_wizard_view.xml``:
                           </group>
                       </group>
                       <footer>
-                          <button type="object" name="do_mass_update" string="Mass Update" class="oe_highlight" attrs="{'invisible': [('new_deadline','=',False), ('new_user_id','=',False)]}"/>
-                           <button special="cancel" string="Cancel"/>
+                          <button type="object" name="do_mass_update" string="Mass Update"
+                                  class="oe_highlight"
+                                  attrs="{'invisible': [('new_deadline','=',False), ('new_user_id','=',False)]}"/>
+                          <button special="cancel" string="Cancel"/>
                       </footer>
                     </form>
                 </field>
             </record> 
             <!-- More button Action -->
-            <act_window id="todo_app.action_todo_wizard" name="To-Do Tasks Wizard" src_model="todo.task" res_model="todo.wizard" view_mode="form" target="new" multi="True"/>
+            <act_window id="todo_app.action_todo_wizard" name="To-Do Tasks Wizard"
+                        src_model="todo.task" res_model="todo.wizard" view_mode="form"
+                        target="new" multi="True"/>
         </data>
     </openerp> 
 
@@ -165,6 +174,7 @@ Así es como lucirá su asistente:
 
   Gráfico 7.1 - Vista ToDo Tasks Wizard
 
+
 Lógica de negocio del asistente
 -------------------------------
 
@@ -176,17 +186,18 @@ código.
 
 .. code-block:: python
 
-    @api.multi def do_mass_update(self): 
+    @api.multi
+    def do_mass_update(self):
         self.ensure_one() 
-        if not (self.new_deadline   or self.new_user_id): 
-            raise  exceptions.ValidationError('No data to    update!') # 
+        if not (self.new_deadline   or self.new_user_id):
+            raise  exceptions.ValidationError('No data to update!') #
         else:
-            _logger.debug('Mass update on Todo Tasks %s',self.task_ids.ids) 
+            _logger.debug('Mass update on Todo Tasks %s',self.task_ids.ids)
             if self.new_deadline:
                 self.task_ids.write({'date_deadline': self.new_deadline})
                 if self.new_user_id:
-                    self.task_ids.write({'user_id': self.new_user_id.id}) 
-                    return True 
+                    self.task_ids.write({'user_id': self.new_user_id.id})
+                    return True
 
 Nuestro código puede manejar solo una instancia del asistente al mismo
 tiempo. Puede que haya usado ``@api.one``, pero no es recomendable
@@ -195,20 +206,21 @@ devuelva una acción de ventana, que le diga al cliente que hacer luego.
 Esto no es posible hacerlo con ``@api.one``, ya que esto devolverá una
 lista de acciones en vez de una sola.
 
-Debido a esto, prefiere usar ``@api.multi`` y luego use
-``ensure_one()`` para verificar que ``self`` representa un único registro.
-Debe tenerse en cuenta que ``self`` es un registro que representa los
-datos en el formulario del asistente. El método comienza validando si se
-ha dado una nueva fecha límite o un nuevo responsable, de lo contrario
-arroja un error. Luego, se hace una demostración de la escritura de un
-mensaje en el registro del servidor. Si pasa la validación, escriba
-los nuevos valores dados a las tareas seleccionadas. Esta usando el
-método de escritura en un conjunto de registros, como los ``task_id`` a
-muchos campos para ejecutar una actualización masiva.
+Debido a esto, prefiere usar ``@api.multi`` y luego use ``ensure_one()``
+para verificar que ``self`` representa un único registro. Debe tenerse en
+cuenta que ``self`` es un registro que representa los datos en el formulario
+del asistente. El método comienza validando si se ha dado una nueva fecha
+límite o un nuevo responsable, de lo contrario arroja un error. Luego, se
+hace una demostración de la escritura de un mensaje en el registro del
+servidor. Si pasa la validación, escriba los nuevos valores dados a las
+tareas seleccionadas. Esta usando el método de escritura en un conjunto de
+registros, como los ``task_id`` a muchos campos para ejecutar una
+actualización masiva.
 
 Esto es más eficiente que escribir repetidamente en cada registro dentro
-de un bucle. Ahora trabajara en la lógica detrás de los dos botones
-en la parte superior. "Count" y "Get All".
+de un bucle. Ahora trabajara en la lógica detrás de los dos botones en la
+parte superior. "Count" y "Get All".
+
 
 Elevar excepciones
 ------------------
@@ -220,9 +232,9 @@ disponibles en Python. Estos son ejemplos de las más usadas:
 
 .. code-block:: python
 
-    from openerp import exceptions 
+    from openerp import exceptions
 
-    raise exceptions.Warning('Warning   message') 
+    raise exceptions.Warning('Warning message')
     raise exceptions.ValidationError('Not valid message')
 
 El mensaje de advertencia también interrumpe la ejecución pero puede
@@ -236,7 +248,8 @@ interfaz, les aprovechará de esto para mostrar un mensaje en el botón
         Task  = self.env['todo.task']
         count = Task.search_count([])
 
-        raise exceptions.Warning('There are %d active tasks.' % count) 
+        raise exceptions.Warning('There are %d active tasks.' % count)
+
 
 Recarga automática de los cambios en el código
 ----------------------------------------------
@@ -262,11 +275,13 @@ Usando paquetes OS, ejecutando el siguiente comando:
 
     $ sudo apt-get install python-pyinotify
 
-Usando pip, posiblemente en un entorno virtual (virtualenv), ejecutando el siguiente comando:
+Usando ``pip``, posiblemente en un entorno virtual creado por el paquete
+``virtualenv``, ejecutando el siguiente comando:
 
 .. code-block:: console
 
     $ pip install pyinotify
+
 
 Acciones en el dialogo del asistente
 ------------------------------------
@@ -297,17 +312,17 @@ de nuevo en varios botones, como se muestra a continuación:
 
 .. code-block:: python
 
-    @api.multi def do_reopen_form(self): 
-        self.ensure_one() 
-        return 
-           { 
-              'type': 'ir.actions.act_window', 
-              'res_model': self._name,         # this model
-              'res_id': self.id,               # the current wizard record
-              'view_type': 'form',
-              'view_mode': 'form',
-              'target': 'new'
-            } 
+    @api.multi
+    def do_reopen_form(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': self._name, # this model
+            'res_id': self.id, # the current wizard record
+            'view_type': 'form',
+            'view_mode': 'form',
+            'target': 'new'
+        }
 
 No es importante si la acción de ventana es cualquier otra cosa, como
 saltas a un formulario y registro específico, o abrir otro formulario de
@@ -318,12 +333,13 @@ usuario trabajando en el mismo asistente:
 
 .. code-block:: python
 
-    @api.multi def do_populate_tasks(self): 
+    @api.multi
+    def do_populate_tasks(self):
         self.ensure_one()
         Task = self.env['todo.task']
         all_tasks = Task.search([])
-        self.task_ids = all_tasks       # reopen wizard form on same wizard record
-        return self.do_reopen_form() 
+        self.task_ids = all_tasks # reopen wizard form on same wizard record
+        return self.do_reopen_form()
 
 Aquí podrá ver como obtener una referencia a un modelo diferente, el
 cual en este caso es ``todo.task``, para ejecutar acciones en el. Los
@@ -337,6 +353,7 @@ valida usando ``self.ensure_one()``. No debe usar el decorador
 ``@api.one`` porque envuelve el valor retornado en una lista. Debido a
 que el cliente web espera recibir un diccionario y no una lista, no
 funcionaría como es requerido.
+
 
 Trabajar en el servidor
 -----------------------
@@ -381,7 +398,7 @@ base de datos a usar, como se muestra a continuación:
 
 .. code-block:: console
 
-    $ ./odoo.py shell -d v8dev  
+    $ ./odoo.py shell -d v8dev
 
 Puede ver la secuencia de inicio del servidor en la terminal culminando
 con un el símbolo de entrada de Python ``>>>``. Aquí, ``self`` representa
@@ -391,10 +408,10 @@ continuación:
 .. code-block:: python
 
     >>> self res.users(1,)
-    >>> self.name u'Administrator' 
+    >>> self.name u'Administrator'
     >>> self._name 'res.users'
     >>> self.env 
-    <openerp.api.Environment object at 0xb3f4f52c>  
+    <openerp.api.Environment object at 0xb3f4f52c>
 
 En la sesión anterior, se hizo una breve inspección de su entorno.
 ``self`` representa al conjunto de registro ``res.users`` el cual solo
@@ -424,13 +441,14 @@ como se muestra a continuación:
 .. code-block:: python
 
     >>> print self.name Administrator
-    >>> for rec in self: print rec.name Administrator  
+    >>> for rec in self: print rec.name Administrator
 
 En este ejemplo, se realiza un ciclo a través de los registros en el
 conjunto ``self`` e imprime el contenido del campo ``name``. Este contiene
 solo un registro, por lo tanto solo se muestra un nombre. Como puede
 ver, ``self`` es un "singleton" y se comporta como un registro, pero al
 mismo tiempo es iterable como un conjunto de registros.
+
 
 Usar campos de relación
 -----------------------
@@ -449,7 +467,7 @@ correctas y seguras:
     >>> self.company_id res.company(1,)
     >>> self.company_id.name u'YourCompany'
     >>> self.company_id.currency_id res.currency(1,)
-    >>> self.company_id.currency_id.name u'EUR'  
+    >>> self.company_id.currency_id.name u'EUR'
 
 Convenientemente un conjunto de registros vacío también se comporta como
 un singleton, y el acceder a sus campos no retorna un error simplemente
@@ -460,7 +478,8 @@ como se muestra a continuación:
 .. code-block:: python
 
     >>> self.company_id.country_id res.country()
-    >>> self.company_id.country_id.name False  
+    >>> self.company_id.country_id.name False
+
 
 Consultar los modelos
 ---------------------
@@ -502,8 +521,9 @@ Algunos ejemplos de su uso se muestran a continuación:
 
 .. code-block:: python
 
-    >>> self.env['res.partner'].search([('name','like','Ag')]) res.partner(7,51) 
-    >>> self.env['res.partner'].browse([7,51]) res.partner(7,51)  
+    >>> self.env['res.partner'].search([('name','like','Ag')]) res.partner(7,51)
+    >>> self.env['res.partner'].browse([7,51]) res.partner(7,51)
+
 
 Escribir en los registros
 -------------------------
@@ -515,9 +535,9 @@ conveniente de manipulación de datos, como se muestra a continuación:
 
 .. code-block:: python
 
-    >>> admin = self.env['res.users'].browse(1) 
-    >>> admin.name = 'Superuser' 
-    >>> print admin.name Superuser  
+    >>> admin = self.env['res.users'].browse(1)
+    >>> admin.name = 'Superuser'
+    >>> print admin.name Superuser
 
 Los conjuntos de registros tienes tres métodos para actuar sobre los
 datos: ``create()``, ``write()``, ``unlink()``.
@@ -530,8 +550,8 @@ aquí:
 .. code-block:: python
 
     >>> Partner = self.env['res.partner']
-    >>> new = Partner.create({'name':'ACME','is_company':   True})
-    >>> print new res.partner(72,)  
+    >>> new = Partner.create({'name':'ACME','is_company': True})
+    >>> print new res.partner(72,)
 
 El método ``unlink()`` borra los registros en el conjunto, como se
 muestra a continuación:
@@ -539,8 +559,8 @@ muestra a continuación:
 .. code-block:: python
 
     >>> rec = Partner.search([('name','=','ACME')])
-    >>> rec.unlink() 
-    True  
+    >>> rec.unlink()
+    True
 
 El método ``write()`` toma un diccionario para mapear los valores de los
 registros. Estos son actualizados en todos los elementos del conjunto y
@@ -548,7 +568,7 @@ no se devuelve nada, como se muestra a continuación:
 
 .. code-block:: python
 
-    >>> Partner.write({'comment':'Hello!'})  
+    >>> Partner.write({'comment':'Hello!'})
 
 Usar el patrón de registro activo tiene algunas limitaciones; solo
 actualiza un registro a la vez. Por otro lado, el método ``write()``
@@ -564,9 +584,9 @@ un usuario nuevo copiando lo desde "Demo User":
 
 .. code-block:: python
 
-    >>> demo = self.env.ref('base.user_demo') 
-    >>> new = demo.copy({'name': 'Daniel', 'login': 'dr', 'email':''}) 
-    >>> self.env.cr.commit()  
+    >>> demo = self.env.ref('base.user_demo')
+    >>> new = demo.copy({'name': 'Daniel', 'login': 'dr', 'email':''})
+    >>> self.env.cr.commit()
 
 Recuerde que los campos con el atributo ``copy=False`` no serán tomados
 en cuenta.
@@ -611,9 +631,9 @@ se muestra en el siguiente ejemplo:
 
 .. code-block:: python
 
-    >>> self.env.cr.execute("SELECT id, login   FROM res_users WHERE login=%s   OR id=%s",('demo',1)) 
+    >>> self.env.cr.execute("SELECT id, login FROM res_users WHERE login=%s OR id=%s",('demo',1))
     >>> self.env.cr.fetchall()
-    [(4, u'demo'), (1, u'admin')]  
+    [(4, u'demo'), (1, u'admin')]
 
 También es posible ejecutar instrucciones en *lenguaje de manipulación de
 datos (DML)* como ``UPDATE`` e ``INSERT``. Debido a que el servidor mantiene en
@@ -627,6 +647,7 @@ memoria (cache) debe ser limpiada después de su uso, a través de
     consecuencia la generación de inconsistencias en los datos. Debe usarse
     solo cuando tenga la seguridad de lo que esta haciendo.
 
+
 Trabajar con hora y fecha
 -------------------------
 
@@ -638,8 +659,8 @@ por:
 
 .. code-block:: python
 
-    openerp.tools.misc.DEFAULT_SERVER_DATE_FORMAT 
-    openerp.tools.misc.DEFAULT_SERVER_DATETIME_FORMAT 
+    openerp.tools.misc.DEFAULT_SERVER_DATE_FORMAT
+    openerp.tools.misc.DEFAULT_SERVER_DATETIME_FORMAT
 
 Estas se esquematizan como ``%Y-%m-%d`` y ``%Y-%m-%d %H:%M:%S``
 respectivamente.
@@ -651,9 +672,9 @@ proveen algunas funciones. Por ejemplo:
 
     >>> from openerp import fields
     >>> fields.Datetime.now()
-    '2014-12-08 23:36:09' 
-    >>> fields.Datetime.from_string('2014-12-08 23:36:09') 
-    datetime.datetime(2014, 12, 8, 23, 36, 9)  
+    '2014-12-08 23:36:09'
+    >>> fields.Datetime.from_string('2014-12-08 23:36:09')
+    datetime.datetime(2014, 12, 8, 23, 36, 9)
 
 Dado que las fechas y horas son tratadas y almacenadas por el servidor
 en formato UTC nativo, el cual no toma en cuenta la zona horaria y
@@ -687,6 +708,7 @@ Para facilitar la conversión entre formatos, tanto el objeto
 -  ``to_string(value)``: convierte un objeto fecha o de fecha y hora en
    una cadena en el formato esperado por el servidor.
 
+
 Trabajar con campos de relación
 --------------------------------
 
@@ -707,7 +729,8 @@ registros a los valores de los campos relacionales. Se debería usar el
 ID correspondiente o la lista de Ids.
 
 Por ejemplo, en ves de ``self.write({'user_id': self.env.user})``,
-debería usar ``self.write({'user_id':    self.env.user.id})``.
+debería usar ``self.write({'user_id':self.env.user.id})``.
+
 
 Manipular los conjuntos de registros
 ------------------------------------
@@ -776,6 +799,7 @@ a las precedentes usando ``write()``:
 -  ``self.write([(3, self.task_ids[-1].id, False)])``: Desconecta (quita
    en enlace) el último elemento.
 
+
 Otras operaciones de conjunto de registros
 ------------------------------------------
 
@@ -807,16 +831,17 @@ A continuación se muestran algunos ejemplos del uso de estas funciones:
 .. code-block:: python
 
     >>> rs0 = self.env['res.partner'].search([])
-    >>> len(rs0)                #how many records? 
+    >>> len(rs0) # how many records?
     68 
     >>> rs1 = rs0.filtered(lambda   r: r.name.startswith('A'))
     >>> print rs1 res.partner(3, 7, 6, 18, 51, 58, 39)
     >>> rs2 = rs1.filtered('is_company')
-    >>> print rs2 res.partner(7, 6, 18) 
+    >>> print rs2 res.partner(7, 6, 18)
     >>> rs2.mapped('name') [u'Agrolait', u'ASUSTeK', u'Axelor']
     >>> rs2.mapped(lambda r: (r.id, r.name)) [(7, u'Agrolait'), (6, u'ASUSTeK'), (18, u'Axelor')] 
     >>> rs2.sorted(key=lambda r: r.id, reverse=True)
-    res.partner(18, 7, 6)  
+    res.partner(18, 7, 6)
+
 
 El entorno de ejecución
 -----------------------
@@ -858,7 +883,7 @@ registro, como se muestra a continuación.
 .. code-block:: python
 
     >>> self.env.ref('base.user_root')
-    res.users(1,)  
+    res.users(1,)
 
 **Métodos del modelo para la interacción con el cliente**
 
@@ -941,7 +966,8 @@ representar la interfaz y ejecutar la interacción básica:
 
    .. code-block:: python
 
-       rset.fields_view_get(view_type='tree')
+        rset.fields_view_get(view_type='tree')
+
 
 Sobre escribir los métodos predeterminados
 ------------------------------------------
@@ -961,25 +987,27 @@ personalizado, el cual puede ser de la siguiente forma:
 
 .. code-block:: python
 
-    @api.model def create(self, vals):
+    @api.model
+    def create(self, vals):
         # Code before create
         # Can use the `vals
         dict new_record = super(TodoTask, self).create(vals) 
         # Code after create
         # Can use the `new` record created
-        return new_record 
+        return new_record
 
 Un método ``write()`` personalizado seguiría esta estructura:
 
 .. code-block:: python
 
-    @api.multi def write(self, vals): 
-        # Code before write 
+    @api.multi
+    def write(self, vals):
+        # Code before write
         # Can use `self`, with the old values
-        super(TodoTask, self).write(vals) 
-        # Code after write 
+        super(TodoTask, self).write(vals)
+        # Code after write
         # Can use `self`, with the new (updated) values
-        return True 
+        return True
 
 Estos son ejemplos comunes de ampliación, pero cualquier método estándar
 disponibles para un modelo puede ser heredado en un forma similar para
@@ -1009,6 +1037,7 @@ disponibles, y deben darse le prioridad:
    con ``@api.constraints(fdl1,fdl2,...)``. Estas son como campos
    calculados pero se espera que arrojen errores cuando las condiciones
    no son cumplidas en vez de valores calculados.
+
 
 Decoradores de métodos del Modelo
 ---------------------------------
@@ -1070,7 +1099,8 @@ impedir al usuario continuar. Esto es realizado a través de un método
             'title': 'Warning!',
             'message': 'The warning text'
         }
-    } 
+    }
+
 
 Depuración
 ----------
@@ -1172,6 +1202,7 @@ niveles de depuración en puntos sensibles de su código si siente
 que podrá necesitar investigar algunos problemas en la instancia de
 despliegue. Solo se requiere elevar el nivel de registro del servidor a
 ``DEBUG`` y luego inspeccionar los archivos de registro.
+
 
 Resumen
 =======
