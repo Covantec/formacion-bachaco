@@ -20,10 +20,10 @@ Un bloque de código es asentado de la siguiente manera:
 
     {
         'name': 'To-Do Application',
-        'description':  'Manage your personal Tasks with this module.',
-        'author':   'Daniel Reis',
-        'depends':  ['mail'],
-        'application':  True,
+        'description': 'Manage your personal Tasks with this module.',
+        'author': 'Daniel Reis',
+        'depends': ['mail'],
+        'application': True,
     }
 
 Cualquier entrada de línea de comando es escrito como sigue:
