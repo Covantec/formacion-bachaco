@@ -77,11 +77,11 @@ de **Python** y escriba lo siguiente:
 
 .. code-block:: python
 
-    >>> import xmlrpclib 
-    >>> srv, db = 'http://localhost:8069', 'v8dev' >>> user, pwd = 'admin', 'admin' 
+    >>> import xmlrpclib
+    >>> srv, db = 'http://localhost:8069', 'v8dev' >>> user, pwd = 'admin', 'admin'
     >>> common = xmlrpclib.ServerProxy('%s/xmlrpc/2/common' % srv)
     >>> common.version()
-    {'server_version_info': [8, 0, 0, 'final', 0], 'server_serie': '8.0', 'server_version': '8.0', 'protocol_version': 1} 
+    {'server_version_info': [8, 0, 0, 'final', 0], 'server_serie': '8.0', 'server_version': '8.0', 'protocol_version': 1}
 
 Aquí, importa la biblioteca ``xmlrpclib`` y luego la configura algunas
 variables con la información para la ubicación del servidor y las credenciales
@@ -99,7 +99,7 @@ usarse en solicitudes en lugar del nombre de usuario, como se muestra aquí:
 
 .. code-block:: python
 
-    >>> uid = common.authenticate(db, user, pwd, {}) 
+    >>> uid = common.authenticate(db, user, pwd, {})
     >>> print uid
     1
 
@@ -116,7 +116,7 @@ como se muestra a continuación:
 
 .. code-block:: python
 
-    >>> api = xmlrpclib.ServerProxy('%s/xmlrpc/2/object' % srv) 
+    >>> api = xmlrpclib.ServerProxy('%s/xmlrpc/2/object' % srv)
     >>> api.execute_kw(db, uid, pwd, 'res.partner', 'search_count', [[]])
     70
 
@@ -150,7 +150,7 @@ en el siguiente código:
 .. code-block:: python
 
     >>> api.execute_kw(db, uid, pwd, 'res.partner', 'search', [[('country_id', '=', 'be'), ('parent_id', '!=', False)]])
-    [43,  42] 
+    [43,  42]
     >>> api.execute_kw(db, uid, pwd, 'res.partner', 'read', [[43]], {'fields': ['id', 'name', 'parent_id']})
     [{'parent_id': [7, 'Agrolait'], 'id':43, 'name': 'Michel Fletcher'}]
 
@@ -167,7 +167,11 @@ lo siguiente:
 
 .. code-block:: python
 
-    >>> api.execute_kw(db, uid, pwd, 'res.partner', 'search_read', [[('country_id', '=', 'be'), ('parent_id', '!=', False)]], {'fields': ['id', 'name', 'parent_id']}) 
+    >>> api.execute_kw(
+            db, uid, pwd, 'res.partner', 'search_read', [
+            [('country_id', '=', 'be'), ('parent_id', '!=', False)]
+            ], {'fields': ['id', 'name', 'parent_id']}
+        )
 
 El método ``search_read`` se comporta como leído, pero espera como
 primero argumento posicional un dominio en lugar de una lista de ID.
@@ -245,7 +249,7 @@ de la siguiente manera:
             self.uid = common.authenticate(db, user, pwd, {})
             self.pwd = pwd
             self.db = db
-            self.model = 'todo.task' 
+            self.model = 'todo.task'
 
 Aquí almacena en el objeto creado toda la información necesaria para
 ejecutar llamadas en un modelo: la referencia API, ``uid``, ``cpassword``,
@@ -257,14 +261,13 @@ continuación:
 .. code-block:: python
 
         def execute(self, method, arg_list, kwarg_dict=None):
-            return self.api.execute_kw(
-                                       self.db,
+            return self.api.execute_kw(self.db,
                                        self.uid,
                                        self.pwd,
                                        self.model,
                                        method,
                                        arg_list,
-                                       kwarg_dict or {}) 
+                                       kwarg_dict or {})
 
 Ahora puede usarlo para implementar los métodos de nivel superior ``get()`` y
 ``set()``. El método ``get()`` aceptará una lista opcional de ID para recuperar.
@@ -277,7 +280,7 @@ aquí:
             domain = [('id', 'in', ids)]
             if ids else []
             fields = ['id', 'name']
-            return  self.execute('search_read', [domain, fields]) 
+            return  self.execute('search_read', [domain, fields])
 
 El método ``set()`` tendrá como argumentos el texto de la tarea a escribir,
 y un ID opcional. Si no se proporciona ID, se creará un nuevo registro. Eso
@@ -303,7 +306,7 @@ si ejecuta el archivo Python:
         user, pwd = 'admin', 'admin'
         api =  NoteAPI(srv, db, user, pwd)
         from pprint import pprint
-        pprint(api.get()) 
+        pprint(api.get())
 
 Si ejecuta el script **Python**, debería ver el contenido de su tareas pendientes
 impresas. Ahora que tiene un contenedor simple alrededor de su backend de Odoo,
@@ -360,7 +363,7 @@ a continuación:
                 self.delete('1.0', 'end')
                 self.insert('1.0', text)
                 self.master.geometry('220x235')
-                self.pack(fill='both',  expand=1) 
+                self.pack(fill='both', expand=1)
 
 El método constructor ``Tk()`` crea una nueva ventana de IU y el widget de
 texto coloca dentro de él, de modo que crear una nueva instancia de ``NoteText``
@@ -375,10 +378,10 @@ vacía, pero será almacenado en el servidor solo cuando se realiza una acción
         def create(self, event=None):
             NoteText(self.api, '')
 
-        def save(self,  event=None): 
+        def save(self, event=None):
             text = self.get('1.0', 'end')
             self.id = self.api.set(text,  self.id)
-            tkMessageBox.showinfo('Info', 'Note %d Saved.' % self.id) 
+            tkMessageBox.showinfo('Info', 'Note %d Saved.' % self.id)
 
 La acción ``save`` se puede realizar en tareas existentes o nuevas, pero
 no hay necesidad de preocuparse por eso aquí ya que esos casos ya están
@@ -395,7 +398,7 @@ cuando se inicia el programa, como se muestra en el siguiente código:
         api = NoteAPI(srv, db, user, pwd)
         for note in api.get():
             x = NoteText(api, note['name'], note['id'])
-            x.master.mainloop() 
+            x.master.mainloop()
 
 El último comando ejecuta ``mainloop()`` en la última ventana de Nota creada,
 para iniciar a esperar eventos de ventana.
@@ -452,26 +455,26 @@ en caso de camello:
 
 .. code-block:: python
 
-    >>> m = api.model('res.partner') 
-    >>> m = api.ResPartner 
+    >>> m = api.model('res.partner')
+    >>> m = api.ResPartner
 
 Ahora puede realizar acciones en ese modelo de la siguiente manera:
 
 .. code-block:: python
 
     >>> m.count([('name', 'like', 'Packt%')])
-    1 
+    1
     >>> m.search([('name', 'like', 'Packt%')])
-    [76] 
+    [76]
 
 También proporciona representación de objetos del lado del cliente para registros como
 sigue:
 
 .. code-block:: python
 
-    >>> recs = m.browse([('name', 'like', 'Packt%')]) 
-    >>> recs <RecordList 'res.partner,[76]'> 
-    >>> recs.name ['Packt'] 
+    >>> recs = m.browse([('name', 'like', 'Packt%')])
+    >>> recs <RecordList 'res.partner,[76]'>
+    >>> recs.name ['Packt']
 
 Como puede ver, ``ERPpeek`` recorre un largo camino desde el simple ``xmlrpclib``, y
 hace es posible escribir código que se pueda reutilizar del lado del servidor con poco
@@ -492,7 +495,7 @@ como se muestra a continuación:
 
 .. code-block:: console
 
-    $ erppeek --help  
+    $ erppeek --help
 
 Vea una sesión de muestra de la siguiente manera:
 
@@ -510,7 +513,7 @@ Vea una sesión de muestra de la siguiente manera:
     3 v8dev
     >>> rec = model('res.partner').browse(43)
     v8dev
-    >>> rec.name 'Michel Fletcher'  
+    >>> rec.name 'Michel Fletcher'
 
 Como puede ver, se realizó una conexión con el servidor y la ejecución
 del contexto proporcionó una referencia al método ``model()`` para obtener

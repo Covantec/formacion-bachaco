@@ -5,6 +5,7 @@ Modelos
 =======
 
 
+
 Modelos – Estructura de los Datos de la Aplicación
 ==================================================
 
@@ -103,10 +104,10 @@ contenido:
 .. code-block:: python
 
     { 
-       'name': 'User interface improvements to the To-Do app',
-       'description': 'User friendly features.',
-       'author': 'Daniel Reis',
-       'depends': ['todo_app']  
+        'name': 'User interface improvements to the To-Do app',
+        'description': 'User friendly features.',
+        'author': 'Daniel Reis',
+        'depends': ['todo_app']
     }
 
 Note que depende de ``todo_app`` y no de ``todo_user``. En general,
@@ -320,12 +321,17 @@ descriptivos:
 
     class Stage(models.Model):
         _name  = 'todo.task.stage'
-        _order = 'sequence,name'    
+        _order = 'sequence,name'
 
         # Campos de cadena de caracteres:
         name  = fields.Char('Name',40)
         desc  = fields.Text('Description')
-        state = fields.Selection([('draft','New'),('open','Started'), ('done','Closed')],'State')
+        state = fields.Selection(
+            [
+                ('draft','New'),
+                ('open','Started'),
+                ('done','Closed')
+            ], 'State')
         docs  = fields.Html('Documentation')
 
         # Campos numéricos:
@@ -606,11 +612,11 @@ definición del campo:
 .. code-block:: python
 
     # TodoTask class: Task <-> relación Tag (forma larga): 
-    tag_ids = fields.Many2many( 'todo.task.tag', # modelo relacionado
-                                'todo_task_tag_rel', # nombre de la tabla de relación
-                                'task_id', # campo para "este" registro
-                                'tag_id', # campo para "otro" registro
-                                 string='Tasks')
+    tag_ids = fields.Many2many('todo.task.tag', # modelo relacionado
+                               'todo_task_tag_rel', # nombre de la tabla de relación
+                               'task_id', # campo para "este" registro
+                               'tag_id', # campo para "otro" registro
+                               string='Tasks')
 
 Note que los argumentos adicionales son opcionales. Podrá simplemente
 fijar el nombre para la tabla de relación y dejar que los nombres de los
@@ -678,12 +684,12 @@ código mostrado a continuación:
 .. code-block:: python
 
     # class Stage(models.Model): #
-        _name = 'todo.task.stage' 
+        _name = 'todo.task.stage'
 
         #Stage class relación con Tasks:
-        tasks = fields.One2many('todo.task',# modelo relacionado
-                                'stage_id',# campo para "este" en el modelo relacionado 
-                                'Tasks in this stage') 
+        tasks = fields.One2many('todo.task', # modelo relacionado
+                                'stage_id', # campo para "este" en el modelo relacionado
+                                'Tasks in this stage')
 
 ``One2many`` acepta tres argumentos de posición: el modelo relacionado, el
 nombre del campo en aquel modelo que referencia este registro, y la
@@ -722,12 +728,12 @@ Revisando el modelo de etiquetas definido en el archivo
 
     class Tags(models.Model):
         _name         = 'todo.task.tag'
-        _parent_store = True 
+        _parent_store = True
         #_parent_name  = 'parent_id'
         name = fields.Char('Name')
         parent_id     = fields.Many2one('todo.task.tag','Parent Tag', ondelete='restrict')
         parent_left   = fields.Integer('Parent Left', index=True)
-        parent_right  = fields.Integer('Parent  Right', index=True) 
+        parent_right  = fields.Integer('Parent  Right', index=True)
 
 Aquí tiene un modelo básico, con un campos ``parent_id`` que
 referencia al registro padre, y el atributo adicional ``_parent_store``
@@ -742,7 +748,8 @@ registro:
 
 .. code-block:: python
 
-    child_ids = fields.One2many('todo.task.tag', 'parent_id', 'Child Tags') 
+    child_ids = fields.One2many('todo.task.tag', 'parent_id', 'Child Tags')
+
 
 
 Hacer referencia a campos usando relaciones dinámicas
@@ -759,7 +766,9 @@ que pueda hacer referencia a un User o un Partner:
 .. code-block:: python
 
     # class TodoTask(models.Model):
-        refers_to = fields.Reference([('res.user', 'User'),('res.partner', 'Partner')], 'Refers to') 
+        refers_to = fields.Reference([
+            ('res.user', 'User'),('res.partner', 'Partner')
+        ], 'Refers to')
 
 Puede observar que la definición del campo es similar al campo
 ``Selection``, pero aquí la lista de selección contiene los modelos que
@@ -779,10 +788,10 @@ usarlo con la API nueva:
 
 .. code-block:: python
 
-    from openerp.addons.base.res import res_request 
+    from openerp.addons.base.res import res_request
 
     def referencable_models(self):
-        return res_request.referencable_model(self, self.env.cr, self.env.uid, context=self.env.context) 
+        return res_request.referencable_model(self, self.env.cr, self.env.uid, context=self.env.context)
 
 Usando el código anterior, la versión revisada del campo "Refers to"
 sera así:
@@ -790,7 +799,8 @@ sera así:
 .. code-block:: python
 
     # class TodoTask(models.Model):
-        refers_to = fields.Reference(referencable_models, 'Refers to') 
+        refers_to = fields.Reference(referencable_models, 'Refers to')
+
 
 
 Campos calculados
@@ -819,11 +829,11 @@ Debe editar el modelo ``TodoTask`` en el archivo
 
     # class TodoTask(models.Model):
         stage_fold = fields.Boolean('Stage Folded?', compute='_compute_stage_fold')
-        @api.one 
-        @api.depends('stage_id.fold') 
 
-    def _compute_stage_fold(self):
-        self.stage_fold = self.stage_id.fold 
+        @api.one
+        @api.depends('stage_id.fold')
+        def _compute_stage_fold(self):
+            self.stage_fold = self.stage_id.fold
 
 El código anterior agrega un campo nuevo ``stage_fold`` y el método
 ``_compute_stage_fold`` que sera usado para calcular el campo. El nombre
@@ -873,21 +883,21 @@ esto:
 
     # class TodoTask(models.Model):
         stage_fold = fields.Boolean
-            string   = 'Stage Folded?',                                 
-            compute  ='_compute_stage_fold', 
-                      # store=False) # predeterminado            
-            search   ='_search_stage_fold',                                 
-            inverse  ='_write_stage_fold') 
+            string   = 'Stage Folded?',
+            compute  ='_compute_stage_fold',
+            # store=False) # predeterminado
+            search   ='_search_stage_fold',
+            inverse  ='_write_stage_fold')
 
 Las funciones soportadas son:
 
 .. code-block:: python
 
     def _search_stage_fold(self, operator, value):
-        return [('stage_id.fold', operator, value)] 
+        return [('stage_id.fold', operator, value)]
 
     def _write_stage_fold(self):
-        self.stage_id.fold = self.stage_fold 
+        self.stage_id.fold = self.stage_fold
 
 La función de búsqueda es llamada en cuanto es encontrada en este campo
 una condición ``(campo, operador, valor)`` dentro de una expresión de
@@ -935,7 +945,10 @@ hizo a "stage_fold", pero ahora usando un campo ``related``:
 .. code-block:: python
 
     # class TodoTask(models.Model):
-        stage_state = fields.Selection(related='stage_id.state', string='Stage State') 
+        stage_state = fields.Selection(
+            related='stage_id.state',
+            string='Stage State'
+        )
 
 Detrás del escenario, los campos "Related" son solo campos calculados
 que convenientemente implementan las funciones de búsqueda e inversa.
@@ -962,10 +975,11 @@ el mismo título:
 .. code-block:: python
 
     # class TodoTask(models.Model):
-        _sql_constraints = [
-            ('todo_task_name_uniq',
-             'UNIQUE (name, user_id, active)',
-             'Task title must be unique!')] 
+        _sql_constraints = [(
+            'todo_task_name_uniq',
+            'UNIQUE (name, user_id, active)',
+            'Task title must be unique!'
+        )]
 
 Debido a que esta usando el campo ``user_id`` agregado por el módulo
 ``todo_user``, esta dependencia debe ser agregada a la clave ``depends``
@@ -983,11 +997,11 @@ condición falla:
     from openerp.exceptions import ValidationError
 
     # class TodoTask(models.Model):
-         @api.one 
-         @api.constrains('name') 
-         def _check_name_size(self):                                
+        @api.one
+        @api.constrains('name')
+        def _check_name_size(self):
             if len(self.name) < 5:
-                 raise ValidationError('Must have 5 chars!') 
+                raise ValidationError('Must have 5 chars!')
 
 El ejemplo anterior previene que el título de las tareas sean
 almacenados con menos de 5 caracteres.

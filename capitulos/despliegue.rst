@@ -243,13 +243,13 @@ Luego debe crear el directorio ``LOGFILE`` como sigue:
 .. code-block:: console
 
     $ sudo mkdir /var/log/odoo
-    $ sudo chown $(whoami) /etc/odoo  
+    $ sudo chown $(whoami) /etc/odoo
 
 Ahora debería poder iniciar y parar el servicio de Odoo:
 
 .. code-block:: console
 
-    $ sudo /etc/init.d/odoo start 
+    $ sudo /etc/init.d/odoo start
     Starting odoo: ok  
 
 Debería ser capaces de obtener una respuesta del servidor sin ningún

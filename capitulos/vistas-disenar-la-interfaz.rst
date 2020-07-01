@@ -5,6 +5,7 @@ Vistas
 ======
 
 
+
 Vistas – Diseñar la Interfaz
 ============================
 
@@ -19,10 +20,10 @@ Usuario y modificara las vistas existentes que fueron agregadas en capítulos
 anteriores.
 
 La mejor manera de modificar vistas existentes es usar la herencia, como
-se explico en el :doc:`Capítulo 3 <herencia-extendiendo-funcionalidad-aplicaciones-existentes>`. Sin embargo, para mejorar la claridad en la
-explicación, sobre escribirá las vistas existentes, y las
-reemplazara por unas vistas completamente nuevas. Esto hará que los
-temas sean más fáciles de entender y seguir.
+se explico en el :doc:`Capítulo 3 <herencia-extendiendo-funcionalidad-aplicaciones-existentes>`.
+Sin embargo, para mejorar la claridad en la explicación, sobre escribirá las
+vistas existentes, y las reemplazara por unas vistas completamente nuevas.
+Esto hará que los temas sean más fáciles de entender y seguir.
 
 Es necesario agregar un archivo XML nuevo al módulo, así que comience por
 editar el archivo manifiesto ``__openerp__.py``.
@@ -32,11 +33,11 @@ configurado como una dependencia:
 .. code-block:: python
 
     { 'name': 'User interface improvements to the To-Do app',
-      'description': 'User friendly features.',
-      'author': 'Daniel Reis',
-      'depends': ['todo_user'],
-      'data': ['todo_view.xml']
-    } 
+        'description': 'User friendly features.',
+        'author': 'Daniel Reis',
+        'depends': ['todo_user'],
+        'data': ['todo_view.xml']
+    }
 
 Comience con las opciones de menú y las acciones de ventana.
 
@@ -57,13 +58,16 @@ código:
 .. code-block:: xml
 
     <?xml version="1.0"?>
-        <openerp>
-            <data>
-                <act_window id="action_todo_stage" name="To-Do Task Stages" res_model="todo.task.stage" view_mode="tree,form"/>
-                <act_window id="todo_app.action_todo_task" name="To-Do Tasks" res_model="todo.task" view_mode="tree,form,calendar,gantt,graph" target="current "context="{'default_user_id':    uid}" domain="[]" limit="80"/>
-                <act_window id="action_todo_task_stage" name="To-Do Task Stages" res_model="todo.task.stage" src_model="todo.task" multi="False"/>  
-            </data> 
-         </openerp> 
+    <openerp>
+      <data>
+        <act_window id="action_todo_stage" name="To-Do Task Stages" res_model="todo.task.stage" view_mode="tree,form"/>
+        <act_window id="todo_app.action_todo_task" name="To-Do Tasks" res_model="todo.task"
+                    view_mode="tree,form,calendar,gantt,graph" target="current"
+                    context="{'default_user_id':uid}" domain="[]" limit="80"/>
+        <act_window id="action_todo_task_stage" name="To-Do Task Stages"
+                    res_model="todo.task.stage" src_model="todo.task" multi="False"/>
+      </data>
+     </openerp>
 
 Las acciones de ventana se almacenan en el modelo ``ir.actions.act_window``,
 y pueden ser definidas en archivos XML usando el acceso directo ``<act_window>``
@@ -134,8 +138,10 @@ ventana, agregue el siguiente código:
 .. code-block:: xml
 
     <menuitem id="menu_todo_task_main" name="To-Do" parent="mail.mail_my_stuff"/>
-    <menuitem id="todo_app.menu_todo_task" name="To-Do Tasks" parent="menu_todo_task_main" sequence="10" action="todo_app.action_todo_task"/>
-    <menuitem id="menu_todo_task_stage" name="To-Do Stages" parent="menu_todo_task_main" sequence="20" action="action_todo_stage"/> 
+    <menuitem id="todo_app.menu_todo_task" name="To-Do Tasks" parent="menu_todo_task_main"
+              sequence="10" action="todo_app.action_todo_task"/>
+    <menuitem id="menu_todo_task_stage" name="To-Do Stages" parent="menu_todo_task_main"
+              sequence="20" action="action_todo_stage"/>
 
 La opción de menú "data" para el modelo ``ir.ui.menu`` también puede
 cargarse usando el elemento de acceso directo ``<menuitem>``, como se
@@ -178,7 +184,7 @@ actual. La información inicial de sesión puede verse así:
 
 .. code-block:: python
 
-    {'lang': 'en_US',   'tz': 'Europe/Brussels', 'uid': 1} 
+    {'lang': 'en_US', 'tz': 'Europe/Brussels', 'uid': 1}
 
 Tiene información del ID de usuario actual, y las preferencias de
 idioma y zona horaria para la sesión de usuario.
@@ -202,14 +208,15 @@ corresponda a la sesión actual de usuario, debe usar:
 
 .. code-block:: python
 
-    {'default_user_id': uid} 
+    {'default_user_id': uid}
 
 Y si la vista de destino tiene un filtro llamado ``filter_my_task``,
 podrá habilitarlo usando:
 
 .. code-block:: python
 
-    {'search_default_filter_my_tasks':  True} 
+    {'search_default_filter_my_tasks': True}
+
 
 
 Expresiones de dominio
@@ -225,7 +232,7 @@ Por ejemplo, para limitar solo a las Tareas del usuario actual:
 
 .. code-block:: python
 
-    domain=[('user_id', '=', uid)] 
+    domain=[('user_id', '=', uid)]
 
 El valor ``uid`` usado aquí es provisto por el contexto de sesión. Cuando
 se usa en un campo relacional, limitara las opciones disponibles de
@@ -322,7 +329,7 @@ asignado:
 
 .. code-block:: python
 
-    ['|', ('user_id', '=', uid), ('user_id', '=', False)] 
+    ['|', ('user_id', '=', uid), ('user_id', '=', False)]
 
 Un ejemplo más complejo, usado en las reglas de registro del lado del
 servidor:
@@ -338,7 +345,9 @@ El dominio filtra:
   de la siguiente condición.
 
 - La siguiente condición es, nuevamente, la unión de otras dos
-  condiciones: los registros donde el ``user_id`` es el usuario de la sesión actual o no esta fijado.
+  condiciones: los registros donde el ``user_id`` es el usuario de la
+  sesión actual o no esta fijado.
+
 
 
 Vistas de Formulario
@@ -388,8 +397,8 @@ estructura genérica es esta:
         <field name="model">todo.task</field>
         <field name="arch" type="xml">
             <form>
-                <header><!-- Buttons and status widget --> </header>
-                <sheet><!-- Form    content --> </sheet>
+                <header><!-- Buttons and status widget --></header>
+                <sheet><!-- Form content --></sheet>
                 <!-- History and communication: -->
                 <div class="oe_chatter">
                     <field name="message_follower_ids" widget="mail_followers" />
@@ -430,7 +439,9 @@ ampliar el encabezado vacío para agregar le una barra de estado:
 
     <header>
         <field name="stage_state" invisible="True" />
-        <button name="do_toggle_done" type="object" attrs="{'invisible' [('stage_state','in',['done','cancel'])]}" string="Toggle Done" class="oe_highlight" />
+        <button name="do_toggle_done" type="object"
+                attrs="{'invisible' [('stage_state','in',['done','cancel'])]}"
+                string="Toggle Done" class="oe_highlight" />
         <!-- Add stage statusbar:   … --> 
     </header> 
 
@@ -483,23 +494,24 @@ Para agregar un flujo de "stage" en su encabezado de formulario:
 
 .. code-block:: xml
 
-    <!--    Add stage   statusbar:  ... --> 
-    <field name="stage_id" widget="statusbar" clickable="True" options="{'fold_field': 'fold'}" /> 
+    <!-- Add stage statusbar: ... -->
+    <field name="stage_id" widget="statusbar" clickable="True"
+           options="{'fold_field': 'fold'}" />
 
-El atributo ``clickable`` permite hacer clic en el widget, para cambiar la
-etapa o el estado del documento. Es posible que no querrá esto si el
+El atributo ``clickable`` permite hacer clic en el widget, para cambiar
+la etapa o el estado del documento. Es posible que no querrá esto si el
 progreso del proceso debe realizarse a través de botones de acción.
 
 En el atributo ``options`` podrá usar algunas configuraciones
 específicas:
 
--  ``fold_fields``, cuando de usa el atributo ``stages``, es el nombre del campo que
-   usa el atributo ``stage`` del modelo usa para indicar en cuales etapas debe ser
-   mostrado en **negritas** o "**fold**".
+-  ``fold_fields``, cuando de usa el atributo ``stages``, es el nombre del
+   campo que usa el atributo ``stage`` del modelo usa para indicar en cuales
+   etapas debe ser mostrado en **negritas** o "**fold**".
 
--  ``statusbar_visible``, cuando se usa el atributo ``states``, lista los estados que
-   deben estar siempre visibles, para mantener ocultos los estados de
-   excepción que se usan para casos menos comunes. Por ejemplo:
+-  ``statusbar_visible``, cuando se usa el atributo ``states``, lista los
+   estados que deben estar siempre visibles, para mantener ocultos los
+   estados de excepción que se usan para casos menos comunes. Por ejemplo:
    ``statusbar_visible="draft,open.done"``.
 
 La hoja ``canvas`` es el área del formulario que contiene los elementos
@@ -602,7 +614,10 @@ lo siguiente justo después del bloque ``div`` ``oe_title``:
 .. code-block:: xml
 
     <div name="buttons" class="oe_right oe_button_box">
-        <button class="oe_stat_button" type="action" icon="fa-tasks" name="%(todo_app.action_todo_task)d" string="" context="{'search_default_user_id': user_id, 'default_user_id': user_id}" help="Other to-dos for this user" >
+        <button class="oe_stat_button" type="action" icon="fa-tasks"
+                name="%(todo_app.action_todo_task)d" string=""
+                context="{'search_default_user_id': user_id, 'default_user_id': user_id}"
+                help="Other to-dos for this user">
             <field string="To-dos" name="user_todo_count" widget="statinfo"/>
         </button>
     </div> 
@@ -645,7 +660,8 @@ para mostrar estadísticas. Estos son campos regulares que usan el widget
 
 El campo debe ser un campo calculado, definido en el módulo subyacente.
 También podrá usar texto estático en vez de o junto a los campos de
-``statinfo``, como : ``<div>User's To-dos</div>``
+``statinfo``, como: ``<div>User's To-dos</div>``
+
 
 
 Organizar el contenido en formulario
@@ -705,7 +721,7 @@ etapas de la tarea:
         <page name="second_page">
             <!-- Second page content -->
         </page>
-    </notebook> 
+    </notebook>
 
 Se considera una buena practica tener nombres en las páginas, esto hace
 que la ampliación de estas por parte de otros módulo sea más fiable
@@ -931,7 +947,7 @@ los estados menos ``draft``:
 
 .. code-block:: xml
 
-    <field name="refers_to" attrs="{'invisible': [('state','=','draft')]}"  /> 
+    <field name="refers_to" attrs="{'invisible': [('state','=','draft')]}" />
 
 El atributo ``invisible`` esta disponible para cualquier elemento, no solo
 para los campos. Podrá usarlo en las páginas de un cuaderno o en
@@ -1097,7 +1113,7 @@ siguiente manera:
             <calendar date_start="date_deadline" color="user_id" display="[name], Stage[stage_id]">
                 <!-- Fields used for the text of display attribute -->
                 <field name="name" />
-                <field name="stage_id"  />
+                <field name="stage_id" />
             </calendar>
         </field>
     </record>
@@ -1168,7 +1184,7 @@ agregar un campo. En la clase ``TodoTask``, del archivo
 
 .. code-block:: python
 
-    effort_estimate = fields.Integer('Effort Estimate') 
+    effort_estimate = fields.Integer('Effort Estimate')
 
 También debe ser agregado al formulario de tareas por hacer para que
 podrá fijar datos allí. Ahora, agregue la vista de gráfico con una

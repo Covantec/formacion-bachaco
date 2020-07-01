@@ -5,6 +5,7 @@ Primera aplicación
 ==================
 
 
+
 Construyendo su primera aplicación con Odoo
 ===========================================
 
@@ -451,25 +452,25 @@ ejecutada por este:
 .. code:: XML
 
     <?xml version="1.0" encoding="UTF-8"?>
-        <openerp>
-            <data>
-                <!-- Action to open To-do Task list -->
-                <act_window
-                    id="action_todo_task"
-                    name="To-do Task"
-                    res_model="todo.task"
-                    view_mode="tree,form"
-                />
-                <!-- Menu item to open To-do Task list -->
-                <menuitem
-                    id="menu_todo_task"
-                    name="To-Do Tasks"
-                    parent="mail.mail_feeds"
-                    sequence="20"
-                    action="action_todo_task"
-                />
-            </data>
-        </openerp>
+    <openerp>
+        <data>
+            <!-- Action to open To-do Task list -->
+            <act_window
+                id="action_todo_task"
+                name="To-do Task"
+                res_model="todo.task"
+                view_mode="tree,form"
+            />
+            <!-- Menu item to open To-do Task list -->
+            <menuitem
+                id="menu_todo_task"
+                name="To-Do Tasks"
+                parent="mail.mail_feeds"
+                sequence="20"
+                action="action_todo_task"
+            />
+        </data>
+    </openerp>
 
 La interfaz con el usuario, incluidas las opciones del menú y las acciones,
 son almacenadas en tablas de la base de datos. El archivo XML es un archivo
@@ -554,7 +555,7 @@ Edite el XML que recién ha creado para agregar el elemento
 
 .. code:: XML
 
-    <record    id="view_form_todo_task" model="ir.ui.view">
+    <record id="view_form_todo_task" model="ir.ui.view">
         <field name="name">To-do Task Form</field>
         <field name="model">todo.task</field>
         <field name="arch" type="xml">

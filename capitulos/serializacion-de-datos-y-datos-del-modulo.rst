@@ -5,6 +5,7 @@ Serialización
 =============
 
 
+
 Serialización de Datos y Datos de Módulos
 =========================================
 
@@ -180,7 +181,7 @@ a este:
 
 ::
 
-    "id","name","user_id/id","date_deadline","is_done" "__export__.todo_task_1","Install    Odoo","base.user_root","2015-01- 30","True" "__export__.todo_task_2","Create    dev    database","base.user_root","","False"
+    "id","name","user_id/id","date_deadline","is_done" "__export__.todo_task_1","Install Odoo","base.user_root","2015-01- 30","True" "__export__.todo_task_2","Create dev database","base.user_root","","False"
 
 Observe que Odoo exporta automáticamente una columna adicional
 identificada. Este es un ID externo que se genera automáticamente para
@@ -353,7 +354,7 @@ este aspecto:
 
 ::
 
-    id,name,user_id/id,date_deadline todo_task_a,"Install    Odoo","base.user_root","2015-01-30" todo_task_b","Create    dev    database","base.user_root",""
+    id,name,user_id/id,date_deadline todo_task_a,"Install Odoo","base.user_root","2015-01-30" todo_task_b","Create dev database","base.user_root",""
 
 No hay que olvidar agregar este archivo de datos en el atributo ``demo``
 del ``__openerp__.py``:
@@ -396,16 +397,16 @@ contenido:
 .. code-block:: xml
 
     <?xml version="1.0"?>
-        <openerp>
-            <data>
-                <!-- Data to load -->
-                <record model="todo.task" id="todo_task_c">
-                    <field name="name">Reinstall Odoo</field>
-                    <field name="user_id" ref="base.user_root" />
-                    <field name="date_deadline">2015-01-30</field>
-                </record>
-            </data>
-        </openerp>
+    <openerp>
+      <data>
+        <!-- Data to load -->
+        <record model="todo.task" id="todo_task_c">
+          <field name="name">Reinstall Odoo</field>
+          <field name="user_id" ref="base.user_root" />
+          <field name="date_deadline">2015-01-30</field>
+        </record>
+      </data>
+    </openerp>
 
 Este XML es equivalente al archivo de datos CSV que acaba de ver en
 la sección anterior.
@@ -663,7 +664,8 @@ de miembros se utiliza para crear facturas de demostración de membresía:
 
 .. code-block:: xml
 
-    <function model="res.partner" name="create_membership_invoice" eval="(ref('base.res_partner_2'), ref('membership_0'), {'amount':180})" />
+    <function model="res.partner" name="create_membership_invoice"
+              eval="(ref('base.res_partner_2'), ref('membership_0'), {'amount':180})" />
 
 Esto llama al método ``create_membership_invoice()`` del modelo
 ``res.partner``. Los argumentos se pasan como una tupla en el atributo

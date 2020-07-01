@@ -76,31 +76,32 @@ similar a lo que querrá alcanzar, y crear su nuevo trabajo de
 vista Kanban basada en ella.
 
 Observando las vistas Kanban usadas en los módulos estándar, es posible
-identificar dos estilos de vistas Kanban principales: viñeta y tarjeta
+identificar dos estilos de vistas Kanban principales: *viñeta* y *tarjeta*
 
-Ejemplos de las vistas Kanban de estilo **viñeta** pueden ser
-encontrados en **Clientes, Productos**, y también, **Aplicaciones y
-Módulos**. Ellos usualmente no tienen borde y son decorados con imágenes
-en el lado de la izquierda, tal como se muestra en la siguiente imagen:
+- Estilo **viñeta**: Muchos ejemplos de las vistas Kanban de estilo
+  **viñeta** pueden ser encontrados en las aplicaciones ``CRM``, ``Inventario`` >
+  ``Productos``, y también, **Aplicaciones y Módulos**. Ellos usualmente
+  no tienen borde y son decorados con imágenes en el lado de la izquierda,
+  tal como se muestra en la siguiente imagen:
 
-.. figure:: images/281_1.jpg
-  :align: center
-  :alt: Gráfico 8.2 - Ejemplo de vistas Kanban tipo Viñeta
+  .. figure:: images/281_1.jpg
+    :align: center
+    :alt: Gráfico 8.2 - Ejemplo de vistas Kanban tipo Viñeta
 
-  Gráfico 8.2 - Ejemplo de vistas Kanban tipo Viñeta
+    Gráfico 8.2 - Ejemplo de vistas Kanban tipo Viñeta
 
-El estilo **tarjeta** Kanban es usualmente usada para mostrar tarjetas
-organizadas en columnas para las etapas de procesos. Ejemplo de esto son
-las **Oportunidades CRM y las Tareas de Proyectos**. El contenido
-principal es mostrado en el área superior de la tarjeta y la información
-adicional puede ser mostrada en las áreas inferior derecha e inferior
-izquierda, tal como se muestra en la siguiente imagen:
+- Estilo **tarjeta**: Es usualmente usada para mostrar tarjetas organizadas
+  en columnas para las etapas de procesos. Ejemplo de esto son las  ``CRM`` >
+  ``Oportunidades`` y en ``Proyectos`` > ``Tareas``. El contenido principal
+  es mostrado en el área superior de la tarjeta y la información adicional
+  puede ser mostrada en las áreas inferior derecha e inferior izquierda, tal
+  como se muestra en la siguiente imagen:
 
-.. figure:: images/281_2.jpg
-  :align: center
-  :alt: Gráfico 8.3 - Ejemplo de estilo de tarjeta Kanban
+  .. figure:: images/281_2.jpg
+    :align: center
+    :alt: Gráfico 8.3 - Ejemplo de estilo de tarjeta Kanban
 
-  Gráfico 8.3 - Ejemplo de estilo de tarjeta Kanban
+    Gráfico 8.3 - Ejemplo de estilo de tarjeta Kanban
 
 Vera el esqueleto y elementos típicos usados en ambos estilos de
 vistas tal que puedas sentirte cómodo adaptándolos a tus casos de usos
@@ -131,11 +132,11 @@ como sigue:
 .. code-block:: python
 
     {
-      'name': 'To-Do Kanban',
-      'description': 'Kanban board for to-do tasks.',
-      'author': 'Daniel Reis',
-      'depends': ['todo_ui'],
-      'data': ['todo_view.xml']
+        'name': 'To-Do Kanban',
+        'description': 'Kanban board for to-do tasks.',
+        'author': 'Daniel Reis',
+        'depends': ['todo_ui'],
+        'data': ['todo_view.xml']
     }
 
 A continuación, cree el archivo XML donde irán sus nuevas y brillantes
@@ -147,17 +148,20 @@ se muestra a continuación:
 
     <?xml version="1.0"?>
     <openerp>
-        <data>
-            <!-- Agrega el modo de vista kanban al menu Action: -->
-        <act_window id="todo_app.action_todo_task" name="To-Do Tasks"  res_model="todo.task" view_mode="kanban,tree,form,calendar,gantt,graph" context="{'search_default_filter_my_tasks':True}" />
-            <!-- Agregar vista kanban -->
-              <record id="To-do Task Kanban" model="ir.ui.view">
-                <field name="name">To-do Task Kanban</field>
-                <field name="model">todo.task</field>
-                <field name="arch" type="xml">
-                   <!-- vacío por ahora, pero el Kanban irá aquí! -->
-                </field>
-             </record></data>
+      <data>
+        <!-- Agrega el modo de vista kanban al menu Action: -->
+        <act_window id="todo_app.action_todo_task" name="To-Do Tasks"
+                    res_model="todo.task" view_mode="kanban,tree,form,calendar,gantt,graph"
+                    context="{'search_default_filter_my_tasks':True}" />
+        <!-- Agregar vista kanban -->
+        <record id="To-do Task Kanban" model="ir.ui.view">
+          <field name="name">To-do Task Kanban</field>
+          <field name="model">todo.task</field>
+          <field name="arch" type="xml">
+            <!-- vacío por ahora, pero el Kanban irá aquí! -->
+          </field>
+        </record>
+      </data>
     </openerp>
 
 Ahora tiene ubicado el esqueleto básico para su módulo. Las
@@ -274,30 +278,28 @@ El elemento superior también soporta algunos atributos interesantes:
 Ahora de una mirada más de cerca a las plantillas Qweb usadas en
 las vistas ``kanban``.
 
-La vista ``kanban`` viñeta
-
-Para las plantillas QWeb de las viñetas kanban, el esqueleto se ve así:
+Las plantillas QWeb de la vista de viñetas ``kanban``, su estructura lucen así:
 
 .. code-block:: xml
 
     <t t-name="kanban-box"/>
-        <div class="oe_kanban_vignette">
-            <!-- Left side image: -->
-            <img class="oe_kanban_image" name="..." >
-                <div class="oe_kanban_details">
-                    <!-- Title and data -->
-                    <h4>Title</h4>
-                    <br>Other data <br/>
-                    <ul>
-                         <li>More data</li>
-                    </ul>
-               </div>
+      <div class="oe_kanban_vignette">
+        <!-- Left side image: -->
+        <img class="oe_kanban_image" name="..." >
+        <div class="oe_kanban_details">
+          <!-- Title and data -->
+          <h4>Title</h4>
+          <br>Other data <br/>
+          <ul>
+            <li>More data</li>
+          </ul>
         </div>
+      </div>
     </t>
 
-Puedes ver las dos clases CSS principales provistas para los ``kanban`` de
-estilo viñeta: ``oe_kanban_vignette`` para el contenedor superior y
-``oe_kanban_details`` para el contenido de datos.
+Puedes ver las dos (02) clases CSS principales provistas para los estilos de viñeta
+``kanban``: ``oe_kanban_vignette`` para el contenedor superior y ``oe_kanban_details``
+para el contenido de datos.
 
 La vista completa de viñeta ``kanban`` para las tareas por hacer es como
 sigue:
@@ -307,24 +309,27 @@ sigue:
     <kanban>
         <templates>
             <t t-name="kanban-box">
-               <div class="oe_kanban_vignette">
-                  <img t-att-src="kanban_image('res.partner', 
-                                               'image_medium',
-                                               record.id.value)"
-                       class="oe_kanban_image"/>
-                    <div class="oe_kanban_details">
-                        <!-- Title and Data content -->
-                        <h4><a type="open">
-                            <field name="name"/> </a></h4>
-                            <field name="tags" />
-                              <ul>
-                                <li><field name="user_id" /></li>
-                                <li><field name="date_deadline"/></li>
-                              </ul>
-                            <field name="kanban_state" widget="kanban_state_selection"/>
-                            <field name="priority" widget="priority"/>
-                    </div>
+              <div class="oe_kanban_vignette">
+                <img t-att-src="kanban_image('res.partner',
+                                             'image_medium',
+                                             record.id.value)"
+                     class="oe_kanban_image"/>
+                <div class="oe_kanban_details">
+                    <!-- Title and Data content -->
+                    <h4>
+                      <a type="open">
+                        <field name="name"/>
+                      </a>
+                    </h4>
+                    <field name="tags" />
+                    <ul>
+                      <li><field name="user_id" /></li>
+                      <li><field name="date_deadline"/></li>
+                    </ul>
+                    <field name="kanban_state" widget="kanban_state_selection"/>
+                    <field name="priority" widget="priority"/>
                 </div>
+              </div>
             </t>
         </templates>
     </kanban>
@@ -358,7 +363,7 @@ acción también están disponibles:
 
 -  ``delete``: Elimina el registro y remueve el elemento de la vista kanban.
 
-**La vista kanban de tarjeta** El **tarjeta** de ``kanban`` puede ser un poco
+**La vista de tarjeta kanban** El **tarjeta** de ``kanban`` puede ser un poco
 más complejo. Este tiene un área de contenido principal y dos
 sub-contenedores al pie, alineados a cada lado de la tarjeta. También
 podría contener un botón de apertura de una acción de menú en la esquina
@@ -369,44 +374,46 @@ El esqueleto para esta plantilla se vería así:
 .. code-block:: xml
 
     <t t-name="kanban-box">
-        <div class="oe_kanban_card">
-            <div class="oe_dropdown_kanban oe_dropdown_toggle">
-            <!-- Top-right drop down menu -->
-            </div>
-            <div class="oe_kanban_content">
-                <!-- Content fields go here... -->
-                <div class="oe_kanban_bottom_right"></div>
-                <div class="oe_kanban_footer_left"></div>
-            </div>
+      <div class="oe_kanban_card">
+        <div class="oe_dropdown_kanban oe_dropdown_toggle">
+        <!-- Top-right drop down menu -->
         </div>
+        <div class="oe_kanban_content">
+          <!-- Content fields go here... -->
+          <div class="oe_kanban_bottom_right"></div>
+          <div class="oe_kanban_footer_left"></div>
+        </div>
+      </div>
     </t>
 
-Un **tarjeta** ``kanban`` es más apropiada para las tareas to-do, así que en
+Una **tarjeta** ``kanban`` es más apropiada para las tareas to-do, así que en
 lugar de la vista descrita en la sección anterior, mejor debería usar
 la siguiente:
 
 .. code-block:: xml
 
     <t t-name="kanban-box">
-        <div class="oe_kanban_card">
-            <div class="oe_kanban_content">
-                <!-- Option menu will go here! -->
-                <h4><a type="open">
-                    <field name="name" />
-                    </a></h4>
-                    <field name="tags" />
-                    <ul>
-                        <li><field name="user_id" /></li>
-                        <li><field name="date_deadline" /></li>
-                    </ul>
-                    <div class="oe_kanban_bottom_right">
-                        <field name="kanban_state" widget="kanban_state_selection"/>
-                    </div>
-                    <div class="oe_kanban_footer_left">
-                        <field name="priority" widget="priority"/>
-                    </div>
+      <div class="oe_kanban_card">
+        <div class="oe_kanban_content">
+            <!-- Option menu will go here! -->
+            <h4>
+              <a type="open">
+                <field name="name" />
+              </a>
+            </h4>
+            <field name="tags" />
+            <ul>
+                <li><field name="user_id" /></li>
+                <li><field name="date_deadline" /></li>
+            </ul>
+            <div class="oe_kanban_bottom_right">
+                <field name="kanban_state" widget="kanban_state_selection"/>
+            </div>
+            <div class="oe_kanban_footer_left">
+                <field name="priority" widget="priority"/>
             </div>
         </div>
+      </div>
     </t>
 
 Hasta ahora ha visto vistas ``kanban`` estáticas, usando una combinación
@@ -454,7 +461,7 @@ La directiva ``t-if``, usada en el ejemplo anterior, acepta expresiones
 JavaScript para ser evaluadas. La etiqueta y su contenido serán
 renderizadas si la condición se evalúa verdadera.
 
-Por ejemplo, en la tarjeta kanban, para mostrar el esfuerzo estimado de
+Por ejemplo, en la tarjeta ``kanban``, para mostrar el esfuerzo estimado de
 la Tarea, solo si este contiene un valor, después del campo
 ``date_deadline``, agrega lo siguiente:
 
@@ -485,7 +492,7 @@ evaluación de expresiones Qweb:
 
 -  ``widget``: Esta es una referencia al objeto widget ``KanbanRecord``,
    responsable por el renderizado del registro actual dentro de la
-   tarjeta kanban. Expone algunas funciones de ayuda útiles que podrá
+   tarjeta ``kanban``. Expone algunas funciones de ayuda útiles que podrá
    usar.
 
 -  ``record``: Este es un atajo para ``widget.records`` y provee acceso
@@ -493,7 +500,7 @@ evaluación de expresiones Qweb:
 
 -  ``read_only_mode``:
 
--  ``widget``: Esta es una referencia al widget actual `` KanbanRecord``
+-  ``widget``: Esta es una referencia al widget actual ``KanbanRecord``
    objeto, responsable de la representación del registro actual en un
    tarjeta ``kanban``. Expone algunas funciones ``helper`` útiles que
    puede usar.
@@ -555,7 +562,7 @@ manera:
 .. code-block:: xml
 
     <t t-foreach="record.message_follower_ids.raw_value" t-as="rec"/>
-      <t t-esc="rec" />;
+      <t t-esc="rec" />
     </t>
 
 La directiva ``t-foreach`` acepta una expresión JavaScript que evalúa
@@ -565,13 +572,13 @@ nombre de un campo de relación *a muchos*. Se utiliza con una directiva
 elemento en la iteración.
 
 En el ejemplo anterior, recorre los seguidores de la tarea, almacenados
-en el campo ``message_follower_ids``. Como hay espacio limitado en el tarjeta
-Kanban, podría haber usado la función de JavaScript ``slice()`` para limitar
+en el campo ``message_follower_ids``. Como hay espacio limitado en la tarjeta
+``kanban``, podría haber usado la función de JavaScript ``slice()`` para limitar
 el número de seguidores a mostrar, como se muestra a continuación:
 
 .. code-block:: xml
 
-    t-foreach="record.message_follower_ids.raw_value.slice(0, 3)" 
+    t-foreach="record.message_follower_ids.raw_value.slice(0, 3)"
 
 La variable ``rec`` contiene cada avatar de iteraciones almacenado en la
 base de datos. Las vistas Kanban proporcionan una función auxiliar para
@@ -645,14 +652,14 @@ Otras directivas QWeb
 Usted ha revisado las directivas Qweb más importantes, pero hay algunos
 más que debe tener en cuenta. Usted ha visto lo básico sobre Vistas
 kanban y plantillas QWeb. Todavía hay algunas técnicas que puede utilizar
-para brindar una experiencia de usuario más rica a nuestras tarjetas kanban.
+para brindar una experiencia de usuario más rica a nuestras tarjetas ``kanban``.
 
 
 
 Adición de un menú de opciones de la tarjeta Kanban
 ---------------------------------------------------
 
-Las tarjetas Kanban pueden tener un menú de opciones, ubicado en la parte superior
+Las tarjetas ``kanban`` pueden tener un menú de opciones, ubicado en la parte superior
 derecha. Las acciones usuales son para editar o eliminar el registro, pero cualquier
 acción invocable desde un el botón es posible. También hay disponible un widget para
 configurar la tarjeta.
@@ -670,7 +677,8 @@ configurar la tarjeta.
       <ul class="oe_kanban_colorpicker"
           data-field="color"/>
       </ul>
-    </li></div>
+    </li>
+  </div>
 
 Básicamente es una lista HTML de elementos. Las opciones **Editar** y **Eliminar**
 usa QWeb para hacerlos visibles solo cuando sus acciones estén habilitadas en el
@@ -705,7 +713,7 @@ declarar el color campo, como se muestra a continuación:
 
     <field name="color" />
 
-Y, necesita reemplazar el elemento superior de la tarjeta kanban,
+Y, necesita reemplazar el elemento superior de la tarjeta ``kanban``:
 
 .. code-block:: html
 
@@ -764,10 +772,11 @@ direcciones, como se muestra a continuación:
 
 .. code-block:: xml
 
-    <div t-field="res_company.partner_id" t-field-options='{
+    <div t-field="res_company.partner_id"
+         t-field-options='{
             "widget": "contact",
             "fields": ["address", "name", "phone", "fax"],
-                    "no_marker": true}' />
+            "no_marker": true}' />
 
 Por defecto, algunos pictogramas, como un teléfono, se muestran en la dirección.
 La opción ``no_marker="true"`` los desactiva.

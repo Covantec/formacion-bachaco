@@ -5,6 +5,7 @@ Herencia
 ========
 
 
+
 Herencia - Extendiendo la Funcionalidad de las Aplicaciones Existentes
 ======================================================================
 
@@ -537,8 +538,8 @@ Es usada a través del atributo ``_inherits`` (note la 's' adicional) con
 un mapeo de diccionario de modelos heredados con campos relacionados a
 él.
 
-Un buen ejemplo de esto es el modelo estándar Users, ``res.users``, que
-tiene un modelo Partner anidado:
+Un buen ejemplo de esto es el modelo estándar **Users**, ``res.users``, que
+tiene un modelo **Partner** ``res.partner`` anidado:
 
 .. code:: Python
 
@@ -728,10 +729,10 @@ Para mantener las cosas organizadas, creara un archivo
         <openerp>
             <data noupdate="1">
                 <delete model="ir.rule" search="[('id''=',ref('todo_app.todo_task_user_rule'))]" />
-                <record    id="todo_task_per_user_rule" model="ir.rule">
+                <record id="todo_task_per_user_rule" model="ir.rule">
                     <field name="name">ToDo Tasks only for owner</field>
                     <field name="model_id" ref="model_todo_task"/>
-                    <field name="groups" eval="[(4,    ref('base.group_user'))]"/>
+                    <field name="groups" eval="[(4, ref('base.group_user'))]"/>
                     <field name="domain_force">
                         ['|', ('user_id','in', [user.id,False]), ('message_follower_ids','in',[user.partner_id.id])]
                     </field>
@@ -761,7 +762,10 @@ archivo descriptor ``__openerp__.py`` en el atributo "data":
 
 .. code:: Python
 
-    'data': ['todo_view.xml', 'security/todo_access_rules.xml'],
+    'data': [
+        'todo_view.xml',
+        'security/todo_access_rules.xml'
+    ],
 
 Note que en la actualización de módulos, el elemento ``<delete>``
 arrojará un mensaje de advertencia, porque el registro que será
