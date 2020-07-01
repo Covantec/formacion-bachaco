@@ -12,7 +12,7 @@ El manejo de palabras de código en texto, nombres de tablas de base de
 datos, nombres de carpetas, nombres de archivos, extensiones de
 archivos, nombres de ruta, URLs falsas, entrada de usuario, y Twitter se
 muestran como sigue: "Necesita poder ser importado por Python, por lo
-tanto tendrá también que ser un archivo **init.py**"
+tanto tendrá también que ser un archivo **__init__.py**"
 
 Un bloque de código es asentado de la siguiente manera:
 
@@ -42,3 +42,22 @@ opción **Actualizar Listas de Módulos**."
 
 .. tip::
     Los consejos y notas aparecen así.
+
+
+Acerca del codigo fuente
+========================
+
+El código fuente usado en las todas practicas de en libro **Odoo Development
+Essentials** para la versión Odoo 8.0 esta disponible en la siguiente dirección:
+
+- `https://github.com/dreispt/todo_app/tree/8.0 <https://github.com/dreispt/todo_app/tree/8.0>`_
+
+Puede obtener una copia localmente del código fuente, ejecutando el siguiente comando:
+
+.. code:: shell
+
+    $ git clone https://github.com/dreispt/todo_app.git -b 8.0
+
+.. raw:: html
+
+  <br/>
