@@ -48,15 +48,15 @@ Acerca del codigo fuente
 ========================
 
 El código fuente usado en las todas practicas de en libro **Odoo Development
-Essentials** para la versión Odoo 8.0 esta disponible en la siguiente dirección:
+Essentials** para la versión Odoo 10.0 esta disponible en la siguiente dirección:
 
-- `https://github.com/dreispt/todo_app/tree/8.0 <https://github.com/dreispt/todo_app/tree/8.0>`_
+- `https://github.com/dreispt/todo_app/tree/10.0 <https://github.com/dreispt/todo_app/tree/10.0>`_
 
 Puede obtener una copia localmente del código fuente, ejecutando el siguiente comando:
 
 .. code:: shell
 
-    $ git clone https://github.com/dreispt/todo_app.git -b 8.0
+    $ git clone https://github.com/dreispt/todo_app.git -b 10.0
 
 .. raw:: html
 
