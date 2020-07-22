@@ -115,30 +115,30 @@ servidor Odoo se rehusará a ejecutarse si está usando ``root``.
 Si ha iniciado sesión usando *Ubuntu*, probablemente no necesitará esto, ya que el proceso
 de instalación debe haberte guiado para la creación de un usuario.
 
-Primero, asegúrese de que ``sudo`` esté instalado. Su usuario de trabajo lo necesitará.
+Primero, asegúrese que ``sudo`` esté instalado. Su usuario de trabajo lo necesitará.
 Si se inició sesión como ``root``, ejecute los siguientes comandos:
 
 Instalar las actualizaciones del sistema, ejecutando el siguiente comando:
 
-.. code:: shell
+.. code-block:: console
 
     # apt-get update && apt-get upgrade
 
 Asegúrese que tiene instalado el comando ``sudo``, ejecutando el siguiente comando:
 
-.. code:: shell
+.. code-block:: console
 
     # apt-get install sudo
 
 Crear un usuario ``odoo`` con los poderes *sudo*, ejecutando el siguiente comando:
 
-.. code:: shell
+.. code-block:: console
 
     # useradd -m -g sudo -s /bin/bash odoo
 
 Defina una contraseña para el nuevo usuario ``odoo``, ejecutando el siguiente comando:
 
-.. code:: shell
+.. code-block:: console
 
     # passwd odoo
 
@@ -177,7 +177,7 @@ Asumiendo que su usuario es ``odoo``, confírmelo con el siguiente comando:
 Mostrar el valor de la variable de entorno de usuario ``$HOME``,
 ejecutando el siguiente comando:
 
-.. code:: shell
+.. code-block:: console
 
     $ echo $HOME
     /home/odoo
@@ -185,7 +185,7 @@ ejecutando el siguiente comando:
 Mostrar el valor de la variable de entorno de usuario ``$USER``,
 ejecutando el siguiente comando:
 
-.. code:: shell
+.. code-block:: console
 
     $ echo $USER
     odoo
@@ -193,7 +193,7 @@ ejecutando el siguiente comando:
 Ejecutar el comando ``whoami`` para mostrar el nombre del usuario
 creado, ejecutando el siguiente comando:
 
-.. code:: shell
+.. code-block:: console
 
     $ whoami
     odoo
@@ -206,13 +206,13 @@ ejecute los siguientes comandos.
 
 Instalar las actualizaciones del sistema, ejecutando el siguiente comando:
 
-.. code:: shell
+.. code-block:: console
 
     $ sudo apt-get update && sudo apt-get upgrade
 
 Instalar el paquete ``git``, ejecutando el siguiente comando:
 
-.. code:: shell
+.. code-block:: console
 
     $ sudo apt-get install git
 
@@ -220,20 +220,20 @@ Instalar el paquete ``nodejs`` y su administrador de paquete ``npm``,
 ejecutando el siguiente
 comando:
 
-.. code:: shell
+.. code-block:: console
 
     $ sudo apt-get install npm
 
 Crear enlace simbólico ``node`` al ejecutar ``nodejs``, ejecutando el
 siguiente comando:
 
-.. code:: shell
+.. code-block:: console
 
     $ sudo ln -s /usr/bin/nodejs /usr/bin/node
 
 Instalar el compilador ``less``, ejecutando el siguiente comando:
 
-.. code:: shell
+.. code-block:: console
 
     $ sudo npm install -g less less-plugin-clean-css
 
@@ -249,32 +249,32 @@ dependencias requeridas en un sistema *Debian*/*Ubuntu*:
 
 Debe crear el directorio de trabajo, ejecutando el siguiente comando:
 
-.. code:: shell
+.. code-block:: console
 
     $ mkdir ~/odoo-dev
 
 Ingresar en el directorio de trabajo, ejecutando el siguiente comando:
 
-.. code:: shell
+.. code-block:: console
 
     $ cd ~/odoo-dev
 
 Obtenga una copia del código fuente de Odoo, ejecutando el siguiente comando:
 
-.. code:: shell
+.. code-block:: console
 
     $ git clone https://github.com/odoo/odoo.git -b 10.0 --depth=1
 
 Instalar las dependencias del sistema Odoo, ejecutando el siguiente comando:
 
-.. code:: shell
+.. code-block:: console
 
     $ ./odoo/setup/setup_dev.py setup_deps
 
 Instalar PostgreSQL y el súper usuario de la base de datos para el usuario Unix, ejecutando
 el siguiente comando:
 
-.. code:: shell
+.. code-block:: console
 
     $ ./odoo/setup/setup_dev.py setup_pg
 
@@ -289,7 +289,7 @@ la descarga más pequeña y más veloz.
 
 Para iniciar una instancia del servidor Odoo, simplemente ejecute:
 
-.. code:: shell
+.. code-block:: console
 
     $ ~/odoo-dev/odoo/odoo-bin
 
@@ -325,21 +325,21 @@ Para ser capaces de crear una nueva base de datos, su usuario debe ser un
 súper usuario PostgreSQL. El siguiente comando crea un súper usuario PostgreSQL
 para el usuario actual Unix.
 
-.. code:: shell
+.. code-block:: console
 
     $ sudo createuser --superuser $(whoami)
 
 Para crear una nueva base de datos, use el comando ``createdb``. Cree una
 base de datos ``demo``:
 
-.. code:: shell
+.. code-block:: console
 
     $ createdb demo
 
 Para inicializar ésta base de datos con el esquema de datos Odoo, debe
 ejecutar Odoo en la base de datos vacía, usando la opción ``-d``:
 
-.. code:: shell
+.. code-block:: console
 
     $ ~/odoo-dev/odoo/odoo-bin -d demo
 
@@ -403,11 +403,11 @@ Ya sabe cómo usar el comando ``createdb`` para crear bases de datos
 vacías, pero también puede crear una nueva base de datos copiando una
 existente, usando la opción ``--template``.
 
-Asegúrate de que su instancia de Odoo está detenida y no tiene ninguna
+Asegúrate que su instancia de Odoo está detenida y no tiene ninguna
 otra conexión abierta en la base de datos ``demo`` que acaba de crear y,
 a continuación, ejecute esto:
 
-.. code:: shell
+.. code-block:: console
 
     $ createdb --template=demo demo-test
 
@@ -418,7 +418,7 @@ llamada ``template1``.
 Para listar las bases de datos existentes en su sistema use la utilidad
 ``psql`` de PostgreSQL con la opción ``-l``:
 
-.. code:: shell
+.. code-block:: console
 
     $ psql -l
 
@@ -430,7 +430,7 @@ la codificación necesaria para las bases de datos Odoo.
 Para eliminar una base de datos que ya no necesite (o necesita crear
 nuevamente), use el comando ``dropdb``:
 
-.. code:: shell
+.. code-block:: console
 
     $ dropdb demo-test
 
@@ -457,13 +457,13 @@ trabajará a lo largo de éste libro.
     un servidor Odoo 10 contra una base de datos creada para una versión
     principal anterior de Odoo, no funcionará.
 
-El trabajo de migración no trivial es necesario antes de que una base
+El trabajo de migración no trivial es necesario antes que una base
 de datos pueda ser usada con una versión más reciente del producto.
 
 Lo mismo ocurre con los módulos adicionales o *addon*: como regla general,
 un módulo addon desarrollado para una versión mayor Odoo no funcionará con
 otras versiones. Cuando descargue un módulo de la comunidad desde la Web,
-asegúrese de que esté orientado a la versión Odoo que está utilizando.
+asegúrese que esté orientado a la versión Odoo que está utilizando.
 
 Por otra parte, se espera que las versiones principales (``9.0``, ``10.0``)
 reciban actualizaciones frecuentes, pero éstas deben ser en su mayoría
@@ -487,7 +487,7 @@ El servidor Odoo soporta bastantes otras opciones. Podrá comprobar todas
 las opciones disponibles con más opciones de configuración del servidor
 con el parámetro ``--help``:
 
-.. code:: shell
+.. code-block:: console
 
     $ ./odoo-bin --help
 
@@ -519,7 +519,7 @@ la configuración actual de la instancia, ejecutando el siguiente comando:
 
 Servir configuración al archivo
 
-.. code:: shell
+.. code-block:: console
 
     $ ~/odoo-dev/odoo/odoo-bin --save --stop-after-init
 
@@ -531,7 +531,7 @@ actualización de un módulo para verificar que se instala correctamente.
 Ahora se puede inspeccionar lo que se guardó en este archivo de
 configuración, ejecutando el siguiente comando:
 
-.. code:: shell
+.. code-block:: console
 
     $ more ~/.odoorc
 
@@ -558,13 +558,13 @@ tiempo, en el mismo servidor.
 Va a probar esto. Abra dos ventanas de la terminal. En la primera
 ejecute:
 
-.. code:: shell
+.. code-block:: console
 
     $ ~/odoo-dev/odoo/odoo-bin --xmlrpc-port=8070
 
 Ejecuta el siguiente comando en el segundo terminal:
 
-.. code:: shell
+.. code-block:: console
 
     $ ~/odoo-dev/odoo/odoo-bin --xmlrpc-port=8071
 
@@ -589,7 +589,7 @@ ejecuta en modo privado puede ayudar a evitar algunos de estos
 problemas.
 
 Otra buena práctica es habilitar un filtro de base de datos en la
-instancia del servidor para asegurarse de que sólo permite las
+instancia del servidor para asegurarse que sólo permite las
 solicitudes de la base de datos con la que querrá trabajar, ignorando
 todos las demás. Esto se hace con la opción ``--db-filter``. Acepta una
 expresión regular que se utiliza como filtro para los nombres de base de
@@ -599,7 +599,7 @@ comenzar con un ``^`` y terminar con ``$``.
 Por ejemplo, para permitir sólo la base de datos ``demo`` use este
 comando:
 
-.. code:: shell
+.. code-block:: console
 
     $ ~/odoo-dev/odoo/odoo-bin --db-filter=^demo$
 
@@ -666,7 +666,7 @@ Es posible que prefiera éste, ya que es más fácil de usar. En caso que no
 esté disponible en su servidor, puede instalarlo, ejecutando el siguiente
 comando:
 
-.. code:: shell
+.. code-block:: console
 
     $ sudo apt-get install nano
 
@@ -682,7 +682,7 @@ El servicio Samba ayuda a que los servicios de compartición de archivos
 de Linux sean compatibles con los sistemas Microsoft *Windows*. Podrá
 instalarlo en su servidor *Debian*/*Ubuntu* con este comando:
 
-.. code:: shell
+.. code-block:: console
 
     $ sudo apt-get install samba samba-common-bin
 
@@ -694,7 +694,7 @@ registrar a su usuario, ``odoo`` por ejemplo, y establecer una
 contraseña para su acceso a compartir archivos, ejecutando el siguiente
 comando:
 
-.. code:: shell
+.. code-block:: console
 
     $ sudo smbpasswd -a odoo
 
@@ -705,7 +705,7 @@ lectura. Querrá tener acceso de escritura, por lo que necesita editar el
 archivo de configuración de Samba para cambiarlo, ejecute el siguiente
 comando:
 
-.. code:: shell
+.. code-block:: console
 
     $ sudo nano /etc/samba/smb.conf
 
@@ -725,7 +725,7 @@ siguiente manera:
 Para que estos cambios en la configuración tengan efecto, reinicie el
 servicio, ejecutando el siguiente comando:
 
-.. code:: shell
+.. code-block:: console
 
     $ sudo /etc/init.d/smbd restart
 
@@ -850,12 +850,12 @@ Odoo.
 Para obtener el código fuente desde GitHub, ejecute los siguientes
 comandos:
 
-.. code:: shell
+.. code-block:: console
 
     $ cd ~/odoo-dev
     $ git clone https://github.com/dreispt/todo_app.git -b 10.0
 
-Usted uso la opción ``-b`` para asegurarse de que está descargando los
+Usted uso la opción ``-b`` para asegurarse que está descargando los
 módulos para la versión 10.0.
 
 Después de esto, tendrá un directorio nuevo ``/todo_app`` junto al
@@ -879,7 +879,7 @@ módulos:
 
 Accede al directorio de trabajo, ejecutando el siguiente comando:
 
-.. code:: shell
+.. code-block:: console
 
     $ cd ~/odoo-dev/odoo
 
@@ -887,7 +887,7 @@ Accede al directorio de trabajo, ejecutando el siguiente comando:
 Inicie la instancia Odoo indicando la ruta personalizada de sus complementos,
 ejecutando el siguiente comando:
 
-.. code:: shell
+.. code-block:: console
 
     $ ./odoo-bin -d demo --addons-path="../todo_app,./addons"
 
@@ -901,7 +901,7 @@ Actualizar la lista de aplicaciones
 -----------------------------------
 
 Todavía necesita pedirle a Odoo que actualice su lista de módulos antes
-de que estos nuevos módulos estén disponibles para la instalación.
+que estos nuevos módulos estén disponibles para la instalación.
 
 Para ello, necesita activar el modo desarrollador, ya que proporciona la
 opción de menú **Actualizar Lista de Aplicaciones**. Se puede encontrar
